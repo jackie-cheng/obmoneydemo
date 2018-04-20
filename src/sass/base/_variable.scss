@@ -1,0 +1,60 @@
+$color_base: #00c3a3;//主题绿色
+
+//$color-base: #ff0000;
+// 新增——rwy
+$text_color:#111;//常规的文本色
+$title_color:#222;//title 文本色
+$lightGray_color:#666;//学科下面的备注
+$gray_color:#999;//淡灰色字体
+$title_sub:#444;
+$baseFontFamily: "SimHei" !default;
+$baseNumFamily: Arial;//数字的字体;
+
+$color_current_bf:#eee;//选中的背景颜色
+
+// $color_blue_light:#00b7ee;//亮蓝色
+
+
+$border_color: #e4e4e4; //border的颜色
+// 各个成绩阶段的颜色
+$bad_color:#ff0000;
+$jige_color:#f88a47;
+$youxiu_color:#18d6b9 ;//高分色
+$lianghao_color:#11cce2;//优秀色
+$jige_color:#f88a47;//及格色
+$difen_color:#f26666 ;//低分色
+
+//学科的颜色
+
+$chemistry_color:#c666e2;//化学
+$physic_color:#097cc5;//物理
+$biology_color:#12c785;//生物
+$geogra_color:#d79a24;//地理
+$english_color:#ec57b2;
+$chinese_color:#f07373;
+$math_color:#14a8be;
+$political_color:#09c5b6;//政治
+$history_color:#ce6251;//历史
+
+//对错的颜色
+$red_color:#ff0000;//红色字体
+$orange_color:#f88a47;//橙色字体
+
+
+
+$max-width-phone: 480px;
+
+$max-width-small-screen-phone: 361px;
+
+$color-font-notice-send: #212121;
+
+$device-width-iphone6p:414px;
+$device-width-iphone6:375px;
+$device-width-xiaomi5:360px;
+$device-width-iphone4_5:320px;
+
+$device-width-mobile-s:320px;
+$device-width-mobile-m:375px;
+$device-width-mobile-l:425px;
+$device-width-tablet:768px;
+

@@ -1,0 +1,100 @@
+@charset "UTF-8";
+input::-ms-clear{display:none;}
+html,body,textarea, input,button,pre{resize:none; outline:none;  font-family: $baseFontFamily; color:#444;}
+html, body, #app{
+  height:100%;
+}
+.wx_contet_box{
+  height:100%;
+  overflow:auto;
+}
+body{
+  font-size:0.857rem;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+}
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+  background:#fff;
+}
+button{
+  -webkit-appearance:none;
+  padding:0;
+  border:none;
+}
+
+a {
+  color: $text-color;
+  &:hover{
+    color: $color-base;
+    text-decoration: none;
+  }
+  &:focus{ outline: none;}
+}
+table{
+  border-collapse:collapse;
+}
+i,span,a,pre{*display:inline;letter-spacing:normal;word-spacing: normal; }
+
+i, em, cite ,pre{ font-style: normal; }
+
+h1,h2,h3,h4,h4,h6{
+  font-weight: normal;
+  font-style:none;
+  line-height: 100%;
+}
+
+
+.fyahei{font-family:$baseFontFamily;}
+.vam{@extend %vam;}
+.wx-icon{@extend %display; @extend %vam;}
+.dn{
+  display:none;
+}
+
+.ovh{
+  @extend %ovh;
+}
+
+.bg-white{
+  background:#fff;
+}
+.gray_color{
+  color:$gray_color;
+}
+
+@font-face {
+  font-family: 'iconfont';  /* project id 336131 */
+  src: url('//at.alicdn.com/t/font_336131_5iwp5kv1b0ebfbt9.eot');
+  src: url('//at.alicdn.com/t/font_336131_5iwp5kv1b0ebfbt9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_336131_5iwp5kv1b0ebfbt9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_336131_5iwp5kv1b0ebfbt9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_336131_5iwp5kv1b0ebfbt9.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    //-webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.wx-content-box{
+  @extend %wx-width;
+  height:100%;
+  overflow-y: auto;
+}
+option{
+  min-height: 0.533rem;
+}
+
+.wx_mt30{
+  margin-top:0.4rem;
+}
+.wx_mt40{
+  margin-top:0.533rem;
+}
+/*.{
+  height:0.8rem
+
+}*/

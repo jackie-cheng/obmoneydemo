@@ -1,0 +1,276 @@
+@charset "UTF-8";
+%arial{font-family:$baseNumFamily;}
+
+%white-bg{background:#fff;}
+@mixin fontSize($value){
+  font-size:$value;
+}
+%fontSize10{
+  @include fontSize(0.133rem);
+}
+%fontSize12{
+  @include fontSize(0.16rem);
+}
+%fontSize14{
+  @include fontSize(0.187rem);
+}
+%fontSize16{
+  @include fontSize(0.213rem);
+}
+%fontSize18{
+  @include fontSize(0.24rem);
+}
+%fontSize20{
+  @include fontSize(0.267rem);
+}
+%fontSize22{
+  @include fontSize(0.293rem);
+}
+%fontSize24{
+  @include fontSize(0.32rem);
+}
+%fontSize26{
+  @include fontSize(0.347rem);
+}
+%fontSize28{
+    @include fontSize(0.373rem);
+}
+%fontSize30{
+  @include fontSize(0.4rem);
+}
+
+
+/**
+    @Name: Eex 1.0 button mixin
+    @Overview: button mixin
+    @Require: @mixin %
+    @Author: zyl
+    @time:2016/5/18/
+**/
+
+@mixin containerWidth($containerWidth,$value: auto){
+   max-width:$containerWidth;
+   margin:$value;
+}
+%containerWidth{
+  @include containerWidth(750px, auto);
+}
+
+
+// 定位 position relative obsolute fixed ...
+@mixin position($value, $extend:false){
+ @if($extend){
+  @extend %relative;
+  }@else{
+     position: $value;
+  }
+}
+%relative{
+  @include position(relative);
+}
+%absolute{
+  @include position(absolute);
+}
+// 页面宽度适配
+%wx-content{
+  width:100%;
+}
+%wx-width{
+  width:100%;
+  min-width: 320px;
+}
+
+//高度与行高的配置
+@mixin height($extend:true, $height : auto, $lineHight:auto){
+    @if($extend){
+        height:$height;
+        line-height: $lineHight;
+    } @else{
+        height:$height;
+    }
+}
+// 文字设置
+@mixin fontStyle($size, $color, $family){
+  font-size: $size;
+  color: $color;
+  font-family: $family;
+}
+
+//最大宽度
+@mixin max-width{
+  width:100%;
+  max-width: 750px;
+}
+
+// 文字设置
+@mixin fontStyle($size, $color, $family){
+  @include fontSize($size);
+  color: $color;
+  font-family: $family;
+}
+
+//文本左，中，右对齐方式
+@mixin textAlign($direction:center){
+  text-align:$direction;
+}
+
+%textAlign {
+  @include textAlign(center);
+}
+//文本上下对齐的方式
+@mixin vam($direction:middle){
+  vertical-align:$direction;
+}
+%ovh{overflow:hidden;}
+%fwb{font-weight:bold;}
+%vam{
+  @include vam(middle);
+}
+//display状态提取
+@mixin display($state:inline-block){
+  display: $state;
+}
+
+%display{
+  @include display(inline-block);
+   @if $lte7 {
+      *display: inline;
+      *zoom:1;
+   }
+}
+
+%align-center{
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+  transform: translate(50%, 50%);
+}
+
+// 文本超出 显示省略号 ……
+@mixin ellipsis{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @extend %ovh;
+}
+%ellipsis{
+  @include ellipsis;
+}
+
+//边距 padding
+@mixin padding($value , $dec){
+  // $list : top left right bottom lr tb  tlrb;
+  @if $dec == lr {
+    padding: 0 $value;
+  } @else if $dec == tb {
+    padding: $value 0;
+  } @else if $dec == tlrb{
+    padding: $value;
+  } @else {
+    padding-#{$dec}: $value;
+  }
+}
+
+%padding-lr{
+ @include padding(0.851rem, lr)
+}
+
+@mixin pop-buttons($align, $calign){
+  @include textAlign($align);
+  input[type="submit"]{
+    margin-right:16px;
+  }
+  input[type="submit"],input[type="reset"],input[type="button"]{
+    @extend %display;
+    width: 97px;
+    height:30px;
+    font: normal 12px/normal 'Microsoft Yahei';
+    @include textAlign($calign);
+    &.pop-buttons-yes{
+      color:#fff;
+      border:#e1c325 solid 1px !important;
+      // background:#28c570; // 成功确认信息
+      background:#e1c325 !important; //警告 确认信息
+      &:hover{
+        color:#fff;
+        background:#ffb625;
+      }
+    }
+    &.pop-buttons-reset{
+      border:#ccc solid 1px;
+      color:#919191;
+      background:none;
+    }
+
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$device-width-iphone6p}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin iphone6p {
+  @media (min-width: #{$device-width-iphone6p}) {
+    @content;
+  }
+}
+
+@mixin iphone6 {
+  @media (min-width: #{$device-width-iphone6}) and (max-width: #{$device-width-iphone6p - 1px}) {
+    @content;
+  }
+}
+
+@mixin xiaomi5 {
+  @media (min-width: #{$device-width-xiaomi5}) and (max-width: #{$device-width-iphone6 - 1px}) {
+    @content;
+  }
+}
+
+@mixin iphone4_5 {
+  @media (min-width: #{$device-width-iphone4_5}) and (max-width: #{$device-width-xiaomi5 - 1px}) {
+    @content;
+  }
+}
+
+@mixin retina {
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
+
+@mixin limit-lines($line){
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}
+
+// Gradients
+// Firefox 10+, Opera 11.6+, Chrome 26+ and IE10 also support the new "to (side)" syntax.
+//-----------------------------------------------------
+// 水平渐变，从右往左
+// @include gradient-horizontal-right(#333, #ccc);
+@mixin gradient-horizontal-right($gradient...){
+  background-image: -webkit-linear-gradient(right, $gradient); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient(right, $gradient); // Opera 11.10
+  background-image: linear-gradient(to left, $gradient); // Standard, IE10
+}
+
+// 针对iphone 6p字体太大的样式调整
+// @media only screen and (min-width: 414px){
+//   html{
+//     font-size: 18px!important;
+//     font-weight:normal;
+//  }
+
+// }

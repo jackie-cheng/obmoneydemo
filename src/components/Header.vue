@@ -3,7 +3,7 @@
     <van-nav-bar
       title="首页"
       left-text="返回"
-      right-text="我的22"
+      right-text="我的"
       left-arrow
       @click-left="onClickLeft"
       @click-right="onClickRight"
