@@ -5,7 +5,8 @@ import App from './App'
 import router from './router'
 
 Vue.config.productionTip = false
-
+import { appInitInject, } from './utils/common'
+appInitInject()
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
