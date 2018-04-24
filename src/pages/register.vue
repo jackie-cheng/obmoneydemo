@@ -42,13 +42,15 @@
       />
     </van-cell-group>
     <van-button type="primary"  size="large">马上注册</van-button>
-    <van-button type="primary"  size="large" >立即登录</van-button>
-    <tabbar :activeNum="4"></tabbar>
+    <router-link  tag="van-button" to="/login"  type="primary"  size="large">
+      立即登录
+    </router-link>
+    <!--<van-button type="primary"  size="large" >立即登录</van-button>-->
+
   </div>
 </template>
 
 <script>
-  import tabbar from '../components/tabbar'
 
   import Header from '../components/Header'
   export default {
@@ -63,7 +65,7 @@
     },
 
     components:{
-      Header,tabbar
+      Header
     },
     created(){
 

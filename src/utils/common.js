@@ -18,9 +18,10 @@ export function appInitInject (store, router) {
   Vue.prototype.$t = function (msg) { return msg }
 
   //
-  // axios.defaults.baseURL = constants.ENV_CONFIG.apiBaseUrl
-  axios.defaults.headers.post['Content-Type'] = 'application/json'
-  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+
+  // axios.defaults.baseURL = 'http://47.92.129.86:80/'
+  // axios.defaults.headers.post['Content-Type'] = 'application/json'
+  // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
   //
   // Vue.mixin({

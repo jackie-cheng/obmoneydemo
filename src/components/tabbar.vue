@@ -7,6 +7,7 @@
       <van-tabbar-item icon="gold-coin" info="20">客服</van-tabbar-item>
       <van-tabbar-item icon="gold-coin" info="20">我的</van-tabbar-item>
     </van-tabbar>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -15,9 +16,10 @@
     name: 'tabbar',
     data() {
       return {
-        active: 0
+        active:this.activeNum
       }
     },
+    props:['activeNum'],
     methods:{
 
     },
