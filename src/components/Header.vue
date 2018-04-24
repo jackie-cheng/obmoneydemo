@@ -2,8 +2,8 @@
   <div id="app">
     <van-nav-bar
       title="首页"
-      left-text="返回22"
-      right-text="我的"
+      left-text="返回"
+      right-text="登录"
       left-arrow
       @click-left="onClickLeft"
       @click-right="onClickRight"
@@ -21,10 +21,11 @@
     },
     methods: {
       onClickLeft() {
-        Toast('返回');
+        this.$toast('提示文案')
       },
       onClickRight() {
-        Toast('按钮');
+          const vm = this
+        vm.$router.push('/login')
       }
     }
 

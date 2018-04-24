@@ -1,137 +1,166 @@
 @charset "UTF-8";
-%arial{font-family:$baseNumFamily;}
-
-%white-bg{background:#fff;}
-@mixin fontSize($value){
-  font-size:$value;
+%arial {
+  font-family: $baseNumFamily;
 }
-%fontSize10{
+
+%white-bg {
+  background: #fff;
+}
+
+@mixin fontSize($value) {
+  font-size: $value;
+}
+
+%fontSize10 {
   @include fontSize(0.133rem);
 }
-%fontSize12{
+
+%fontSize12 {
   @include fontSize(0.16rem);
 }
-%fontSize14{
+
+%fontSize14 {
   @include fontSize(0.187rem);
 }
-%fontSize16{
+
+%fontSize16 {
   @include fontSize(0.213rem);
 }
-%fontSize18{
+
+%fontSize18 {
   @include fontSize(0.24rem);
 }
-%fontSize20{
+
+%fontSize20 {
   @include fontSize(0.267rem);
 }
-%fontSize22{
+
+%fontSize22 {
   @include fontSize(0.293rem);
 }
-%fontSize24{
+
+%fontSize24 {
   @include fontSize(0.32rem);
 }
-%fontSize26{
+
+%fontSize26 {
   @include fontSize(0.347rem);
 }
-%fontSize28{
-    @include fontSize(0.373rem);
+
+%fontSize28 {
+  @include fontSize(0.373rem);
 }
-%fontSize30{
+
+%fontSize30 {
   @include fontSize(0.4rem);
 }
 
-
-@mixin containerWidth($containerWidth,$value: auto){
-   max-width:$containerWidth;
-   margin:$value;
+@mixin containerWidth($containerWidth,$value: auto) {
+  max-width: $containerWidth;
+  margin: $value;
 }
-%containerWidth{
+
+%containerWidth {
   @include containerWidth(750px, auto);
 }
 
-
 // 定位 position relative obsolute fixed ...
-@mixin position($value, $extend:false){
- @if($extend){
-  @extend %relative;
-  }@else{
-     position: $value;
+@mixin position($value, $extend:false) {
+  @if ($extend) {
+    @extend %relative;
+  } @else {
+    position: $value;
   }
 }
-%relative{
+
+%relative {
   @include position(relative);
 }
-%absolute{
+
+%absolute {
   @include position(absolute);
 }
+
 // 页面宽度适配
-%wx-content{
-  width:100%;
+%wx-content {
+  width: 100%;
 }
-%wx-width{
-  width:100%;
+
+%wx-width {
+  width: 100%;
   min-width: 320px;
 }
 
 //高度与行高的配置
-@mixin height($extend:true, $height : auto, $lineHight:auto){
-    @if($extend){
-        height:$height;
-        line-height: $lineHight;
-    } @else{
-        height:$height;
-    }
+@mixin height($extend:true, $height : auto, $lineHight:auto) {
+  @if ($extend) {
+    height: $height;
+    line-height: $lineHight;
+  } @else {
+    height: $height;
+  }
 }
+
 // 文字设置
-@mixin fontStyle($size, $color, $family){
+@mixin fontStyle($size, $color, $family) {
   font-size: $size;
   color: $color;
   font-family: $family;
 }
 
 //最大宽度
-@mixin max-width{
-  width:100%;
+@mixin max-width {
+  width: 100%;
   max-width: 750px;
 }
 
 // 文字设置
-@mixin fontStyle($size, $color, $family){
+@mixin fontStyle($size, $color, $family) {
   @include fontSize($size);
   color: $color;
   font-family: $family;
 }
 
 //文本左，中，右对齐方式
-@mixin textAlign($direction:center){
-  text-align:$direction;
+@mixin textAlign($direction:center) {
+  text-align: $direction;
 }
 
 %textAlign {
   @include textAlign(center);
 }
+
 //文本上下对齐的方式
-@mixin vam($direction:middle){
-  vertical-align:$direction;
+@mixin vam($direction:middle) {
+  vertical-align: $direction;
 }
-%ovh{overflow:hidden;}
-%fwb{font-weight:bold;}
-%vam{
+
+%ovh {
+  overflow: hidden;
+}
+
+%fwb {
+  font-weight: bold;
+}
+
+%vam {
   @include vam(middle);
 }
+
 //display状态提取
-@mixin display($state:inline-block){
+@mixin display($state:inline-block) {
   display: $state;
 }
 
-%display{
+%display {
   @include display(inline-block);
-   @if $lte7 {
-      *display: inline;
-      *zoom:1;
-   }
+  @if $lte7 {
+    *display: inline;
+    *zoom: 1;
+  }
 }
 
-%align-center{
+%align-center {
   position: absolute;
   right: 50%;
   bottom: 50%;
@@ -139,58 +168,59 @@
 }
 
 // 文本超出 显示省略号 ……
-@mixin ellipsis{
+@mixin ellipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
   @extend %ovh;
 }
-%ellipsis{
+
+%ellipsis {
   @include ellipsis;
 }
 
 //边距 padding
-@mixin padding($value , $dec){
+@mixin padding($value , $dec) {
   // $list : top left right bottom lr tb  tlrb;
   @if $dec == lr {
     padding: 0 $value;
   } @else if $dec == tb {
     padding: $value 0;
-  } @else if $dec == tlrb{
+  } @else if $dec == tlrb {
     padding: $value;
   } @else {
     padding-#{$dec}: $value;
   }
 }
 
-%padding-lr{
- @include padding(0.851rem, lr)
+%padding-lr {
+  @include padding(0.851rem, lr)
 }
 
-@mixin pop-buttons($align, $calign){
+@mixin pop-buttons($align, $calign) {
   @include textAlign($align);
-  input[type="submit"]{
-    margin-right:16px;
+  input[type="submit"] {
+    margin-right: 16px;
   }
-  input[type="submit"],input[type="reset"],input[type="button"]{
+  input[type="submit"], input[type="reset"], input[type="button"] {
     @extend %display;
     width: 97px;
-    height:30px;
+    height: 30px;
     font: normal 12px/normal 'Microsoft Yahei';
     @include textAlign($calign);
-    &.pop-buttons-yes{
-      color:#fff;
-      border:#e1c325 solid 1px !important;
+    &.pop-buttons-yes {
+      color: #fff;
+      border: #e1c325 solid 1px !important;
       // background:#28c570; // 成功确认信息
-      background:#e1c325 !important; //警告 确认信息
-      &:hover{
-        color:#fff;
-        background:#ffb625;
+      background: #e1c325 !important; //警告 确认信息
+      &:hover {
+        color: #fff;
+        background: #ffb625;
       }
     }
-    &.pop-buttons-reset{
-      border:#ccc solid 1px;
-      color:#919191;
-      background:none;
+    &.pop-buttons-reset {
+      border: #ccc solid 1px;
+      color: #919191;
+      background: none;
     }
 
   }
@@ -227,8 +257,7 @@
 }
 
 @mixin retina {
-  @media
-  only screen and (-webkit-min-device-pixel-ratio: 2),
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (min--moz-device-pixel-ratio: 2),
   only screen and (-o-min-device-pixel-ratio: 2/1),
   only screen and (min-device-pixel-ratio: 2),
@@ -238,8 +267,7 @@
   }
 }
 
-
-@mixin limit-lines($line){
+@mixin limit-lines($line) {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -252,7 +280,7 @@
 //-----------------------------------------------------
 // 水平渐变，从右往左
 // @include gradient-horizontal-right(#333, #ccc);
-@mixin gradient-horizontal-right($gradient...){
+@mixin gradient-horizontal-right($gradient...) {
   background-image: -webkit-linear-gradient(right, $gradient); // Safari 5.1+, Chrome 10+
   background-image: -o-linear-gradient(right, $gradient); // Opera 11.10
   background-image: linear-gradient(to left, $gradient); // Standard, IE10
@@ -266,3 +294,30 @@
 //  }
 
 // }
+html {
+  font-size: 24px !important;
+}
+
+@media only screen and (min-width: 320px) {
+  html {
+    font-size: 10px !important;
+  }
+}
+
+@media only screen and (min-width: 375px) {
+  html {
+    font-size: 20px !important;
+  }
+}
+
+@media only screen and (min-width: 414px) {
+  html {
+    font-size: 24px !important;
+  }
+}
+
+@media only screen and (min-width: 569px) {
+  html {
+    font-size: 24px !important;
+  }
+}

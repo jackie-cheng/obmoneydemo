@@ -3,10 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
-Vue.config.productionTip = false
-import { appInitInject, } from './utils/common'
-appInitInject()
+import axios from 'axios'
+// 将axios挂载到vue对象的原型下边以实现全局通用
+Vue.prototype.axios = axios
+// Vue.config.productionTip = false
+// import { appInitInject, } from './utils/common'
+// appInitInject()
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

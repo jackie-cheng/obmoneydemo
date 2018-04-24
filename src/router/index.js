@@ -6,6 +6,7 @@ import home from '../pages/Home.vue'
 Vue.use(Router)
 
 export default new Router({
+  linkActiveClass:'is-active',
   routes: [
     {
       path: '/',
@@ -26,6 +27,18 @@ export default new Router({
       path:'/discount',
       component:resolve=>{
         require(['../pages/Discount.vue'],resolve)
+      }
+    },
+    {
+      path:'/login',
+      component:resolve=>{
+        require(['../pages/login.vue'],resolve)
+      }
+    },
+    {
+      path:'/register',
+      component:resolve=>{
+        require(['../pages/register.vue'],resolve)
       }
     },
     {
