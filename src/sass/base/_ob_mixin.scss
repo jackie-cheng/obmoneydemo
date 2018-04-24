@@ -40,14 +40,6 @@
 }
 
 
-/**
-    @Name: Eex 1.0 button mixin
-    @Overview: button mixin
-    @Require: @mixin %
-    @Author: zyl
-    @time:2016/5/18/
-**/
-
 @mixin containerWidth($containerWidth,$value: auto){
    max-width:$containerWidth;
    margin:$value;
