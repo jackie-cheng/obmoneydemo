@@ -1,0 +1,186 @@
+@charset "UTF-8";
+// 学科列表化学符号
+.chemistry_icon{
+	background-color:$chemistry_color;
+	&:before{
+		content:"\e643";
+	}
+}
+.physics_icon{
+	background-color:$physic_color;
+	&:before{
+		content:"\e6e7";
+	}
+}
+.biology_icon{
+	background-color:$biology_color;
+	&:before{
+		content:"\e648";
+	}
+}
+.geogra_icon{
+	background-color:$geogra_color;
+	&:before{
+		content:"\e600";
+	}
+}
+.english_icon{
+	background-color:$english_color;
+	&:before{
+		content:"\e68d";
+	}
+}
+.chinese_icon{
+	background-color:$chinese_color;
+	&:before{
+		content:"\e728";
+	}
+}
+.math_icon{
+	background-color:$math_color;
+	&:before{
+		content:"\e603";
+	}
+}
+.political_icon{
+	background-color:$political_color;
+	&:before{
+		content:"\e632";
+	}
+}
+.history_icon{
+  background-color:$history_color;
+  &:before{
+    content:"\e635";
+  }
+}
+.music_icon{
+  background-color:#05d6db;
+  &:before{
+    content:"\e683";
+  }
+}
+.unknown_icon{
+  background-color:#fc7f3a;
+  &:before{
+    content:"\e637";
+  }
+}
+//对错
+.wrong_icon{
+  &:before{
+    content:'\e63d';
+    color: $bad_color;
+  }
+}
+.right_icon{
+  &:before{
+    content:'\e623';
+    color: $color_base;
+  }
+}
+.half_right_icon{
+  &:before{
+    content:'\e752';
+    color:$jige_color;
+  }
+}
+
+//向上箭头
+.arrow_up{
+	@extend %absolute;
+	top:-0.133rem;
+	&:after{
+		content:"\e610";
+		@extend %fontSize30;
+	}
+}
+
+.arrow_down{
+  @extend %absolute;
+  top:-0.133rem;
+  &:after{
+    content:"\e6d4";
+    @extend %fontSize30;
+  }
+}
+//分段统计图标
+.grade_stati_icon{
+	color:$color_base;
+	&:before{
+		content:"\e602";
+    @extend %fontSize24;
+	}
+}
+
+//知识点占比
+.knowledge_proportion_icon{
+  color:$color_base;
+  &:before{
+    content:"\e608";
+    @extend %fontSize28;
+  }
+}
+//知识点详情
+.knowledge_detail_icon{
+  color:$color_base;
+  &:before{
+    content:"\e6ae";
+    @extend %fontSize28;
+  }
+}
+//消息
+.message_iconfont{
+  margin-left:0.667rem;
+  @extend %vam;
+  font-size:0.48rem;
+  &:before{
+    margin-right:0.133rem;
+    content:"\e854";
+
+  }
+}
+//评论图标
+.comment_icon{
+	margin-right:0.24rem;
+	@extend %vam;
+	&:before{
+		content:"\e6b4";
+		font-size:0.52rem;
+		color:$title_color;
+	}
+}
+//闭眼睛
+.blan_view{
+	&:before{
+		content:"\e644";
+		color:$bad_color;
+    font-size:0.48rem;
+	}
+}
+//向下展开详情
+.comment_down_icon{
+    &:after{
+    	content:"\e60e";
+    }
+}
+//向上展开详情
+.comment_up_icon{
+    &:after{
+    	content:"\e615";
+    }
+}
+
+//向上收起
+.fold_icon{
+  &:before{
+    content:'\e668';
+  }
+}
+
+//向下展开
+.unfold_icon{
+  &:before{
+    content:'\e855';
+  }
+}
