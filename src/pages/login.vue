@@ -23,6 +23,7 @@
     <router-link  tag="van-button" to="/register"  type="primary"  size="large">
       免费注册
     </router-link>
+
     <!--<van-button type="primary"  size="large">免费注册</van-button>-->
     <tabbar :activeNum="4"></tabbar>
   </div>
@@ -53,7 +54,7 @@ const vm = this
           username:vm.username,
           password:vm.password,
         }
-        vm.axios.post(`http://47.92.129.86:80/api/LoginController/login.do`,params)
+        vm.$axios.post(`/api/LoginController/login.do`,params)
           .then(response => {
               console.log(response)
           if (response.status == 200) {
