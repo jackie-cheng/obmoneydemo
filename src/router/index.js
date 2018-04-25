@@ -53,5 +53,11 @@ export default new Router({
         require(['../pages/CustomerSerVice.vue'],resolve)
       }
     },
+    {
+      path:'/notice',
+      component:resolve=>{
+        require(['../pages/notice/pageIndex.vue'],resolve)
+      }
+    },
   ]
 })

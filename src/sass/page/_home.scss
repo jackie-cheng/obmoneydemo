@@ -9,6 +9,7 @@
   top: 44px;
   right: 5px;
   width: 25%;
+  z-index: 2;
   .van-cell {
     background-color: #000;
     color: #fff;
@@ -23,9 +24,78 @@
     }
   }
 }
-.ob_index_imgs{
-  border:1px solid $border_color;
-  .van-swipe-item{
-    height:140px;
+
+.ob_index_imgs {
+  border: 1px solid $border_color;
+  .van-swipe-item {
+    height: 3.4rem;
+  }
+}
+
+//首页中间app
+.ob_home_apps {
+  padding: 0.5rem;
+  @extend %textAlign;
+  border-bottom: 0.3rem solid #efeff4;
+  ul {
+    li {
+      @extend %display;
+      .ob_home_app {
+        width: 1.45rem;
+        @include height(true, 1.45rem, 1.45rem);
+        border-radius: 8px;
+        @extend %textAlign;
+        &.app_download {
+          background: linear-gradient(#affab4, #42b149);
+        }
+        &.app_arrive {
+          background: linear-gradient(#2e63af, #52c0e3);
+        }
+        &.app_pride {
+          background: linear-gradient(#57a2da, #3a82b8);
+        }
+        &.app_addpeople {
+          background: linear-gradient(#678acf, #2b457e);
+        }
+      }
+      span {
+        @extend %fontSize12;
+      }
+
+    }
+    li + li {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+//房间列表
+//.ob_home_lists {
+//  margin-bottom:;
+//}
+
+.sd_home_room_pic {
+  @extend %float;
+  width: 1.45rem;
+  @include height(true, 1.45rem, 1.45rem);
+  background-color: $jige_color;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+//底部
+.ob_footer {
+  margin-bottom: 1.2rem;
+  ul {
+    padding: 0.8rem;
+    @extend %textAlign;
+    li {
+      @extend %display;
+      @extend %fontSize16;
+      color: #666;
+    }
+    li + li {
+      margin-left: 0.8rem;
+    }
   }
 }

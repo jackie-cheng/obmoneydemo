@@ -26,10 +26,62 @@
     </section>
     <!--消息提示-->
     <van-cell-group>
-      <van-cell title="欢迎来到帝魂国际">
+      <van-cell title="欢迎来到帝魂国际!" is-link>
         <em class="iconfont notice_icon" slot="icon"></em>
       </van-cell>
     </van-cell-group>
+    <!--App -->
+    <section class="ob_home_apps">
+      <ul>
+        <li>
+          <div class="ob_home_app app_download">
+            <em class="iconfont download_icon"></em>
+          </div>
+          <span>App下载</span>
+
+        </li>
+        <li>
+          <div class="ob_home_app app_arrive">
+            <em class="iconfont arrive_icon"></em>
+          </div>
+          <span>签到有奖</span>
+        </li>
+        <li>
+          <div class="ob_home_app app_pride">
+            <em class="iconfont pride_icon"></em>
+          </div>
+          <span>积分摇奖</span>
+        </li>
+        <li>
+          <div class="ob_home_app app_addpeople">
+            <em class="iconfont addpeople_icon"></em>
+          </div>
+          <span>邀请好友</span>
+        </li>
+
+
+      </ul>
+
+    </section>
+    <!--房间list-->
+    <section class="ob_home_lists">
+      <van-cell-group v-for="n in 4" :key="n">
+        <van-cell :title="'北京'+n" value="进入房间" label="最低30元起，大双小单4.6倍，大胆期限红100万">
+          <div class="sd_home_room_pic" slot="icon"></div>
+        </van-cell>
+      </van-cell-group>
+
+    </section>
+    <!--关于我们-->
+    <section class="ob_footer">
+      <ul>
+        <li>关于我们</li>
+        <li>免责声明</li>
+        <li>技术支持</li>
+      </ul>
+
+    </section>
+
 
     <tabbar :activeNum="0"></tabbar>
   </div>
