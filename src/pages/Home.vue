@@ -27,7 +27,7 @@
     <!--消息提示-->
     <van-cell-group>
       <van-cell title="欢迎来到帝魂国际">
-        <em class="iconfont " slot="icon"></em>
+        <em class="iconfont notice_icon" slot="icon"></em>
       </van-cell>
     </van-cell-group>
 
