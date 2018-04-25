@@ -1,9 +1,43 @@
 @charset "UTF-8";
-// 学科列表化学符号
+//提示
 .notice_icon {
   color: $jige_color;
-  @extend %fontSize24;
+  @extend %fontSize18;
+  @extend %vam;
+  margin-right:4px;
   &:before {
     content: "\e667";
+  }
+}
+//下载
+.download_icon {
+  color: #fff;
+  font-size:1rem;
+  &:before {
+    content: "\e645";
+  }
+}
+//签到
+.arrive_icon {
+  color: #fff;
+  font-size:1rem;
+  &:before {
+    content: "\e641";
+  }
+}
+//摇奖
+.pride_icon {
+  color: #fff;
+  font-size:1rem;
+  &:before {
+    content: "\e6a7";
+  }
+}
+//加人
+.addpeople_icon {
+  color: #fff;
+  font-size:1rem;
+  &:before {
+    content: "\e614";
   }
 }
