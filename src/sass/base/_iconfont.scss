@@ -1,8 +1,9 @@
 @charset "UTF-8";
 // 学科列表化学符号
-.notice_icon{
-	background-color:$chemistry_color;
-	&:before{
-		content:"\e643";
-	}
+.notice_icon {
+  color: $jige_color;
+  @extend %fontSize24;
+  &:before {
+    content: "\e667";
+  }
 }
