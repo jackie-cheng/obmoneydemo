@@ -53,22 +53,7 @@
 
       goRegister(){
         const vm = this
-//        let params={
-//          username:vm.username,
-//          password:vm.pass,
-//        }
-//        vm.$axios.post(`/api/LoginController/login.do`,params)
-//          .then(response => {
-//            console.log(response)
-//            if (response.status == 200) {
-//
-//            } else {
-//              vm.$toast('获取验证码失败');
-//            }
-//          }).catch(response => {
-//
-//
-//        })
+
                 vm.$axios({
           url: '/api/LoginController/login.do',
           method: 'get',
