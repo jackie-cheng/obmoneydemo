@@ -1,73 +1,121 @@
 <template>
   <div class="mr-root">
-    <Header></Header>
+    <van-nav-bar
+      title="登录"
+      left-text="返回"
+      left-arrow
+      @click-left="onClickLeft"
+
+    />
     <van-cell-group>
-      <van-field
-        v-model="username"
-        label="用户名"
-        required
-        placeholder="输入数字、字母，2-20个字符"
-        error
-      />
-
-      <van-field
-        v-model="password"
-        type="password"
-        label="密码"
-        placeholder="密码长度为6-20个字符"
-        required
-      />
-
+      <van-field v-model="username" placeholder="请输入用户名" />
+      <van-field v-model="pass" placeholder="请输入密码" />
     </van-cell-group>
-    <van-button type="primary"  size="large" @click="userLogin()">马上登录</van-button>
-    <router-link  tag="van-button" to="/register"  type="primary"  size="large">
-      免费注册
-    </router-link>
+    <van-button type="primary" @click="goRegister()">登录</van-button>
 
-    <!--<van-button type="primary"  size="large">免费注册</van-button>-->
-    <tabbar :activeNum="4"></tabbar>
+
+    <router-link tag="a" to="/register">
+快速注册
+    </router-link>
+    <router-link tag="a" to="/register">
+忘记密码？
+    </router-link>
   </div>
 </template>
 
 <script>
-  import tabbar from '../components/tabbar'
+
   import Header from '../components/Header'
   export default {
+
     name: 'login',
     data(){
+
+
       return {
-        password:null,
-        username:null,
+          username:'',
+          pass: '',
       }
     },
+    computed:{
 
+    },
     components:{
-      Header, tabbar
+      Header
     },
     created(){
-
+      const vm = this
     },
     methods:{
-      userLogin(){
-const vm = this
-        let params={
-          username:vm.username,
-          password:vm.password,
-        }
-        vm.$axios.post(`/api/LoginController/login.do`,params)
-          .then(response => {
-              console.log(response)
-          if (response.status == 200) {
+      onClickLeft() {
+        this.$router.go(-1)
+      },
 
-          } else {
-
+      goRegister(){
+        const vm = this
+//        let params={
+//          username:vm.username,
+//          password:vm.pass,
+//        }
+//        vm.$axios.post(`/api/LoginController/login.do`,params)
+//          .then(response => {
+//            console.log(response)
+//            if (response.status == 200) {
+//
+//            } else {
+//              vm.$toast('获取验证码失败');
+//            }
+//          }).catch(response => {
+//
+//
+//        })
+                vm.$axios({
+          url: '/api/LoginController/login.do',
+          method: 'get',
+          data: {
+            phone:159375,
+            photoCode:1234
+          },
+          transformRequest: [function (data) {
+            // Do whatever you want to transform the data
+            let ret = ''
+            for (let it in data) {
+              ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+            }
+            return ret
+          }],
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
           }
-        }).catch(response => {
-
-
         })
-      }
+      },
+
+      submitForm() {
+
+      },
+
     }
   }
 </script>
 
+<style>
+  .demo-ruleForm{
+    margin-top:0.6rem;
+  }
+  .demo-ruleForm .el-form-item__content{
+    width: 70%;
+    margin: 0 auto;
+  }
+  .twoInput .el-input-group__append {
+    border: none;
+    padding: 0;
+  }
+  .threeInput .el-input-group__append {
+    border: none;
+    background-color: transparent;
+    padding: 0 0rem 0 0.8rem;
+  }
+  .twoInput .el-input-group__append img{
+
+  }
+</style>

@@ -7,55 +7,7 @@
       left-arrow
       @click-left="onClickLeft"
       @click-right="onClickRight"
-      style="background-color: red;color: white"
     />
-    <!--<van-cell-group>-->
-      <!--<van-field-->
-        <!--v-model="phone"-->
-        <!--type="tel"-->
-        <!--placeholder="请输入您的手机号"-->
-        <!--icon="clear"-->
-        <!--@click-icon="phone = ''"-->
-      <!--/>-->
-      <!--<van-field-->
-        <!--center-->
-        <!--v-model="photoCode"-->
-        <!--placeholder="请输入图片验证码"-->
-      <!--&gt;-->
-        <!--&lt;!&ndash;<img src="http://47.92.129.86:80/api/Registercontroller/photoCode.do" alt="Smiley face" width="42" height="42">&ndash;&gt;-->
-        <!--<img src="http://47.92.129.86:80/api/Registercontroller/photoCode.do"  slot="button" size="small">-->
-      <!--</van-field>-->
-      <!--<van-field-->
-        <!--center-->
-        <!--v-model="mobileCode"-->
-        <!--placeholder="请输入短信验证码"-->
-        <!--icon="clear"-->
-        <!--@click-icon="mobileCode = ''"-->
-      <!--&gt;-->
-        <!--<van-button slot="button" size="small" type="primary" @click="obMobileCode">发送验证码</van-button>-->
-      <!--</van-field>-->
-
-
-      <!--<van-field-->
-        <!--v-model="password"-->
-        <!--type="password"-->
-        <!--placeholder="请输入您的登录密码"-->
-      <!--/>-->
-      <!--<van-field-->
-        <!--v-model="qqNum"-->
-        <!--type="number"-->
-        <!--icon="clear"-->
-        <!--placeholder="请输入您的QQ号"-->
-        <!--@click-icon="qqNum = ''"-->
-      <!--/>-->
-      <!--<van-field-->
-        <!--v-model="tuijianMan"-->
-        <!--icon="clear"-->
-        <!--placeholder="请输入您的介绍人（没有可不填）"-->
-        <!--@click-icon="tuijianMan = ''"-->
-      <!--/>-->
-    <!--</van-cell-group>-->
-    <!--<van-button type="primary"  size="large" @click="goRegister">马上注册</van-button>-->
     <el-form :model="ruleForm2" label-position="top" :rules="rules2"
              ref="ruleForm2"
              class="demo-ruleForm">
@@ -88,8 +40,8 @@
       <el-form-item  prop="recomMan">
         <el-input type="password" v-model="ruleForm2.recomMan" auto-complete="off" placeholder="请输入您的介绍人（没有可不填）"></el-input>
       </el-form-item>
-<div style="width: 100%">
-  <el-button type="primary" @click="submitForm('ruleForm2')" style="width: 50%;margin-left: 25%">立即注册</el-button>
+<div style="width: 100%;text-align: center;">
+  <el-button type="primary" @click="submitForm('ruleForm2')" style="width: 70%; max-width: 8rem;">立即注册</el-button>
 
 </div>
 
@@ -190,7 +142,8 @@ const vm = this
     },
     methods:{
       onClickLeft() {
-        this.$toast('提示文案')
+        const vm = this
+        vm.$router.go(-1)
       },
       onClickRight() {
         const vm = this
@@ -211,7 +164,7 @@ const vm = this
           mobileCode:vm.mobileCode,
           phone:vm.phone
         }
-        vm.$axios.post(`/api/Registercontroller/registUser.do`,params)
+        vm.$axios.get(`/api/Registercontroller/registUser.do`,{params})
           .then(response => {
             console.log(response)
             if (response.status == 200) {
@@ -244,7 +197,7 @@ const vm = this
           vm.$toast('请填写图片验证码')
           return
         }
-        let param = new FormData(); //创建form对象
+        let param = new URLSearchParams(); //创建form对象
         param.append('phone', vm.ruleForm2.phone);//通过append向form对象添加数据
         param.append('photoCode', vm.ruleForm2.photoCode);//添加form表单中其他数据
 
@@ -252,7 +205,7 @@ const vm = this
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };  //添加请求头
 //        vm.$axios.post('core/upload', param, config)
-        vm.$axios.post(`/api/Registercontroller/sendMsg.do`, param,config)
+        vm.$axios.post(`/api/Registercontroller/sendMsg.do`, params)
           .then(response => {
             console.log(response)
             if (response.status == 200) {
@@ -336,6 +289,7 @@ const vm = this
 }
 .demo-ruleForm .el-form-item__content{
   width: 70%;
+  max-width: 8rem;
   margin: 0 auto;
 }
   .twoInput .el-input-group__append {
