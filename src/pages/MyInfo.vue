@@ -1,48 +1,16 @@
 <template>
   <div class="mr-root">
-    <Header></Header>
-    <van-cell-group>
-      <van-field
-        v-model="username"
-        label="用户名"
-        required
-        placeholder="输入数字、字母，2-20个字符"
-        error
-      />
-      <van-field
-        v-model="phone"
-        label="手机号"
-        required
-        placeholder="请输入11位手机号"
-        error-message="手机号格式错误"
-      />
-      <van-field
-        v-model="username"
-        label="姓名"
-        icon="clear"
-        placeholder="请输入中文名"
-        required
-        @click-icon="username = ''"
-      />
+    <van-nav-bar
+      title="我的"
+      right-text="设置"
 
-      <van-field
-        v-model="password"
-        type="password"
-        label="密码"
-        placeholder="密码长度为6-20个字符"
-        required
-      />
 
-      <van-field
-        v-model="password"
-        type="repassword"
-        label="密码确认"
-        placeholder="密码长度为6-20个字符"
-        required
-      />
-    </van-cell-group>
-    <van-button type="primary"  size="large">马上注册</van-button>
-    <van-button type="primary"  size="large" >立即登录</van-button>
+      @click-right="onClickRight"
+
+    />
+
+    <router-link to="/login">还没登录，去登录</router-link>
+<!--<p>还没登录，去登录</p>-->
     <tabbar :activeNum="4"></tabbar>
   </div>
 </template>
@@ -69,7 +37,9 @@
 
     },
     methods:{
+      onClickRight(){
 
+      }
     }
   }
 </script>

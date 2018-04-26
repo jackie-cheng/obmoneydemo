@@ -1,73 +1,128 @@
 <template>
   <div class="mr-root">
-    <Header></Header>
-    <van-cell-group>
-      <van-field
+    <van-nav-bar
+      title="登录"
+      left-text="返回"
+      left-arrow
+      @click-left="onClickLeft"
+
+    />
+    <div class="login-content">
+      <div class="userPhoto">
+        <img src="../assets/logo.png" alt="">
+      </div>
+      <el-input
+        placeholder="请输入用户名"
         v-model="username"
-        label="用户名"
-        required
-        placeholder="输入数字、字母，2-20个字符"
-        error
-      />
-
-      <van-field
-        v-model="password"
+        clearable>
+      </el-input>
+      <el-input
+        placeholder="请输入密码"
         type="password"
-        label="密码"
-        placeholder="密码长度为6-20个字符"
-        required
-      />
+        v-model="pass"
+        clearable>
+      </el-input>
+      <van-button type="danger" @click="goLogin()">登录</van-button>
 
-    </van-cell-group>
-    <van-button type="primary"  size="large" @click="userLogin()">马上登录</van-button>
-    <router-link  tag="van-button" to="/register"  type="primary"  size="large">
-      免费注册
-    </router-link>
+      <p> <router-link tag="a" to="/register">
+        快速注册
+      </router-link>
+        <router-link tag="a" to="/register">
+          忘记密码？
+        </router-link></p>
+    </div>
 
-    <!--<van-button type="primary"  size="large">免费注册</van-button>-->
-    <tabbar :activeNum="4"></tabbar>
+
   </div>
 </template>
 
 <script>
-  import tabbar from '../components/tabbar'
-  import Header from '../components/Header'
+
+
   export default {
+
     name: 'login',
     data(){
       return {
-        password:null,
-        username:null,
+          username:'',
+          pass: '',
       }
     },
+    computed:{
 
+    },
     components:{
-      Header, tabbar
+
     },
     created(){
-
+      const vm = this
     },
     methods:{
-      userLogin(){
-const vm = this
-        let params={
-          username:vm.username,
-          password:vm.password,
+      onClickLeft() {
+        this.$router.go(-1)
+      },
+
+//      登录
+      goLogin(){
+        const vm = this
+        if (vm.$_.isEmpty(vm.username)) {
+          vm.$toast('用户名不能为空');
+          return
+        } else if (vm.$_.isEmpty(vm.pass)) {
+          vm.$toast('请输入密码')
+          return
         }
-        vm.$axios.post(`/api/LoginController/login.do`,params)
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 10000,       // 持续展示 toast
+          message: '登录中...'
+        });
+        let param = new URLSearchParams(); //创建form对象
+        param.append('username', vm.username);//通过append向form对象添加数据
+        param.append('password', vm.pass);//添加form表单中其他数据
+
+        vm.$axios.post(`/api/LoginController/login.do`, param)
           .then(response => {
-              console.log(response)
-          if (response.status == 200) {
+            toast1.clear();
+            if (response.status == 200) {
+              if (response.data.status != 'fail') {
 
-          } else {
+                console.log('成功')
+              } else {
+                vm.$toast(response.data.message);
+              }
 
-          }
-        }).catch(response => {
-
+            } else {
+              vm.$toast('获取验证码失败');
+            }
+          }).catch(response => {
 
         })
-      }
+      },
+
+
     }
   }
 </script>
 
+<style>
+  .demo-ruleForm{
+    margin-top:0.6rem;
+  }
+  .demo-ruleForm .el-form-item__content{
+    width: 70%;
+    margin: 0 auto;
+  }
+  .twoInput .el-input-group__append {
+    border: none;
+    padding: 0;
+  }
+  .threeInput .el-input-group__append {
+    border: none;
+    background-color: transparent;
+    padding: 0 0rem 0 0.8rem;
+  }
+  .twoInput .el-input-group__append img{
+
+  }
+</style>
