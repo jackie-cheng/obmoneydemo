@@ -32,19 +32,25 @@ export default new Router({
     {
       path:'/login',
       component:resolve=>{
-        require(['../pages/login.vue'],resolve)
+        require(['../pages/user/login.vue'],resolve)
       }
     },
     {
       path:'/register',
       component:resolve=>{
-        require(['../pages/register.vue'],resolve)
+        require(['../pages/user/register.vue'],resolve)
       }
     },
     {
       path:'/user',
       component:resolve=>{
-        require(['../pages/MyInfo.vue'],resolve)
+        require(['../pages/user/MyInfo.vue'],resolve)
+      }
+    },
+    {
+      path:'/forgetPass',
+      component:resolve=>{
+        require(['../pages/user/forgetPass.vue'],resolve)
       }
     },
     {
@@ -59,5 +65,6 @@ export default new Router({
         require(['../pages/notice/pageIndex.vue'],resolve)
       }
     },
+
   ]
 })

@@ -9,7 +9,7 @@
     />
     <div class="login-content">
       <div class="userPhoto">
-        <img src="../assets/logo.png" alt="">
+        <img src="../../assets/logo.png" alt="">
       </div>
       <el-input
         placeholder="请输入用户名"
@@ -27,7 +27,7 @@
       <p> <router-link tag="a" to="/register">
         快速注册
       </router-link>
-        <router-link tag="a" to="/register">
+        <router-link tag="a" to="/forgetPass">
           忘记密码？
         </router-link></p>
     </div>
@@ -106,23 +106,5 @@
 </script>
 
 <style>
-  .demo-ruleForm{
-    margin-top:0.6rem;
-  }
-  .demo-ruleForm .el-form-item__content{
-    width: 70%;
-    margin: 0 auto;
-  }
-  .twoInput .el-input-group__append {
-    border: none;
-    padding: 0;
-  }
-  .threeInput .el-input-group__append {
-    border: none;
-    background-color: transparent;
-    padding: 0 0rem 0 0.8rem;
-  }
-  .twoInput .el-input-group__append img{
 
-  }
 </style>
