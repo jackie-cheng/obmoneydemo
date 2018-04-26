@@ -10,7 +10,7 @@
       <van-cell-group>
         <van-field v-model="phoneNum" placeholder="请输入您的手机号"  type="number"  icon="clear"
                    @click-icon="phoneNum = ''" />
-        <van-field
+        <van-field class="forgetTwoInput"
           center
           v-model="photoCode"
           placeholder="请输入图片验证码"
@@ -146,42 +146,10 @@
         })
 
       },
-//      获取验证码
+      //下一步
       goLogin(){
         const vm = this
-        if (vm.$_.isEmpty(vm.username)) {
-          vm.$toast('用户名不能为空');
-          return
-        } else if (vm.$_.isEmpty(vm.pass)) {
-          vm.$toast('请输入密码')
-          return
-        }
-        const toast1 = vm.$toast.loading({
-          mask: true,
-          duration: 10000,       // 持续展示 toast
-          message: '登录中...'
-        });
-        let param = new URLSearchParams(); //创建form对象
-        param.append('username', vm.username);//通过append向form对象添加数据
-        param.append('password', vm.pass);//添加form表单中其他数据
-
-        vm.$axios.post(`/api/LoginController/login.do`, param)
-          .then(response => {
-            toast1.clear();
-            if (response.status == 200) {
-              if (response.data.status != 'fail') {
-
-                console.log('成功')
-              } else {
-                vm.$toast(response.data.message);
-              }
-
-            } else {
-              vm.$toast('获取验证码失败');
-            }
-          }).catch(response => {
-
-        })
+       vm.$router.push('/newPassword')
       },
 
 

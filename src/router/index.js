@@ -54,6 +54,12 @@ export default new Router({
       }
     },
     {
+      path:'/newPassword',
+      component:resolve=>{
+        require(['../pages/user/newPassword.vue'],resolve)
+      }
+    },
+    {
       path:'/customerSerVice',
       component:resolve=>{
         require(['../pages/CustomerSerVice.vue'],resolve)

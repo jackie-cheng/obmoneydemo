@@ -11,17 +11,23 @@
       <div class="userPhoto">
         <img src="../../assets/logo.png" alt="">
       </div>
-      <el-input
-        placeholder="请输入用户名"
-        v-model="username"
-        clearable>
-      </el-input>
-      <el-input
-        placeholder="请输入密码"
-        type="password"
-        v-model="pass"
-        clearable>
-      </el-input>
+      <van-cell-group>
+        <van-field v-model="username" placeholder="请输入用户名"   icon="clear"
+                   @click-icon="username = ''" />
+        <van-field v-model="pass" placeholder="请输入密码"  type="password" />
+
+      </van-cell-group>
+      <!--<el-input-->
+        <!--placeholder="请输入用户名"-->
+        <!--v-model="username"-->
+        <!--clearable>-->
+      <!--</el-input>-->
+      <!--<el-input-->
+        <!--placeholder="请输入密码"-->
+        <!--type="password"-->
+        <!--v-model="pass"-->
+        <!--clearable>-->
+      <!--</el-input>-->
       <van-button type="danger" @click="goLogin()">登录</van-button>
 
       <p> <router-link tag="a" to="/register">

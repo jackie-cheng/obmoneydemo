@@ -29,8 +29,7 @@
         <el-form-item prop="mobileCode" class="threeInput">
           <el-input v-model.number="ruleForm2.mobileCode" placeholder="请输入您的短信验证码">
             <template slot="append" v-if="!disableBut">
-              <el-button style="background-color: white;border-color: red;color: red;
-          border-top: 1px solid red;border-bottom: 1px solid red" @click="obMobileCode('ruleForm2.phone')">获取验证码
+              <el-button  @click="obMobileCode('ruleForm2.phone')">获取验证码
               </el-button>
             </template>
             <template slot="append" v-if="disableBut">
@@ -319,7 +318,6 @@
   .threeInput .el-input-group__append {
     border: none;
     background-color: transparent;
-    padding: 0 0rem 0 0.8rem;
   }
 
   .twoInput .el-input-group__append img {
