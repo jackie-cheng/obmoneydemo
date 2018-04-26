@@ -65,6 +65,12 @@ export default new Router({
         require(['../pages/notice/pageIndex.vue'],resolve)
       }
     },
+    {
+      path:'/msg_content/:id',
+      component:resolve=>{
+        require(['../pages/notice/MessageContent.vue'],resolve)
+      }
+    },
 
   ]
 })

@@ -1,0 +1,58 @@
+@charset "UTF-8";
+.ob_msg_list {
+  li {
+    @extend %relative;
+    padding: 0.25rem 0.4rem;
+    p {
+      @extend %ovh;
+      .ob_msg_name {
+        @extend %float;
+        @extend %display;
+        @extend %fwb;
+        color: #222;
+        max-width: 70%;
+        @extend %ellipsis;
+        @extend %fontSize18;
+      }
+      .ob_msg_time {
+        float: right;
+      }
+      &.ob_msg_content {
+        margin-top: 0.1rem;
+        @extend %ellipsis;
+      }
+    }
+
+    &:after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      transform: scale(.5);
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+      pointer-events: none;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      border-bottom: 1px solid #e5e5e5;
+
+    }
+  }
+}
+
+//消息详情
+.ob_notice_detail_box {
+  padding: 0.5rem 0.2rem;
+  @extend %fontSize16;
+  .ob_notice_detail {
+    text-indent: 2em;
+  }
+  .ob_notice_detail_note {
+    margin-top: 0.6rem;
+    float: right;
+    text-align: right;
+  }
+
+}

@@ -2,14 +2,24 @@
   <div class="mr-root">
     <!--<Header></Header>-->
     <van-nav-bar title="帝魂国际">
-      <select slot="left" class="ob_header_select">
-        <option value="">线路一</option>
-      </select>
+      <span slot="left" class="ob_header_select" @click="selectRoad()">
+        {{roadSelect}}
+        <van-icon name="arrow"/>
+
+      </span>
+      <!--<select slot="left" class="ob_header_select">-->
+      <!--<option value="">线路一</option>-->
+      <!--</select>-->
       <div slot="right" @click="showDownBox()">
         <van-icon name="contact"/>
         <van-icon name="more-o"/>
       </div>
     </van-nav-bar>
+    <!--选择线路-->
+    <div v-if="showRoad" class="ob_show_road">
+      <van-cell v-for="road in roads" :key="road" :title="road" @click="selectedRoad(road)"/>
+    </div>
+
     <!--顶部下拉菜单-->
     <div class="ob_moreOperate_content" v-if="showDownNav">
       <van-cell v-for="item in list" :key="item" :title="item + ''"/>
@@ -94,6 +104,8 @@
     name: 'home',
     data() {
       return {
+        roadSelect: '线路一',
+        showRoad: false,
         roads: ["线路一", "线路二"],
         list: ["交易记录", "统计记录", "关闭声音", "个人中心", "退出账号"],
         images: [
@@ -111,6 +123,18 @@
 
     },
     methods: {
+      //选择线路
+      selectRoad() {
+        const vm = this
+        vm.showRoad = true
+
+      },
+      selectedRoad(road) {
+        const vm = this
+        vm.roadSelect = road
+        vm.showRoad = false
+//        console.log(road)
+      },
       onChange() {
 
       },
