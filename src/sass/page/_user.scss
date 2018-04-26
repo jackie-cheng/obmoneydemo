@@ -1,2 +1,85 @@
 @charset "UTF-8";
-//
+//登录页样式
+.mr-root .login-content {
+  .el-input {
+    width: 70%;
+    display: block;
+    max-width: 8rem;
+    margin: 0.3rem auto;
+    .el-input__inner {
+      height: 1.1rem;
+    }
+  }
+  .userPhoto {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: 1.2rem auto;
+    img {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+    }
+  }
+  .van-button {
+    width: 70%;
+    display: block;
+    max-width: 8rem;
+    margin: 0.4rem auto;
+  }
+  p {
+    //display: block;
+    width: 70%;
+    max-width: 8rem;
+    margin: 0 auto;
+
+    //margin-right:14px;
+    a:nth-child(1) {
+      float: left;
+      color: #606266;
+    }
+    a:nth-child(2) {
+      float: right;
+      color: #606266;
+    }
+  }
+
+}
+
+//注册页样式
+.mr-root .register {
+  .demo-ruleForm {
+    .el-form-item {
+      width: 70%;
+      max-width: 8rem;
+      margin: 0 auto 0.5rem;
+
+      //line-height: 0.5rem;
+      .el-form-item__content {
+        width: 100%;
+        .el-input .el-input__inner {
+          height: 1rem;
+          max-height: 40px;
+        }
+      }
+    }
+  }
+  .twoInput {
+    .el-input__inner {
+      width: 100%;
+    }
+    img {
+
+    }
+  }
+  .goRegis {
+    width: 100%;
+    text-align: center;
+    .el-button--primary {
+      width: 70%;
+      max-width: 8rem;
+      background-color: #e1171b;
+      border-color: #e1171b;
+    }
+  }
+
+}
