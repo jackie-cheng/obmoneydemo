@@ -29,8 +29,7 @@
         <el-form-item prop="mobileCode" class="threeInput">
           <el-input v-model.number="ruleForm2.mobileCode" placeholder="请输入您的短信验证码">
             <template slot="append" v-if="!disableBut">
-              <el-button style="background-color: white;border-color: red;color: red;
-          border-top: 1px solid red;border-bottom: 1px solid red" @click="obMobileCode('ruleForm2.phone')">获取验证码
+              <el-button  @click="obMobileCode('ruleForm2.phone')">获取验证码
               </el-button>
             </template>
             <template slot="append" v-if="disableBut">
@@ -63,7 +62,7 @@
 
 <script>
 
-  import Header from '../components/Header'
+  import Header from '../../components/Header'
   export default {
 
     name: 'register',
@@ -201,7 +200,12 @@
         let param = new URLSearchParams(); //创建form对象
         param.append('phone', vm.ruleForm2.phone);//通过append向form对象添加数据
         param.append('photoCode', vm.ruleForm2.photoCode);//添加form表单中其他数据
-
+        vm.seconds = 20
+        vm.disableBut = true
+        vm.getTimesec()
+        setTimeout(() => {
+          vm.disableBut = false
+        }, 20000)
         let config = {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };  //添加请求头
@@ -211,23 +215,23 @@
 
             if (response.status == 200) {
               if (response.data.status != 'fail') {
-                vm.seconds = 20
-                vm.disableBut = true
-                vm.getTimesec()
-                setTimeout(() => {
-                  vm.disableBut = false
-                }, 20000)
+
 
                 console.log('成功')
               } else {
+                vm.disableBut = false
+                clearInterval(vm._timer);
                 vm.$toast(response.data.message);
               }
 
             } else {
+              vm.disableBut = false
+              clearInterval(vm._timer);
               vm.$toast('获取验证码失败');
             }
           }).catch(response => {
-
+          vm.disableBut = false
+          clearInterval(vm._timer);
         })
 //        vm.$axios({
 //          url: '/api/Registercontroller/sendMsg.do',
@@ -268,7 +272,7 @@
 //                                console.log(params)
             let paramtwo = new URLSearchParams(); //创建form对象
             paramtwo.append('phone', vm.ruleForm2.phone);//通过append向form对象添加数据
-            paramtwo.append('mobileCode', vm.ruleForm2.mobileCode);//添加form表单中其他数据
+            paramtwo.append('phoneCode', (vm.ruleForm2.mobileCode).toString());//添加form表单中其他数据
             paramtwo.append('username', vm.ruleForm2.username);//添加form表单中其他数据
             paramtwo.append('password', vm.ruleForm2.pass);//添加form表单中其他数据
 
@@ -314,7 +318,6 @@
   .threeInput .el-input-group__append {
     border: none;
     background-color: transparent;
-    padding: 0 0rem 0 0.8rem;
   }
 
   .twoInput .el-input-group__append img {

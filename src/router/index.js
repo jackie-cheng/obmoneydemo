@@ -30,21 +30,33 @@ export default new Router({
       }
     },
     {
-      path: '/login',
-      component: resolve => {
-        require(['../pages/login.vue'], resolve)
+      path:'/login',
+      component:resolve=>{
+        require(['../pages/user/login.vue'],resolve)
       }
     },
     {
-      path: '/register',
-      component: resolve => {
-        require(['../pages/register.vue'], resolve)
+      path:'/register',
+      component:resolve=>{
+        require(['../pages/user/register.vue'],resolve)
       }
     },
     {
-      path: '/user',
-      component: resolve => {
-        require(['../pages/MyInfo.vue'], resolve)
+      path:'/user',
+      component:resolve=>{
+        require(['../pages/user/MyInfo.vue'],resolve)
+      }
+    },
+    {
+      path:'/forgetPass',
+      component:resolve=>{
+        require(['../pages/user/forgetPass.vue'],resolve)
+      }
+    },
+    {
+      path:'/newPassword',
+      component:resolve=>{
+        require(['../pages/user/newPassword.vue'],resolve)
       }
     },
     {
@@ -65,25 +77,25 @@ export default new Router({
         require(['../pages/notice/MessageContent.vue'], resolve)
       }
     },
-    {
-      path: '/my_wallet',
-      component: resolve => {
-        require(['../pages/my_wallet/PageIndex.vue'], resolve)
-      }
-    },
-    {
-      path: '/wallet_record',
-      component: resolve => {
-        require(['../pages/my_wallet/Record.vue'], resolve)
-      }
-    },
-    {
-      path: '/wallet_out',
-      component: resolve => {
-        require(['../pages/my_wallet/MoneyOut.vue'], resolve)
-      }
-    },
+      {
+        path: '/my_wallet',
+        component: resolve => {
+          require(['../pages/my_wallet/PageIndex.vue'], resolve)
+        }
+      },
+      {
+        path: '/wallet_record',
+        component: resolve => {
+          require(['../pages/my_wallet/Record.vue'], resolve)
+        }
+      },
+      {
+        path: '/wallet_out',
+        component: resolve => {
+          require(['../pages/my_wallet/MoneyOut.vue'], resolve)
+        }
+      },
 
 
-  ]
+    ]
 })

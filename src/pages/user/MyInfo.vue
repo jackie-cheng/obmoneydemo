@@ -16,9 +16,7 @@
 </template>
 
 <script>
-  import tabbar from '../components/tabbar'
-
-  import Header from '../components/Header'
+  import tabbar from '../../components/tabbar'
   export default {
     name: 'home',
     data(){
@@ -31,7 +29,7 @@
     },
 
     components:{
-      Header,tabbar
+     tabbar
     },
     created(){
 
