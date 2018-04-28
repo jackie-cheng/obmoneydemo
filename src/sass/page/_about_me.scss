@@ -1,0 +1,56 @@
+@charset "UTF-8";
+.ob_myWallet_container {
+  .van-nav-bar {
+    background-color: #fff;
+    color: #222;
+  }
+}
+
+.ob_myWallet_content {
+  @extend %textAlign;
+  color: #222;
+  .ob_myWallet_num {
+    margin-top: -1.3rem;
+    @extend %fontSize18;
+    .money_num {
+      @extend %fontSize30;
+    }
+
+  }
+  .ob_myWallet_btns {
+    margin: .7rem auto;
+    width: 85%;
+    .van-button {
+      margin-bottom: 0.7rem;
+    }
+    .van-button--default {
+      border: 1px solid $red_color;
+      color: $red_color;
+    }
+  }
+
+}
+
+//充值记录
+.ob_pay_record_table {
+  width: 100%;
+  background-color: #fff;
+  tr {
+    @extend %textAlign;
+    @include height(true, 1.5rem, 1.5rem);
+    @extend %fontSize16;
+    border-bottom: 1px solid #e5e5e5;
+    td{
+      &.pay_money{
+        color: $red_color;
+      }
+    }
+    &:first-child {
+      @include height(true, 1rem, 1rem);
+      @extend %fontSize16;
+      background-color: #c7c6cb;
+      color: #fff;
+
+    }
+  }
+}

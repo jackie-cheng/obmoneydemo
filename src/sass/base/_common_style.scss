@@ -1,6 +1,10 @@
 @charset "UTF-8";
 //header样式
+#app{
+  background-color: #efeff4;
+}
 .mr-root {
+
   .van-nav-bar {
     background-color: $red_color;
     color: #fff;
@@ -8,8 +12,8 @@
       color: #fff;
       font-size: 0.4rem;
     }
-    .van-nav-bar__text{
-      color:#fff;
+    .van-nav-bar__text {
+      color: #fff;
       //font-size: 0.7rem;
     }
   }

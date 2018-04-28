@@ -6,7 +6,7 @@ import home from '../pages/Home.vue'
 Vue.use(Router)
 
 export default new Router({
-  linkActiveClass:'is-active',
+  linkActiveClass: 'is-active',
   routes: [
     {
       path: '/',
@@ -15,55 +15,75 @@ export default new Router({
     },
     {
       path: '*',
-      redirect:"/home",
+      redirect: "/home",
     },
     {
-      path:'/recharge',
-      component:resolve=>{
-        require(['../pages/Recharge.vue'],resolve)
+      path: '/recharge',
+      component: resolve => {
+        require(['../pages/Recharge.vue'], resolve)
       }
     },
     {
-      path:'/discount',
-      component:resolve=>{
-        require(['../pages/Discount.vue'],resolve)
+      path: '/discount',
+      component: resolve => {
+        require(['../pages/Discount.vue'], resolve)
       }
     },
     {
-      path:'/login',
-      component:resolve=>{
-        require(['../pages/login.vue'],resolve)
+      path: '/login',
+      component: resolve => {
+        require(['../pages/login.vue'], resolve)
       }
     },
     {
-      path:'/register',
-      component:resolve=>{
-        require(['../pages/register.vue'],resolve)
+      path: '/register',
+      component: resolve => {
+        require(['../pages/register.vue'], resolve)
       }
     },
     {
-      path:'/user',
-      component:resolve=>{
-        require(['../pages/MyInfo.vue'],resolve)
+      path: '/user',
+      component: resolve => {
+        require(['../pages/MyInfo.vue'], resolve)
       }
     },
     {
-      path:'/customerSerVice',
-      component:resolve=>{
-        require(['../pages/CustomerSerVice.vue'],resolve)
+      path: '/customerSerVice',
+      component: resolve => {
+        require(['../pages/CustomerSerVice.vue'], resolve)
       }
     },
     {
-      path:'/notice',
-      component:resolve=>{
-        require(['../pages/notice/pageIndex.vue'],resolve)
+      path: '/notice',
+      component: resolve => {
+        require(['../pages/notice/pageIndex.vue'], resolve)
       }
     },
     {
-      path:'/msg_content/:id',
-      component:resolve=>{
-        require(['../pages/notice/MessageContent.vue'],resolve)
+      path: '/msg_content/:id',
+      component: resolve => {
+        require(['../pages/notice/MessageContent.vue'], resolve)
       }
     },
+    {
+      path: '/my_wallet',
+      component: resolve => {
+        require(['../pages/my_wallet/PageIndex.vue'], resolve)
+      }
+    },
+    {
+      path: '/wallet_record',
+      component: resolve => {
+        require(['../pages/my_wallet/Record.vue'], resolve)
+      }
+    },
+    {
+      path: '/wallet_out',
+      component: resolve => {
+        require(['../pages/my_wallet/MoneyOut.vue'], resolve)
+      }
+    },
+
+
   ]
 })
