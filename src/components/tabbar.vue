@@ -2,10 +2,10 @@
   <div id="app">
     <van-tabbar v-model="active">
       <van-tabbar-item icon="shop">大厅</van-tabbar-item>
-      <van-tabbar-item icon="chat" dot>充值/提现</van-tabbar-item>
-      <van-tabbar-item icon="records" info="5">优惠</van-tabbar-item>
-      <van-tabbar-item icon="gold-coin" info="20">客服</van-tabbar-item>
-      <van-tabbar-item icon="gold-coin" info="20">我的</van-tabbar-item>
+      <van-tabbar-item icon="chat">充值/提现</van-tabbar-item>
+      <van-tabbar-item icon="records">优惠</van-tabbar-item>
+      <van-tabbar-item icon="gold-coin">客服</van-tabbar-item>
+      <van-tabbar-item icon="gold-coin">我的</van-tabbar-item>
     </van-tabbar>
     <router-view></router-view>
   </div>

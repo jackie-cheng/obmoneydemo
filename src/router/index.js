@@ -20,7 +20,7 @@ export default new Router({
     {
       path:'/recharge',
       component:resolve=>{
-        require(['../pages/Recharge.vue'],resolve)
+        require(['../pages/aboutMoney/Recharge.vue'],resolve)
       }
     },
     {
