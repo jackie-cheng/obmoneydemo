@@ -32,7 +32,7 @@
         if(vm.active==0){
           vm.$router.push('/')
         }else if(vm.active==1){
-          vm.$router.push('/recharge')
+          vm.$router.push('/my_wallet')
         }
         else if(vm.active==2){
           vm.$router.push('/discount')

@@ -15,7 +15,7 @@
         },
         methods: {
           onClickLeft(){
-
+            this.$router.go(-1)
           }
         },
         computed: {},

@@ -3,6 +3,9 @@
 #app{
   background-color: #efeff4;
 }
+.van-tabbar-item--active{
+  color: $red_color;;
+}
 .mr-root {
 
   .van-nav-bar {

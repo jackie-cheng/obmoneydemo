@@ -17,12 +17,7 @@ export default new Router({
       path: '*',
       redirect:"/home",
     },
-    {
-      path:'/recharge',
-      component:resolve=>{
-        require(['../pages/aboutMoney/Recharge.vue'],resolve)
-      }
-    },
+
     {
       path:'/discount',
       component:resolve=>{

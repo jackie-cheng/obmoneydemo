@@ -3,7 +3,8 @@
     <!--header-->
     <van-nav-bar title="我的钱包" left-arrow @click-left="onClickLeft"/>
     <section class="ob_myWallet_container">
-      <van-nav-bar title="充值/提现记录"/>
+      <router-link to="/wallet_record">  <van-nav-bar title="充值/提现记录"/></router-link>
+
       <div class="ob_myWallet_content">
         <i class="iconfont wallet_icon"></i>
         <div class="ob_myWallet_num">
@@ -12,7 +13,8 @@
         </div>
         <div class="ob_myWallet_btns">
           <van-button size="large" type="danger">充值</van-button>
-          <van-button size="large">提现</van-button>
+          <router-link to="/wallet_out"><van-button size="large">提现</van-button></router-link>
+
         </div>
       </div>
 
@@ -28,11 +30,13 @@
     data() {
       return {}
     },
-    methods: {},
-    computed: {
+    methods: {
       onClickLeft() {
-
+        this.$router.go(-1)
       }
+    },
+    computed: {
+
     },
     created() {
       const vm = this
