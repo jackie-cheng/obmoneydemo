@@ -41,3 +41,11 @@
     content: "\e614";
   }
 }
+//钱袋图标
+.wallet_icon{
+  color: $red_color;
+  font-size:6rem;
+  &:before{
+    content:"\e603";
+  }
+}

@@ -1,0 +1,37 @@
+@charset "UTF-8";
+.ob_cus_serCon {
+  padding-top: 3rem;
+  ul {
+    @extend %textAlign;
+    li {
+      @extend %display;
+      width: 3rem;
+      @include height(true, 3rem, 3rem);
+      border-radius: 100%;
+      background-color: #fff;
+      span {
+        @extend %display;
+        width: 2.4rem;
+        @include height(true, 2.4rem, 3rem);
+        @extend %vam;
+        &.serveice_icon {
+          background: url("../assets/service.png") no-repeat center;
+          background-size: contain;
+        }
+        &.qq_icon {
+          background: url("../assets/qq.png") no-repeat center;
+          background-size: contain;
+        }
+
+      }
+      p {
+        line-height:1rem;
+        @extend %fontSize18;
+      }
+    }
+    li + li {
+      margin-left: 1.5rem;
+    }
+
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="mr-root">
-    <!--顶部-->
+    <!--header-->
     <van-nav-bar title="消息公告" left-arrow @click-left="onClickLeft"/>
     <!--tab标签-->
     <van-tabs v-model="tabActive" swipeable>
