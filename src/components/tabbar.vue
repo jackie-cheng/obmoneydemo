@@ -7,7 +7,7 @@
       <van-tabbar-item icon="gold-coin">客服</van-tabbar-item>
       <van-tabbar-item icon="gold-coin">我的</van-tabbar-item>
     </van-tabbar>
-    <router-view></router-view>
+    <!--<router-view></router-view>-->
   </div>
 </template>
 

@@ -22,7 +22,11 @@
 
     <!--顶部下拉菜单-->
     <div class="ob_moreOperate_content" v-if="showDownNav">
-      <van-cell v-for="item in list" :key="item" :title="item + ''"/>
+      <van-cell  title="交易记录"/>
+      <van-cell  title="统计记录"/>
+      <van-cell  title="关闭声音"/>
+      <van-cell  title="个人中心" to="/user"/>
+      <van-cell  title="退出账号" @click="outLogin"/>
 
     </div>
     <!--图片部分-->
@@ -75,22 +79,22 @@
     </section>
     <!--房间list-->
     <section class="ob_home_lists">
-      <van-cell-group v-for="n in 4" :key="n">
-        <van-cell :title="'北京'+n" value="进入房间" label="最低30元起，大双小单4.6倍，大胆期限红100万">
+      <van-cell-group v-for="r in roomList" :key="r.no">
+        <van-cell :title="r.name" value="进入房间" label="最低30元起，大双小单4.6倍，大胆期限红100万" :to="'/roomDetail/'+r.no">
           <div class="sd_home_room_pic" slot="icon"></div>
         </van-cell>
       </van-cell-group>
 
     </section>
     <!--关于我们-->
-    <section class="ob_footer">
-      <ul>
-        <li>关于我们</li>
-        <li>免责声明</li>
-        <li>技术支持</li>
-      </ul>
+    <!--<section class="ob_footer">-->
+      <!--<ul>-->
+        <!--<li>关于我们</li>-->
+        <!--<li>免责声明</li>-->
+        <!--<li>技术支持</li>-->
+      <!--</ul>-->
 
-    </section>
+    <!--</section>-->
 
 
     <tabbar :activeNum="0"></tabbar>
@@ -113,6 +117,7 @@
           'https://img.yzcdn.cn/2.jpg'
         ],
         showDownNav: false,
+        roomList:null,
       }
     },
 
@@ -120,9 +125,44 @@
       tabbar
     },
     created() {
+const vm = this
+      const toast1 = vm.$toast.loading({
+        mask: true,
+        duration: 10000,       // 持续展示 toast
+        message: '加载中...'
+      });
+   if(!sessionStorage.getItem('userInfo')){
+     vm.$router.push('/login')
+   }else{
+     vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+     vm.userToken =  vm.userData.accessToken
+     let params = {
+       pageNo:1,
+       pageSize:10,
+       accessToken:vm.userToken
+     }
+     vm.$axios.get(`/api/RoomController/queryRoomList`, {params})
+       .then(response => {
+         toast1.clear();
+         if (response.status == 200&&response.data) {
+             vm.roomList = response.data.rows
+              console.log(response)
+         } else {
+           vm.$toast('获取房间列表失败');
+         }
+       }).catch(response => {
+       toast1.clear();
+     })
 
+   }
     },
     methods: {
+        //退出登录
+      outLogin(){
+          const vm = this
+        sessionStorage.removeItem('userInfo')
+        vm.$router.push('/login')
+      },
       //选择线路
       selectRoad() {
         const vm = this

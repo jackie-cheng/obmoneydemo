@@ -13,7 +13,7 @@
                ref="ruleForm2"
                class="demo-ruleForm">
         <el-form-item prop="username">
-          <el-input v-model="ruleForm2.username" auto-complete="off" placeholder="请输入您的用户名"></el-input>
+          <el-input v-model="ruleForm2.username" auto-complete="off" placeholder="请输入您的昵称"></el-input>
         </el-form-item>
         <el-form-item prop="phone">
           <el-input v-model.number="ruleForm2.phone" auto-complete="off" placeholder="请输入您的手机号"></el-input>
@@ -112,8 +112,14 @@
             {validator: checkAge, trigger: 'blur', required: true,}
           ],
           photoCode: [],
-          qqNum: [],
-          recomMan: [],
+          qqNum: [
+//              { type: 'number', message: 'QQ号码为数字值', required: false},
+//            {min: 6, max: 15, message: '长度在 5 到 18 个字符', trigger: 'blur'}
+          ],
+          recomMan: [
+//            { type: 'number', message: '推荐人id必须为数字值', required: false},
+//            {min: 6, max: 15, message: '长度在 5 到 18 个字符', trigger: 'blur'}
+          ],
           mobileCode: [
             {required: true, message: '请输入短信验证码', trigger: 'blur'},
           ],
@@ -275,12 +281,14 @@
             paramtwo.append('phoneCode', (vm.ruleForm2.mobileCode).toString());//添加form表单中其他数据
             paramtwo.append('username', vm.ruleForm2.username);//添加form表单中其他数据
             paramtwo.append('password', vm.ruleForm2.pass);//添加form表单中其他数据
-
+            paramtwo.append('qq', vm.ruleForm2.qqNum);//添加form表单中其他数据
+            paramtwo.append('introducer', vm.ruleForm2.recomMan);//添加form表单中其他数据
             vm.$axios.post('/api/Registercontroller/registUser.do', paramtwo).then(function (response) {
               if (response.status == 200 && response.data) {
                 toast1.clear();
                 if (response.data.status != 'fail') {
                   vm.$toast.success('注册成功');
+                  vm.$router.push('/login')
                 } else {
                   vm.$toast(response.data.message);
                 }

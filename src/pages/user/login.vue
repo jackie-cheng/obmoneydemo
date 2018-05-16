@@ -2,8 +2,6 @@
   <div class="mr-root">
     <van-nav-bar
       title="登录"
-      left-text="返回"
-      left-arrow
       @click-left="onClickLeft"
 
     />
@@ -92,8 +90,9 @@
             toast1.clear();
             if (response.status == 200) {
               if (response.data.status != 'fail') {
-
-                console.log('成功')
+                sessionStorage.setItem('userInfo',JSON.stringify(response.data))
+//console.log(response.data)
+                vm.$router.push('/')
               } else {
                 vm.$toast(response.data.message);
               }

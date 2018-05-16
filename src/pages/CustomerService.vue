@@ -12,6 +12,7 @@
         <li>
           <span class="qq_icon"></span>
           <p>QQ客服</p>
+
         </li>
       </ul>
     </section>
@@ -27,6 +28,15 @@
     data() {
       return {}
     },
+    methods:{
+        QQaaa(){
+
+            //其中1234567指的是QQ号码
+            window.location.href="mqqwpa://im/chat?chat_type=wpa&uin=771810659&version=1&src_type=web&web_src=oicqzone.com";
+
+        }
+    },
+
     created() {
       const vm = this
     },

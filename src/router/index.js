@@ -17,7 +17,12 @@ export default new Router({
       path: '*',
       redirect:"/home",
     },
-
+    {
+      path:'/roomDetail/:id',
+      component:resolve=>{
+        require(['../pages/room/roomDetail.vue'],resolve)
+      }
+    },
     {
       path:'/discount',
       component:resolve=>{
