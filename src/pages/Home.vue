@@ -87,14 +87,14 @@
 
     </section>
     <!--关于我们-->
-    <!--<section class="ob_footer">-->
-      <!--<ul>-->
-        <!--<li>关于我们</li>-->
-        <!--<li>免责声明</li>-->
-        <!--<li>技术支持</li>-->
-      <!--</ul>-->
+    <section class="ob_footer">
+      <ul>
+        <li>关于我们</li>
+        <li>免责声明</li>
+        <li>技术支持</li>
+      </ul>
 
-    <!--</section>-->
+    </section>
 
 
     <tabbar :activeNum="0"></tabbar>
@@ -126,14 +126,15 @@
     },
     created() {
 const vm = this
-      const toast1 = vm.$toast.loading({
-        mask: true,
-        duration: 10000,       // 持续展示 toast
-        message: '加载中...'
-      });
+
    if(!sessionStorage.getItem('userInfo')){
      vm.$router.push('/login')
    }else{
+     const toast1 = vm.$toast.loading({
+       mask: true,
+       duration: 10000,       // 持续展示 toast
+       message: '加载中...'
+     });
      vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
      vm.userToken =  vm.userData.accessToken
      let params = {

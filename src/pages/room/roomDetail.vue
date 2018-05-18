@@ -1,51 +1,172 @@
 <template>
-    <div class="mr-root">
-      <van-nav-bar
-        title="房间详情"
-        @click-left="onClickLeft"
-
-      />
-      <h1>66666</h1>
+  <div class="mr-root">
+    <van-nav-bar
+      title="房间详情"
+      left-arrow
+      @click-left="onClickLeft"
+    > <van-icon name="add-o" slot="right" />
+    </van-nav-bar>
+    <!--<van-row>-->
+      <!--<van-col span="12">span: 8</van-col>-->
+      <!--<van-col span="12">span: 8</van-col>-->
+    <!--</van-row>-->
+    <div class="room_topData">
+      <!--信息-->
+      <div class="room_topData_up">
+<div class="room_topData_lift"> <span>距<em>333</em>期止</span>
+  <p>01:25</p>
+</div>
+        <div class="room_topData_lift"><span>总余额</span>
+          <p>01:25</p></div>
+      </div>
+      <!--列-->
+      <!--<div class="room_topData_down">-->
+<!--<span>第 <em>4854545</em> 期5+1+3=9（大单）</span>-->
+      <!--</div>-->
+      <van-collapse v-model="activeNames" class="room_topData_down">
+        <van-collapse-item  name="1">
+          <div slot="title"><span>第 <em>4854545</em> 期 <i class="num_color">5</i>
+            +<i class="num_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大单）</span></div>
+          888887887878787877456456
+        </van-collapse-item>
+      </van-collapse>
     </div>
+    <div class="footSet">
+      <van-button >投注</van-button>
+      <van-button >
+        撤单
+      </van-button>
+      <van-cell-group>
+        <van-field v-model="messageValue" placeholder="发送聊天" />
+      </van-cell-group>
+      <!--<form action="/">-->
+        <!--<van-search-->
+          <!--v-model="messageValue"-->
+          <!--placeholder="发送聊天"-->
+          <!--show-action-->
+          <!--@search="sendMess"-->
+        <!--/>-->
+      <!--</form>-->
+      <van-button  class="send_button" @click="sendMess">
+       发送
+      </van-button>
+      <!--<i>-->
+        <!--<span class="right_class">正确</span>-->
+        <!--<span class="wrong_class">错误</span>-->
+        <!--<em class="set_score">给分</em>-->
+      <!--</i>-->
+
+    </div>
+    <!--<form action="/">-->
+      <!--<van-search-->
+        <!--v-model="messageValue"-->
+        <!--placeholder="发送聊天"-->
+        <!--show-action-->
+        <!--@search="sendMess"-->
+      <!--&gt;-->
+        <!--<div slot="action" @click="sendMess">发送</div>-->
+      <!--</van-search>-->
+    <!--</form>-->
+  </div>
 </template>
 <script>
-    export default{
-        name: 'roomDetail',
-        data () {
-            return {
-              roomId:null,
-              userToken:null,
-              roomData:null,
-            }
-        },
-      methods: {
-        onClickLeft() {
-          this.$router.go(-1)
-        },
-      },
-        created () {
-            const vm = this
-          vm.roomId = vm.$route.params.id
-          vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-          vm.userToken =  vm.userData.accessToken
-          let params = {
-            roomnumber:vm.roomId,
-            accessToken:vm.userToken,
-          }
-          vm.$axios.get(`/api/RoomController/queryRoomByRoomNo`, {params})
-            .then(response => {
-              if (response.status == 200&&response.data) {
-                vm.roomData = response.data.rows
-                console.log(response)
-              } else {
-                vm.$toast('获取房间信息失败');
-              }
-            }).catch(response => {
+  import Vue from 'vue'
+  import { Row, Col } from 'vant';
 
-          })
-        },
-        components: {},
-    }
+  Vue.use(Row).use(Col);
+  export default{
+    name: 'roomDetail',
+    data () {
+      return {
+        activeNames: ['2'],
+        roomId: null,
+        userToken: null,
+        roomData: null,
+        websock: null,
+        messageValue: null,//websock要发送的值
+        resData: {}, //websock接收到的值
+
+      }
+    },
+    methods: {
+      sendMess(){
+        const vm = this
+        vm.threadPoxi()
+        console.log(vm.messageValue)
+      },
+      onCancel(){
+        const vm = this
+      },
+      onClickLeft() {
+        this.$router.go(-1)
+      },
+      threadPoxi(){  // 实际调用的方法
+        //参数
+        const vm = this
+        const agentData = vm.messageValue;
+        //若是ws开启状态
+        if (vm.websock.readyState === vm.websock.OPEN) {
+          vm.websocketsend(agentData)
+        }
+        // 若是 正在开启状态，则等待300毫秒
+        else if (vm.websock.readyState === vm.websock.CONNECTING) {
+          setTimeout(function () {
+            vm.websocketsend(agentData)
+          }, 300);
+        }
+        // 若未开启 ，则等待500毫秒
+        else {
+          vm.initWebSocket();
+          setTimeout(function () {
+            vm.websocketsend(agentData)
+          }, 500);
+        }
+      },
+      initWebSocket(){ //初始化weosocket
+        //ws地址
+        const vm = this
+        vm.websock = new WebSocket("ws://47.92.129.86:8080/websocket");
+        console.log(vm.websock)
+        vm.websock.onmessage = vm.websocketonmessage;
+        vm.websock.onclose = vm.websocketclose;
+      },
+      websocketonmessage(e){ //数据接收
+        const vm = this
+        vm.redata = JSON.parse(e.data);
+        console.log(vm.redata);
+      },
+      websocketsend(agentData){//数据发送
+        const vm = this
+        vm.websock.send(agentData);
+      },
+      websocketclose(e){  //关闭
+        console.log("connection closed (" + e.code + ")");
+      }
+    },
+    created () {
+      const vm = this
+      vm.initWebSocket()
+      vm.roomId = vm.$route.params.id
+      vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
+      vm.userToken = vm.userData.accessToken
+      let params = {
+        roomnumber: vm.roomId,
+        accessToken: vm.userToken,
+      }
+      vm.$axios.get(`/api/RoomController/queryRoomByRoomNo`, {params})
+        .then(response => {
+          if (response.status == 200 && response.data) {
+            vm.roomData = response.data.rows
+            console.log(response)
+          } else {
+            vm.$toast('获取房间信息失败');
+          }
+        }).catch(response => {
+
+      })
+    },
+    components: {},
+  }
 </script>
 <style>
 </style>
