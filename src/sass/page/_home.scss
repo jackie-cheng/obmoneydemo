@@ -126,10 +126,11 @@
 }
 //房间顶部
 .room_topData{
-  height: 3.4rem;
-
+  position: fixed;
+  //height: 3.4rem;
+top:46px;
   //padding: 0.2rem 0.4rem;
-  //width: 100%;
+  width: 100%;
   .room_topData_up{
     background-color: white;
     padding: 0.2rem 0.4rem;
@@ -176,6 +177,103 @@
     }
   }
 }
+//房间聊天记录
+.room_wechat{
+  margin-top: 169px;
+  margin-bottom: 1.4rem;
+  .lift_wechat{
+    //height: 1.5rem;
+    width: 100%;
+    margin-bottom: 0.2rem;
+    //line-height: 1.5rem;
+    //background-color: white;
+    a{
+
+    }
+    img{
+      width: 1rem;
+      height: 1rem;
+     vertical-align:top
+    }
+    span{
+      display: inline-block;
+      max-width: 50%;
+      word-wrap:break-word;
+      //width: 50%;
+      //height: 1rem;
+      //line-height: 1rem;
+      padding: 0.2rem 0.2rem;
+      background-color: white;
+      border-radius: 0.2rem;
+      //&:before{
+      //  position: absolute;
+      //  content: "";
+      //  width: 0;
+      //  height: 0;
+      //  left: 30px;
+      //  top: 2px;
+      //  border-bottom: 20px solid transparent;
+      //  border-left: 20px solid #000;
+      //}
+      //&:after{
+      //  position: absolute;
+      //  content: "";
+      //  width: 0;
+      //  height: 0;
+      //  left: 30px;
+      //  top: 3px;
+      //  border-bottom: 15px solid transparent;
+      //  border-left: 15px solid #fff;
+      //}
+    }
+  }
+  .right_wechat{
+    //height: 1.5rem;
+    width: 100%;
+    margin-bottom: 0.2rem;
+    //line-height: 1.5rem;
+    //background-color: white;
+    img{
+      width: 1rem;
+      height: 1rem;
+      float: right;
+      vertical-align:top
+    }
+    span{
+      float: right;
+      display: inline-block;
+      max-width: 50%;
+      word-wrap:break-word;
+      //position: relative;
+      //height: 1rem;
+      //line-height: 1rem;
+      padding: 0.3rem 0.3rem;
+      background-color: white;
+      border-radius: 0.2rem;
+      //&:before{
+      //  position: absolute;
+      //  content: "";
+      //  width: 0;
+      //  height: 0;
+      //  left: 140px;
+      //  top: 2px;
+      //  border-bottom: 20px solid transparent;
+      //  border-left: 20px solid #000;
+      //}
+      //&:after{
+      //  position: absolute;
+      //  content: "";
+      //  width: 0;
+      //  height: 0;
+      //  left: 140px;
+      //  top: 3px;
+      //  border-bottom: 15px solid transparent;
+      //  border-left: 15px solid #fff;
+      //}
+    }
+  }
+}
+
 //房间详情底部
 .footSet{
   position: fixed;

@@ -3,7 +3,7 @@
     <van-nav-bar
       title="房间详情"
       left-arrow
-      @click-left="onClickLeft"
+      @click-left="onClickLeft"  :fixed="true"
     > <van-icon name="add-o" slot="right" />
     </van-nav-bar>
     <!--<van-row>-->
@@ -31,6 +31,42 @@
         </van-collapse-item>
       </van-collapse>
     </div>
+    <!--聊天信息-->
+    <main class="room_wechat">
+      <ul>
+        <li class="lift_wechat">
+          <a>
+            <img src="../../assets/qq.png" alt="">
+          </a>
+          <span>我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录</span>
+        </li>
+        <li class="lift_wechat">
+          <a>
+            <img src="../../assets/qq.png" alt="">
+          </a>
+          <span>我是自己发的聊天记录</span>
+        </li>
+        <li class="right_wechat">
+          <a>
+            <img src="../../assets/qq.png" alt="">
+          </a>
+          <span>我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录</span>
+          <div style="clear:both"></div>
+        </li>
+
+
+
+      <li class="right_wechat">
+        <a>
+          <img src="../../assets/qq.png" alt="">
+        </a>
+        <span>6666666666666666666666666666666666666888888888888888888888888888888</span>
+        <div style="clear:both"></div>
+      </li>
+
+      </ul>
+
+    </main>
     <div class="footSet">
       <van-button >投注</van-button>
       <van-button >
@@ -125,7 +161,7 @@
       initWebSocket(){ //初始化weosocket
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.92.129.86:8080/websocket");
+        vm.websock = new WebSocket("ws://47.92.129.86:8080/myHandler");
         console.log(vm.websock)
         vm.websock.onmessage = vm.websocketonmessage;
         vm.websock.onclose = vm.websocketclose;
