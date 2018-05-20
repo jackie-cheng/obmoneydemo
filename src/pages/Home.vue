@@ -95,7 +95,16 @@
       </ul>
 
     </section>
+    <section class="ob_footer">
+      <ul>
+        <li>关于我们</li>
+        <li>免责声明</li>
+        <van-cell-group>
+          <van-field  placeholder="请输入用户名" />
+        </van-cell-group>
+      </ul>
 
+    </section>
 
     <tabbar :activeNum="0"></tabbar>
   </div>

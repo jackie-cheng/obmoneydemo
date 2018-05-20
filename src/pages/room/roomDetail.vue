@@ -68,7 +68,7 @@
 
     </main>
     <div class="footSet">
-      <van-button >投注</van-button>
+      <van-button @click="showCustomAction=true">投注</van-button>
       <van-button >
         撤单
       </van-button>
@@ -93,27 +93,51 @@
       <!--</i>-->
 
     </div>
-    <!--<form action="/">-->
-      <!--<van-search-->
-        <!--v-model="messageValue"-->
-        <!--placeholder="发送聊天"-->
-        <!--show-action-->
-        <!--@search="sendMess"-->
-      <!--&gt;-->
-        <!--<div slot="action" @click="sendMess">发送</div>-->
-      <!--</van-search>-->
-    <!--</form>-->
+    <van-actionsheet v-model="showCustomAction" title="定位球投注" class="touzhu_actionbac">
+      <div class="touzhu_action">
+        <div class="touzhu_lift">
+         <span>特码</span>
+          <span class="active_touzhu">定位球</span>
+        </div>
+        <div class="touzhu_right">
+<p>第一球</p>
+          <ul>
+            <li v-for="n in 20"><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
+          </ul>
+          <p>第二球</p>
+          <ul>
+            <li v-for="n in 20"><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
+          </ul>
+        </div>
+      </div>
+<div class="touzhu_foot">
+
+  <div class="foot_but">
+    <van-stepper
+      v-model="touzhuNum"
+      integer
+      :min="1000"
+      :max="100000"
+      :step="1000"
+    />
+    <span class="touzhu_total">总计：￥{{touzhuNum||0}}</span><van-button size="small" class="touzhu_null">清空</van-button>
+    <van-button size="small" class="touzhu_ok">确认</van-button>
+  </div>
+
+
+</div>
+    </van-actionsheet>
   </div>
 </template>
 <script>
   import Vue from 'vue'
-  import { Row, Col } from 'vant';
 
-  Vue.use(Row).use(Col);
   export default{
     name: 'roomDetail',
     data () {
       return {
+        touzhuNum:null,
+        showCustomAction:false,
         activeNames: ['2'],
         roomId: null,
         userToken: null,

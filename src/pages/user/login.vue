@@ -7,7 +7,7 @@
     />
     <div class="login-content">
       <div class="userPhoto">
-        <img src="../../assets/logo.png" alt="">
+        <img src="../../assets/qq.png" alt="">
       </div>
       <van-cell-group>
         <van-field v-model="username" placeholder="请输入用户名"   icon="clear"
@@ -88,17 +88,18 @@
         vm.$axios.post(`/api/LoginController/login.do`, param)
           .then(response => {
             toast1.clear();
-            if (response.status == 200) {
+            if (response.status == 200&&!vm.$_.isEmpty(response.data)) {
               if (response.data.status != 'fail') {
+                  console.log(response)
                 sessionStorage.setItem('userInfo',JSON.stringify(response.data))
 //console.log(response.data)
                 vm.$router.push('/')
-              } else {
+//              } else {
                 vm.$toast(response.data.message);
               }
 
             } else {
-              vm.$toast('获取验证码失败');
+              vm.$toast('登录失败');
             }
           }).catch(response => {
 

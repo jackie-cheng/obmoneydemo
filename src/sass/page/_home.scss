@@ -316,3 +316,92 @@ margin-right: 0.2rem;
 
 
 }
+//房间底部弹窗
+.touzhu_actionbac{
+  &.van-actionsheet{
+    .van-actionsheet__content{
+      background-color: #efeff4;
+    }
+    .van-actionsheet__header{
+      background-color: #ff4444;
+      color: white;
+      i{
+        color: white;
+      }
+    }
+  }
+.touzhu_foot{
+  width: 100%;
+  height: 3.04rem;
+  background-color: #6a6b6e;
+  position: fixed;
+  bottom: 0;
+  .van-stepper{
+    @extend %display;
+  }
+  .foot_but{
+    
+    margin-top: 1.9rem;
+    padding: 0 0.4rem;
+  }
+  .touzhu_total{
+  color:white ;
+}
+  .touzhu_null{
+    background-color: #e5282b;
+    color: white;
+    border-color:#e5282b;
+  }
+  .touzhu_ok{
+    background-color: #f5832f;
+    color: white;
+    border-color:#f5832f;
+  }
+}
+}
+
+.touzhu_action{
+  width: 100%;
+  .touzhu_lift{
+    .active_touzhu{
+      background-color: #587cbe;
+      color: white;
+    }
+
+    width: 12%;
+    @extend %display;
+    span{
+      @extend %display;
+     //margin: 0 auto;
+      //padding: 0.2rem;
+      height: 5.8rem;
+      width: 100%;
+      //font-size: 24px;
+    }
+  }
+  .touzhu_right{
+
+    width: 87%;
+    @extend %display;
+    margin: 0.2rem 0;
+    p{
+
+    }
+    ul{
+      li{
+        @extend %display;
+        width: 1.52rem;
+        height: 2.2rem;
+        line-height: 1.1rem;
+        background-color: white;
+        margin: 0.1rem;
+        text-align: center;
+        .foz_bol{
+font-weight: bold;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
