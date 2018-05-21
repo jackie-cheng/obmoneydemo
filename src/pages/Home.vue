@@ -80,7 +80,7 @@
     <!--房间list-->
     <section class="ob_home_lists">
       <van-cell-group v-for="r in roomList" :key="r.no">
-        <van-cell :title="r.name" value="进入房间" label="最低30元起，大双小单4.6倍，大胆期限红100万" :to="'/roomDetail/'+r.no">
+        <van-cell :title="r.name" value="进入房间" label="最低30元起，大双小单4.6倍，大胆期限红100万" :to="'/roomDetail/'+r.roomnumber">
           <div class="sd_home_room_pic" slot="icon"></div>
         </van-cell>
       </van-cell-group>
@@ -95,16 +95,7 @@
       </ul>
 
     </section>
-    <section class="ob_footer">
-      <ul>
-        <li>关于我们</li>
-        <li>免责声明</li>
-        <van-cell-group>
-          <van-field  placeholder="请输入用户名" />
-        </van-cell-group>
-      </ul>
 
-    </section>
 
     <tabbar :activeNum="0"></tabbar>
   </div>

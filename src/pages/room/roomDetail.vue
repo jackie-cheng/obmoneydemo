@@ -1,7 +1,7 @@
 <template>
   <div class="mr-root">
     <van-nav-bar
-      title="房间详情"
+      title="666"
       left-arrow
       @click-left="onClickLeft"  :fixed="true"
     > <van-icon name="add-o" slot="right" />
@@ -113,13 +113,27 @@
 <div class="touzhu_foot">
 
   <div class="foot_but">
-    <van-stepper
-      v-model="touzhuNum"
-      integer
-      :min="1000"
-      :max="100000"
-      :step="1000"
-    />
+    <ul>
+      <li :class="{active_monbut:touzhuNum==1000}" @click="touzhuNum=1000">
+        1000
+      </li><li :class="{active_monbut:touzhuNum==5000}" @click="touzhuNum=5000">
+        5000
+      </li><li :class="{active_monbut:touzhuNum==10000}" @click="touzhuNum=10000">
+        1W
+      </li>
+      <li :class="{active_monbut:touzhuNum==50000}" @click="touzhuNum=50000">
+      5W
+    </li>
+
+    </ul>
+    <!--<van-stepper-->
+      <!--v-model="touzhuNum"-->
+      <!--integer-->
+      <!--:min="1000"-->
+      <!--:max="100000"-->
+      <!--:step="1000"-->
+    <!--/>-->
+    <input type="number"  v-model="touzhuNum">
     <span class="touzhu_total">总计：￥{{touzhuNum||0}}</span><van-button size="small" class="touzhu_null">清空</van-button>
     <van-button size="small" class="touzhu_ok">确认</van-button>
   </div>
@@ -182,10 +196,10 @@
           }, 500);
         }
       },
-      initWebSocket(){ //初始化weosocket
+      initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.92.129.86:8080/myHandler");
+        vm.websock = new WebSocket("ws://47.92.129.86:80/websocket");
         console.log(vm.websock)
         vm.websock.onmessage = vm.websocketonmessage;
         vm.websock.onclose = vm.websocketclose;
@@ -216,7 +230,7 @@
       vm.$axios.get(`/api/RoomController/queryRoomByRoomNo`, {params})
         .then(response => {
           if (response.status == 200 && response.data) {
-            vm.roomData = response.data.rows
+            vm.roomData = response.data
             console.log(response)
           } else {
             vm.$toast('获取房间信息失败');

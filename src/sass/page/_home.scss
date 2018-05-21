@@ -248,7 +248,7 @@ top:46px;
       //height: 1rem;
       //line-height: 1rem;
       padding: 0.3rem 0.3rem;
-      background-color: white;
+      background-color: #9eea6a;
       border-radius: 0.2rem;
       //&:before{
       //  position: absolute;
@@ -334,14 +334,58 @@ margin-right: 0.2rem;
   width: 100%;
   height: 3.04rem;
   background-color: #6a6b6e;
+
   position: fixed;
   bottom: 0;
-  .van-stepper{
+  ul{
+position: absolute;
+    bottom: 1.8rem;
+    li{
+      display: inline-block;
+      width: 1.39rem;
+      height: 1.39rem;
+
+      border-radius: 50%;
+      line-height: 1.39rem;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: 0.5rem;
+      margin-left: 0.3rem;
+      &.active_monbut{
+        width: 1.9rem;
+        height: 1.9rem;
+        line-height: 1.9rem;
+        margin-left: 0.1rem;
+
+      }
+      &.active_monbut+li{
+        margin-left: 0.1rem;
+      }
+    }
+    li:nth-child(1){
+      background-color: #f2dd41;
+    }
+    li:nth-child(2){
+      background-color: #f5832f;
+    }
+    li:nth-child(3){
+      background-color: #de5a28;
+    }
+    li:nth-child(4){
+      background-color: #e5282b;
+    }
+  }
+  input{
     @extend %display;
+    width: 2rem;
+    height: 1rem;
+    border-radius: 0.1rem;
+    border:none;
+    text-indent:0.5rem
   }
   .foot_but{
-    
-    margin-top: 1.9rem;
+    margin-top: 1.8rem;
     padding: 0 0.4rem;
   }
   .touzhu_total{
