@@ -25,9 +25,27 @@
       <!--</div>-->
       <van-collapse v-model="activeNames" class="room_topData_down">
         <van-collapse-item  name="1">
-          <div slot="title"><span>第 <em>4854545</em> 期 <i class="num_color">5</i>
-            +<i class="num_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大单）</span></div>
-          888887887878787877456456
+          <div slot="title"><span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
+            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大 <i class="dan_color">单</i> ）</span></div>
+          <p class="kai_jieguo">开奖结果</p>
+          <ul>
+            <li>
+              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
+            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i class="dan_color">单</i>）</span>
+            </li>
+            <li>
+              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
+            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i class="dan_color">单</i>）</span>
+            </li>
+            <li>
+              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
+            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i class="dan_color">单</i>）</span>
+            </li><li>
+              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
+            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i class="dan_color">单</i>）</span>
+          </li>
+
+          </ul>
         </van-collapse-item>
       </van-collapse>
     </div>
@@ -96,17 +114,41 @@
     <van-actionsheet v-model="showCustomAction" title="定位球投注" class="touzhu_actionbac">
       <div class="touzhu_action">
         <div class="touzhu_lift">
-         <span>特码</span>
-          <span class="active_touzhu">定位球</span>
+         <span :class="{active_touzhu:touzhuType==1}" @click="touzhuType=1"> <em>特<br/>码</em> </span>
+          <span :class="{active_touzhu:touzhuType==2}" @click="touzhuType=2"> <em>定 <br/> 位 <br/>球</em> </span>
         </div>
-        <div class="touzhu_right">
-<p>第一球</p>
+        <div class="touzhu_right" v-if="touzhuType==1">
+
+          <ul>
+            <li ><p class="foz_bol"> 大</p><p> 2</p></li>
+            <li><p class="foz_bol"> 大</p><p> 2</p></li>
+            <li><p class="foz_bol"> 大</p><p> 2</p></li>
+            <li><p class="foz_bol"> 大</p><p> 2</p></li>
+            <li><p class="foz_bol"> 大</p><p> 2</p></li>
+            <li><p class="foz_bol"> 小</p><p> 2</p></li>
+            <li><p class="foz_bol"> 小</p><p> 2</p></li>
+            <li><p class="foz_bol"> 小</p><p> 2</p></li>
+            <li><p class="foz_bol"> 小</p><p> 2</p></li>
+            <li><p class="foz_bol"> 小</p><p> 2</p></li>
+            <li><p class="foz_bol"> 红</p><p> 2</p></li>
+            <li><p class="foz_bol"> 红</p><p> 2</p></li>
+            <li><p class="foz_bol"> 红</p><p> 2</p></li>
+            <li><p class="foz_bol"> 红</p><p> 2</p></li>
+            <li><p class="foz_bol"> 红</p><p> 2</p></li>
+          </ul>
+
           <ul>
             <li v-for="n in 20"><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
           </ul>
+        </div>
+        <div class="touzhu_right" v-if="touzhuType==2">
+          <p>第一球</p>
+          <ul>
+            <li v-for="n in 20" :class="{curChosBall_class:curChosBallOne== n}" @click = 'curChosBallOne= n'><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
+          </ul>
           <p>第二球</p>
           <ul>
-            <li v-for="n in 20"><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
+            <li v-for="n in 20" :class="{curChosBall_class:curChosBallTwo== n}" @click = 'curChosBallTwo= n'><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
           </ul>
         </div>
       </div>
@@ -133,8 +175,8 @@
       <!--:max="100000"-->
       <!--:step="1000"-->
     <!--/>-->
-    <input type="number"  v-model="touzhuNum">
-    <span class="touzhu_total">总计：￥{{touzhuNum||0}}</span><van-button size="small" class="touzhu_null">清空</van-button>
+    <input type="number"  v-model="touzhuNum" placeholder="单注金额"  pattern="[0-9]*">
+    <span class="touzhu_total">总计：￥{{touzhuNum||0}}</span><van-button size="small" class="touzhu_null" @click="touzhuNum=null">清空</van-button>
     <van-button size="small" class="touzhu_ok">确认</van-button>
   </div>
 
@@ -150,6 +192,9 @@
     name: 'roomDetail',
     data () {
       return {
+        curChosBallOne:1,//当前选中球1
+        curChosBallTwo:1,//当前选中球2
+        touzhuType:1,
         touzhuNum:null,
         showCustomAction:false,
         activeNames: ['2'],
@@ -178,6 +223,7 @@
         //参数
         const vm = this
         const agentData = vm.messageValue;
+        vm.websocketsend(agentData)
         //若是ws开启状态
         if (vm.websock.readyState === vm.websock.OPEN) {
           vm.websocketsend(agentData)
@@ -199,7 +245,7 @@
       initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.92.129.86:80/websocket");
+        vm.websock = new WebSocket("ws://47.92.129.86:8080/websocket");
         console.log(vm.websock)
         vm.websock.onmessage = vm.websocketonmessage;
         vm.websock.onclose = vm.websocketclose;
@@ -221,11 +267,11 @@
       const vm = this
       vm.initWebSocket()
       vm.roomId = vm.$route.params.id
-      vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
-      vm.userToken = vm.userData.accessToken
+//      vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
+//      vm.userToken = vm.userData.accessToken
       let params = {
         roomnumber: vm.roomId,
-        accessToken: vm.userToken,
+//        accessToken: vm.userToken,
       }
       vm.$axios.get(`/api/RoomController/queryRoomByRoomNo`, {params})
         .then(response => {

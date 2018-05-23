@@ -96,6 +96,8 @@
                 vm.$router.push('/')
 //              } else {
                 vm.$toast(response.data.message);
+              }else{
+                vm.$toast(response.data.message);
               }
 
             } else {

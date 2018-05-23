@@ -108,6 +108,7 @@
     name: 'home',
     data() {
       return {
+        nullLogin:false,
         roadSelect: '线路一',
         showRoad: false,
         roads: ["线路一", "线路二"],
@@ -128,19 +129,19 @@
 const vm = this
 
    if(!sessionStorage.getItem('userInfo')){
-     vm.$router.push('/login')
-   }else{
+    vm.nullLogin = true
+   }
+
      const toast1 = vm.$toast.loading({
        mask: true,
        duration: 10000,       // 持续展示 toast
        message: '加载中...'
      });
-     vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-     vm.userToken =  vm.userData.accessToken
+//     vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+//     vm.userToken =  vm.userData.accessToken
      let params = {
        pageNo:1,
        pageSize:10,
-       accessToken:vm.userToken
      }
      vm.$axios.get(`/api/RoomController/queryRoomList`, {params})
        .then(response => {
@@ -155,7 +156,7 @@ const vm = this
        toast1.clear();
      })
 
-   }
+
     },
     methods: {
         //退出登录
