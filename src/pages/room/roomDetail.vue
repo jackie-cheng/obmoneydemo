@@ -52,35 +52,21 @@
     <!--聊天信息-->
     <main class="room_wechat">
       <ul>
-        <li class="lift_wechat">
+        <li class="lift_wechat" v-for="mes in othersSendMessage">
           <a>
             <img src="../../assets/qq.png" alt="">
           </a>
-          <span>我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录我是别人发的聊天记录</span>
+          <span>{{mes}}</span>
         </li>
-        <li class="lift_wechat">
+
+        <li class="right_wechat" v-for="mess in mySendMessage">
           <a>
             <img src="../../assets/qq.png" alt="">
           </a>
-          <span>我是自己发的聊天记录</span>
-        </li>
-        <li class="right_wechat">
-          <a>
-            <img src="../../assets/qq.png" alt="">
-          </a>
-          <span>我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录我是自己发的聊天记录</span>
+          <span>{{mess}}</span>
           <div style="clear:both"></div>
         </li>
 
-
-
-      <li class="right_wechat">
-        <a>
-          <img src="../../assets/qq.png" alt="">
-        </a>
-        <span>6666666666666666666666666666666666666888888888888888888888888888888</span>
-        <div style="clear:both"></div>
-      </li>
 
       </ul>
 
@@ -225,10 +211,14 @@
         //参数
         const vm = this
         const agentData = vm.messageValue;
+        vm.messageValue=null
+//       vm.mySendMessage.push(agentData)
+//        console.log(vm.mySendMessage)
 //        vm.websocketsend(agentData)
         //若是ws开启状态
         if (vm.websock.readyState === 1) {
           vm.websocketsend(agentData)
+
         }
         // 若是 正在开启状态，则等待300毫秒
         else if (vm.websock.readyState === 0) {
@@ -258,12 +248,15 @@
       websocketonmessage(e){ //数据接收
         const vm = this
         vm.redata = JSON.parse(e.data);
+        vm.othersSendMessage.push(vm.redata)
+
         console.log('jieshou',vm.redata);
       },
       websocketsend(agentData){//数据发送
         const vm = this
         vm.websock.send(agentData);
-        console.log(agentData)
+        vm.mySendMessage.push(agentData)
+
 //        vm.mySendMessage=  vm.mySendMessage.push(agentData)
       },
       websocketclose(e){  //关闭
