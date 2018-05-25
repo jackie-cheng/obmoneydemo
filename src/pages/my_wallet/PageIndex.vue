@@ -40,9 +40,9 @@
     },
     created() {
       const vm = this
-//      if(!sessionStorage.getItem('userInfo')){
-//        vm.$router.push('/login')
-//      }
+      if(!sessionStorage.getItem('userInfo')){
+        vm.$router.push('/login')
+      }
     },
   }
 </script>
