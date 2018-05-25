@@ -49,6 +49,7 @@
     methods: {
       //点击顶部返回按钮触发的事件
       onClickLeft() {
+        this.$router.go(-1)
       },
 
     },

@@ -10,9 +10,12 @@
       <!--<select slot="left" class="ob_header_select">-->
       <!--<option value="">线路一</option>-->
       <!--</select>-->
-      <div slot="right" @click="showDownBox()">
+      <div slot="right" @click="showDownBox()" v-if="!nullLogin">
         <van-icon name="contact"/>
         <van-icon name="more-o"/>
+      </div>
+      <div slot="right" class="homeLogig" v-if="nullLogin">
+       <router-link to="/login">登录</router-link>   <router-link to="/register" >注册</router-link>
       </div>
     </van-nav-bar>
     <!--选择线路-->
@@ -32,15 +35,15 @@
     <!--图片部分-->
     <section class="ob_index_imgs">
       <van-swipe :autoplay="3000">
-        <van-swipe-item>1</van-swipe-item>
-        <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
+        <van-swipe-item  to="/notice">1</van-swipe-item>
+        <van-swipe-item  to="/notice">2</van-swipe-item>
+        <van-swipe-item  to="/notice">3</van-swipe-item>
+        <van-swipe-item  to="/notice">4</van-swipe-item>
       </van-swipe>
     </section>
     <!--消息提示-->
     <van-cell-group>
-      <van-cell title="欢迎来到帝魂国际!" is-link>
+      <van-cell title="欢迎来到帝魂国际!" is-link to="/notice">
         <em class="iconfont notice_icon" slot="icon"></em>
       </van-cell>
     </van-cell-group>

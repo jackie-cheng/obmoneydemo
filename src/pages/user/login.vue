@@ -3,7 +3,7 @@
     <van-nav-bar
       title="登录"
       @click-left="onClickLeft"
-
+      left-arrow
     />
     <div class="login-content">
       <div class="userPhoto">
@@ -63,7 +63,8 @@
     },
     methods:{
       onClickLeft() {
-        this.$router.go(-1)
+          const vm = this
+        vm.$router.push('/')
       },
 
 //      登录

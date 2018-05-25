@@ -30,7 +30,39 @@
   }
 
 }
+//充值
+.money_in{
+  .van-cell-group{
+    .van-cell{
+      height: 2rem;
+      line-height: 2rem;
+      img{
+        width: 1.1rem;
+        height: 1rem;
+      }
+    }
+  }
+}
+//微信充值
+.wechat_in{
+  img{
+    height:7.7rem;
+    width: 5.66rem;
+    display: block;
+    margin: 0.3rem auto;
+  }
+  .shuru_money{
+   .van-cell{
+     padding: 0.5rem;
+     font-size: large;
+   }
+    margin-top: 0.3rem;
+    input{
+      text-indent:3rem
 
+    }
+  }
+}
 //充值记录
 .ob_pay_record_table {
   width: 100%;

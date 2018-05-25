@@ -192,6 +192,8 @@
     name: 'roomDetail',
     data () {
       return {
+          mySendMessage:[],
+        othersSendMessage:[],
         curChosBallOne:1,//当前选中球1
         curChosBallTwo:1,//当前选中球2
         touzhuType:1,
@@ -211,7 +213,7 @@
       sendMess(){
         const vm = this
         vm.threadPoxi()
-        console.log(vm.messageValue)
+//        console.log(vm.messageValue)
       },
       onCancel(){
         const vm = this
@@ -223,13 +225,13 @@
         //参数
         const vm = this
         const agentData = vm.messageValue;
-        vm.websocketsend(agentData)
+//        vm.websocketsend(agentData)
         //若是ws开启状态
-        if (vm.websock.readyState === vm.websock.OPEN) {
+        if (vm.websock.readyState === 1) {
           vm.websocketsend(agentData)
         }
         // 若是 正在开启状态，则等待300毫秒
-        else if (vm.websock.readyState === vm.websock.CONNECTING) {
+        else if (vm.websock.readyState === 0) {
           setTimeout(function () {
             vm.websocketsend(agentData)
           }, 300);
@@ -242,10 +244,13 @@
           }, 500);
         }
       },
-      initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");
+      initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.92.129.86:8080/websocket");
+        vm.websock = new WebSocket("ws://47.92.129.86:80/websocket");
+        if(vm.websock.onopen){
+         console.log("WebSocket连接成功")
+        }
         console.log(vm.websock)
         vm.websock.onmessage = vm.websocketonmessage;
         vm.websock.onclose = vm.websocketclose;
@@ -253,19 +258,67 @@
       websocketonmessage(e){ //数据接收
         const vm = this
         vm.redata = JSON.parse(e.data);
-        console.log(vm.redata);
+        console.log('jieshou',vm.redata);
       },
       websocketsend(agentData){//数据发送
         const vm = this
         vm.websock.send(agentData);
+        console.log(agentData)
+//        vm.mySendMessage=  vm.mySendMessage.push(agentData)
       },
       websocketclose(e){  //关闭
         console.log("connection closed (" + e.code + ")");
-      }
+      },
+      creatGet(){
+          const vm = this
+        vm.$axios.get(`/api/chatWebsocket/startChat`)
+          .then(response => {
+            if (response.status == 200 && response.data) {
+              console.log(response)
+            } else {
+              vm.$toast('获取房间信息失败');
+            }
+          }).catch(response => {
+
+        })
+      },
+//      websocket () {
+//        let ws = new WebSocket('ws://47.92.129.86:8080/websocket');
+//        console.log(ws)
+//        ws.onopen = () => {
+//          // Web Socket 已连接上，使用 send() 方法发送数据
+//          console.log('数据发送中...')
+//          ws.send('Holle')
+//          console.log('数据发送完成')
+//        }
+//        ws.onmessage = evt => {
+//          console.log('数据已接收...')
+//        }
+//        ws.onclose = function () {
+//          // 关闭 websocket
+//          console.log('连接已关闭...')
+//        }
+//        // 路由跳转时结束websocket链接
+//        this.$router.afterEach(function () {
+//          ws.close()
+//        })
+//      }
+    },
+    mounted(){
+        const vm = this
+      vm.$watch('',()=>{
+          if(vm.websock.readyState === 1){
+            console.log('连接成功')
+          }
+
+      })
+
     },
     created () {
       const vm = this
+//      vm.websocket()
       vm.initWebSocket()
+//      vm.creatGet()
       vm.roomId = vm.$route.params.id
 //      vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
 //      vm.userToken = vm.userData.accessToken

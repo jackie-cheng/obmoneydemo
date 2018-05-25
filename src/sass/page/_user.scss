@@ -161,3 +161,66 @@
   }
 
 }
+
+//用户首页
+.user_index_class{
+  .user_header{
+height: 5rem;
+    width: 100%;
+    color: white;
+    font-size: 0.4rem;
+    //padding: 0.5rem;
+    background-color:#ff4444;
+    .top_head{
+span:nth-child(1){
+  float: left;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+
+}
+      span:nth-child(2){
+float: right;
+margin-right: 0.5rem;
+        margin-top: 0.5rem;
+      }
+    }
+    .touxiang_header{
+      margin-top: 0.7rem;
+      margin-left: 0.5rem;
+      //text-align: center;
+      img{
+        float: left;
+        width: 1.7rem;
+        height: 1.7rem;
+        border-radius: 100%;
+        border: 1px solid white;
+        background-color: white;
+        margin-right: 0.4rem;
+      }
+      div{
+       padding: 0.3rem;
+        margin-left: 0.3rem;
+
+      }
+    }
+  }
+  .gongneng_list{
+    margin-top: 1.3rem;
+    .van-cell-group{
+      margin-bottom: 0.3rem;
+    }
+  }
+}
+.myInfo_touxiang{
+  padding:0.4rem;
+  color: #333;
+  font-size: 14px;
+  border-bottom: 1px solid #e5e5e5;
+  img {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 100%;
+    background-color: white;
+    margin-left: 60%;
+  }
+}

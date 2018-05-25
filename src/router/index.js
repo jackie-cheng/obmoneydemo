@@ -44,7 +44,13 @@ export default new Router({
     {
       path:'/user',
       component:resolve=>{
-        require(['../pages/user/MyInfo.vue'],resolve)
+        require(['../pages/user/userMenu/userIndex.vue'],resolve)
+      }
+    },
+    {
+      path:'/myInfo',
+      component:resolve=>{
+        require(['../pages/user/userMenu/MyInfo.vue'],resolve)
       }
     },
     {
@@ -95,6 +101,18 @@ export default new Router({
           require(['../pages/my_wallet/MoneyOut.vue'], resolve)
         }
       },
+    {
+      path: '/wallet_in',
+      component: resolve => {
+        require(['../pages/my_wallet/MoneyIn.vue'], resolve)
+      }
+    },
+    {
+      path: '/wechat_in',
+      component: resolve => {
+        require(['../pages/my_wallet/wechatIn.vue'], resolve)
+      }
+    },
 
 
   ]

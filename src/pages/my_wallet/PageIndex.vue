@@ -12,7 +12,7 @@
           <p class="money_num">188.00</p>
         </div>
         <div class="ob_myWallet_btns">
-          <van-button size="large" type="danger">充值</van-button>
+          <router-link to="/wallet_in"> <van-button size="large" type="danger">充值</van-button></router-link>
           <router-link to="/wallet_out"><van-button size="large">提现</van-button></router-link>
 
         </div>
@@ -40,6 +40,9 @@
     },
     created() {
       const vm = this
+//      if(!sessionStorage.getItem('userInfo')){
+//        vm.$router.push('/login')
+//      }
     },
   }
 </script>
