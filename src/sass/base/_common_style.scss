@@ -1,12 +1,17 @@
 @charset "UTF-8";
 //header样式
-#app,body{
+#app, body {
+  @extend %relative;
   background-color: #efeff4;
   height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
-.van-tabbar-item--active{
+
+.van-tabbar-item--active {
   color: #ff4444;
 }
+
 .mr-root {
 
   .van-nav-bar {
@@ -27,7 +32,11 @@
   @extend %textAlign;
   margin-top: 3.4rem;
 }
-
+.bott_tabbarcla{
+  .van-tabbar--fixed{
+    position: absolute;
+  }
+}
 
 
 

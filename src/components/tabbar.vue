@@ -1,13 +1,16 @@
 <template>
-  <div id="app">
-    <van-tabbar v-model="active">
-      <van-tabbar-item icon="shop">大厅</van-tabbar-item>
-      <van-tabbar-item icon="gold-coin">充值/提现</van-tabbar-item>
-      <van-tabbar-item icon="records">优惠</van-tabbar-item>
-      <van-tabbar-item icon="chat">客服</van-tabbar-item>
-      <van-tabbar-item icon="contact">我的</van-tabbar-item>
-    </van-tabbar>
-    <!--<router-view></router-view>-->
+  <div>
+    <div class="bott_tabbarcla">
+      <van-tabbar v-model="active">
+        <van-tabbar-item icon="shop">大厅</van-tabbar-item>
+        <van-tabbar-item icon="gold-coin">充值/提现</van-tabbar-item>
+        <van-tabbar-item icon="records">优惠</van-tabbar-item>
+        <van-tabbar-item icon="chat">客服</van-tabbar-item>
+        <van-tabbar-item icon="contact">我的</van-tabbar-item>
+      </van-tabbar>
+      <!--<router-view></router-view>-->
+    </div>
+
   </div>
 </template>
 

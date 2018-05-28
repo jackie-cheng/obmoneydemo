@@ -3,7 +3,7 @@
     <van-nav-bar
       title="666"
       left-arrow
-      @click-left="onClickLeft"  :fixed="true"
+      @click-left="onClickLeft"
     > <van-icon name="add-o" slot="right" />
     </van-nav-bar>
     <!--<van-row>-->
@@ -237,7 +237,7 @@
       initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.92.129.86:80/websocket");
+        vm.websock = new WebSocket("ws://47.106.11.246:8080/websocket");
         if(vm.websock.onopen){
          console.log("WebSocket连接成功")
         }

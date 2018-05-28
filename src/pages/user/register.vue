@@ -22,7 +22,7 @@
         <el-form-item prop="photoCode" class="twoInput">
           <el-input v-model="ruleForm2.photoCode" placeholder="请输入图片验证码">
 
-            <template slot="append"><img src="http://47.92.129.86:80/api/Registercontroller/photoCode.do"
+            <template slot="append"><img src="http://47.106.11.246:8080/api/Registercontroller/photoCode.do"
                                          @click="showPhotoCode()" ref="Imgdata"></template>
           </el-input>
         </el-form-item>
@@ -180,7 +180,7 @@
 
         let img = vm.$refs.Imgdata
 
-        img.src = "http://47.92.129.86:80/api/Registercontroller/photoCode.do?time=" + new Date().getTime();
+        img.src = "http://47.106.11.246:8080/api/Registercontroller/photoCode.do?time=" + new Date().getTime();
       },
 
 //      获取短信验证码
