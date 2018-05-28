@@ -254,16 +254,18 @@
       },
       websocketonmessage(e){ //数据接收
         const vm = this
-        vm.redata = JSON.parse(e.data);
+        vm.redata = e.data;
         console.log(e.data)
         vm.othersSendMessage.push(vm.redata)
 //{"phone":"","message":""}
         console.log('jieshou',vm.redata);
       },
-      websocketsend(agentData){//数据发送
+        websocketsend(agentData){//数据发送
         const vm = this
-        let sendData ={"phone":vm.userData.phone,"message":agentData}
-        vm.websock.send(sendData);
+          let aa =agentData.toString()
+        let sendData ={"phone":vm.userData.phone,"message":aa}
+        console.log(JSON.stringify(sendData))
+        vm.websock.send(JSON.stringify(sendData));
         vm.mySendMessage.push(sendData)
 
 //        vm.mySendMessage=  vm.mySendMessage.push(agentData)
