@@ -63,7 +63,7 @@
           <a>
             <img src="../../assets/qq.png" alt="">
           </a>
-          <span>{{mess}}</span>
+          <span>{{mess.message}}</span>
           <div style="clear:both"></div>
         </li>
 
@@ -178,6 +178,8 @@
     name: 'roomDetail',
     data () {
       return {
+        userData:null,
+        userToken:null,
           mySendMessage:[],
         othersSendMessage:[],
         curChosBallOne:1,//当前选中球1
@@ -198,7 +200,12 @@
     methods: {
       sendMess(){
         const vm = this
-        vm.threadPoxi()
+        if(!sessionStorage.getItem('userInfo')){
+          vm.$router.push('/login')
+        }else{
+          vm.threadPoxi()
+        }
+
 //        console.log(vm.messageValue)
       },
       onCancel(){
@@ -248,14 +255,16 @@
       websocketonmessage(e){ //数据接收
         const vm = this
         vm.redata = JSON.parse(e.data);
+        console.log(e.data)
         vm.othersSendMessage.push(vm.redata)
-
+//{"phone":"","message":""}
         console.log('jieshou',vm.redata);
       },
       websocketsend(agentData){//数据发送
         const vm = this
-        vm.websock.send(agentData);
-        vm.mySendMessage.push(agentData)
+        let sendData ={"phone":vm.userData.phone,"message":agentData}
+        vm.websock.send(sendData);
+        vm.mySendMessage.push(sendData)
 
 //        vm.mySendMessage=  vm.mySendMessage.push(agentData)
       },
@@ -309,6 +318,10 @@
     },
     created () {
       const vm = this
+      if(sessionStorage.getItem('userInfo')){
+              vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
+      vm.userToken = vm.userData.accessToken
+      }
 //      vm.websocket()
       vm.initWebSocket()
 //      vm.creatGet()

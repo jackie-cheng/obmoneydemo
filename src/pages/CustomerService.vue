@@ -6,11 +6,11 @@
     <section class="ob_cus_serCon">
       <ul>
         <li>
-          <span class="serveice_icon"></span>
+          <span class="serveice_icon"  :style="note"></span>
           <p>在线客服</p>
         </li>
         <li>
-          <span class="qq_icon"></span>
+          <span class="qq_icon" :style="note2"></span>
           <p>QQ客服</p>
 
         </li>
@@ -26,7 +26,18 @@
   export default {
     name: 'CustomerService',
     data() {
-      return {}
+      return {
+        note: {
+          backgroundImage: "url(" + require("../assets/service.png") + ")",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        },
+        note2: {
+          backgroundImage: "url(" + require("../assets/qq.png") + ")",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        },
+      }
     },
     methods:{
         QQaaa(){

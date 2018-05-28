@@ -15,11 +15,11 @@
         @include height(true, 2.4rem, 3rem);
         @extend %vam;
         &.serveice_icon {
-          background: url("../assets/service.png") no-repeat center;
+          //background:'url(' + require('../assets/service.png') + ')' no-repeat center;
           background-size: contain;
         }
         &.qq_icon {
-          background: url("../assets/qq.png") no-repeat center;
+          //background: 'url(' + require('../assets/qq.png') + ')' no-repeat center;
           background-size: contain;
         }
 
