@@ -328,15 +328,27 @@
     var seperator2 = ":";
     var month = date.getMonth() + 1;
     var strDate = date.getDate();
+      var hours = date.getHours();
+      var minut = date.getMinutes();
+      var second = date.getSeconds();
     if (month >= 1 && month <= 9) {
       month = "0" + month;
     }
     if (strDate >= 0 && strDate <= 9) {
       strDate = "0" + strDate;
     }
+      if (hours >= 0 && hours <= 9) {
+        hours = "0" + hours;
+      }
+      if (minut >= 0 && minut <= 9) {
+        minut = "0" + minut;
+      }
+      if (second >= 0 && second <= 9) {
+        second = "0" + second;
+      }
     var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-      + " " + date.getHours() + seperator2 + date.getMinutes()
-      + seperator2 + date.getSeconds();
+      + " " + hours + seperator2 + minut
+      + seperator2 + second;
     return currentdate;
   }
     },
