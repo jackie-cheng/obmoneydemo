@@ -53,14 +53,25 @@
     <main class="room_wechat">
       <ul>
         <li class="lift_wechat" v-for="mes in othersSendMessage">
-          <a>
+          <p v-text="mes.sendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
+          <p v-text="mes.nickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
+          <a v-if="mes.photourl">
+            <img :src="mes.photourl" alt="">
+          </a>
+          <a v-else>
             <img src="../../assets/qq.png" alt="">
           </a>
-          <span>{{mes}}</span>
+          <span>{{mes.message}}</span>
         </li>
 
         <li class="right_wechat" v-for="mess in mySendMessage">
-          <a>
+
+          <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.time">2018-05-29 09:21</p>
+          <p style="text-align: right;margin-right: 1rem;color: #ce5c4d">{{userData.username}}</p>
+          <a v-if="userData.photourl">
+            <img :src="userData.photourl" alt="">
+          </a>
+          <a v-else>
             <img src="../../assets/qq.png" alt="">
           </a>
           <span>{{mess.message}}</span>
@@ -200,9 +211,13 @@
     methods: {
       sendMess(){
         const vm = this
+
         if(!sessionStorage.getItem('userInfo')){
           vm.$router.push('/login')
-        }else{
+        }else if(vm.$_.isEmpty(vm.messageValue)){
+          return
+        }
+        else{
           vm.threadPoxi()
         }
 
@@ -254,18 +269,18 @@
       },
       websocketonmessage(e){ //数据接收
         const vm = this
-        vm.redata = e.data;
+        vm.redata = JSON.parse(e.data);
         console.log(e.data)
         vm.othersSendMessage.push(vm.redata)
 //{"phone":"","message":""}
-        console.log('jieshou',vm.redata);
+//        console.log('jieshou',vm.redata);
       },
         websocketsend(agentData){//数据发送
         const vm = this
-          let aa =agentData.toString()
-        let sendData ={"phone":vm.userData.phone,"message":aa}
-        console.log(JSON.stringify(sendData))
-        vm.websock.send(JSON.stringify(sendData));
+          let curTime =vm.getNowFormatDate()
+        let sendData ={"phone":vm.userData.phone,"message":agentData,'time':curTime}
+//        console.log(JSON.stringify(sendData))
+        vm.websock.send(sendData);
         vm.mySendMessage.push(sendData)
 
 //        vm.mySendMessage=  vm.mySendMessage.push(agentData)
@@ -307,6 +322,23 @@
 //          ws.close()
 //        })
 //      }
+    getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+      month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+      + " " + date.getHours() + seperator2 + date.getMinutes()
+      + seperator2 + date.getSeconds();
+    return currentdate;
+  }
     },
     mounted(){
         const vm = this
