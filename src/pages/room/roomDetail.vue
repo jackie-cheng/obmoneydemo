@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root roomDa">
     <van-nav-bar
       title="666"
       left-arrow
@@ -51,34 +51,47 @@
     </div>
     <!--聊天信息-->
     <main class="room_wechat">
-      <ul>
-        <li class="lift_wechat" v-for="mes in othersSendMessage">
-          <p v-text="mes.sendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
-          <p v-text="mes.nickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
-          <a v-if="mes.photourl">
-            <img :src="mes.photourl" alt="">
-          </a>
-          <a v-else>
-            <img src="../../assets/qq.png" alt="">
-          </a>
-          <span>{{mes.message}}</span>
-        </li>
+      <ul class ='room_wechatul'>
+        <!--<li class="lift_wechat" v-for="mes in othersSendMessage">-->
+          <!--<p v-text="mes.sendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>-->
+          <!--<p v-text="mes.nickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>-->
+          <!--<a v-if="mes.photourl">-->
+            <!--<img :src="mes.photourl" alt="">-->
+          <!--</a>-->
+          <!--<a v-else>-->
+            <!--<img src="../../assets/qq.png" alt="">-->
+          <!--</a>-->
+          <!--<span>{{mes.message}}</span>-->
+        <!--</li>-->
 
-        <li class="right_wechat" v-for="mess in mySendMessage">
+        <li :class="{right_wechat:!mess.nickname,lift_wechat:mess.nickname}"  v-for="mess in mySendMessage">
+          <template v-if="!mess.nickname">
+            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.sendTime">2018-05-29 09:21</p>
+            <p style="text-align: right;margin-right: 1rem;color: #ce5c4d">{{userData.username}}</p>
+            <a v-if="userData.photourl">
+              <img :src="userData.photourl" alt="">
+            </a>
+            <a v-else>
+              <img src="../../assets/qq.png" alt="">
+            </a>
+            <span>{{mess.message}}</span>
 
-          <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.time">2018-05-29 09:21</p>
-          <p style="text-align: right;margin-right: 1rem;color: #ce5c4d">{{userData.username}}</p>
-          <a v-if="userData.photourl">
-            <img :src="userData.photourl" alt="">
-          </a>
-          <a v-else>
+          </template>
+          <template v-else>
+            <p v-text="mess.sendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
+            <p v-text="mess.nickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
+            <a v-if="mess.photourl">
+            <img :src="mess.photourl" alt="">
+            </a>
+            <a v-else>
             <img src="../../assets/qq.png" alt="">
-          </a>
-          <span>{{mess.message}}</span>
+            </a>
+            <span>{{mess.message}}</span>
+          </template>
           <div style="clear:both"></div>
         </li>
-
-
+        <div style="margin-bottom: 1rem"><a id="msg_end" name="1" href="#1">&nbsp</a></div>
+        <!--<div id="msg_end" style="height:0px; overflow:hidden"></div>-->
       </ul>
 
     </main>
@@ -227,7 +240,8 @@
         const vm = this
       },
       onClickLeft() {
-        this.$router.go(-1)
+          const vm = this
+        vm.$router.push('/')
       },
       threadPoxi(){  // 实际调用的方法
         //参数
@@ -241,20 +255,23 @@
         if (vm.websock.readyState === 1) {
           vm.websocketsend(agentData)
 
+        }else{
+          vm.$toast('聊天还未建立');
+          vm.initWebSocket()
         }
-        // 若是 正在开启状态，则等待300毫秒
-        else if (vm.websock.readyState === 0) {
-          setTimeout(function () {
-            vm.websocketsend(agentData)
-          }, 300);
-        }
-        // 若未开启 ，则等待500毫秒
-        else {
-          vm.initWebSocket();
-          setTimeout(function () {
-            vm.websocketsend(agentData)
-          }, 500);
-        }
+//        // 若是 正在开启状态，则等待300毫秒
+//        else if (vm.websock.readyState === 0) {
+//          setTimeout(function () {
+//            vm.websocketsend(agentData)
+//          }, 300);
+//        }
+//        // 若未开启 ，则等待500毫秒
+//        else {
+//          vm.initWebSocket();
+//          setTimeout(function () {
+//            vm.websocketsend(agentData)
+//          }, 500);
+//        }
       },
       initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
@@ -266,23 +283,36 @@
         console.log(vm.websock)
         vm.websock.onmessage = vm.websocketonmessage;
         vm.websock.onclose = vm.websocketclose;
+        // 路由跳转时结束websocket链接
+//        vm.$router.afterEach(function () {
+//          vm.websock.onclose
+//        })
+//        vm.websocketonmessage
       },
       websocketonmessage(e){ //数据接收
         const vm = this
         vm.redata = JSON.parse(e.data);
-        console.log(e.data)
-        vm.othersSendMessage.push(vm.redata)
+//        console.log(e.data)
+        vm.mySendMessage.push(vm.redata)
+        console.log(vm.mySendMessage)
+        let aa = document.getElementById('msg_end')
+        aa.click();
+//        let divUl = document.getElementsByClassName('room_wechatul')[0]
+//        divUl.scrollTop = divUl.scrollHeight;
 //{"phone":"","message":""}
 //        console.log('jieshou',vm.redata);
       },
         websocketsend(agentData){//数据发送
         const vm = this
           let curTime =vm.getNowFormatDate()
-        let sendData ={"phone":vm.userData.phone,"message":agentData,'time':curTime}
+        let sendData ={"phone":vm.userData.phone,"message":agentData,'sendTime':curTime}
 //        console.log(JSON.stringify(sendData))
-        vm.websock.send(sendData);
+        vm.websock.send(JSON.stringify(sendData));
         vm.mySendMessage.push(sendData)
-
+          let aa = document.getElementById('msg_end')
+          aa.click();
+//          let divUl = document.getElementsByClassName('room_wechatul')[0]
+//          divUl.scrollTop = divUl.scrollHeight;
 //        vm.mySendMessage=  vm.mySendMessage.push(agentData)
       },
       websocketclose(e){  //关闭
@@ -354,12 +384,12 @@
     },
     mounted(){
         const vm = this
-      vm.$watch('',()=>{
-          if(vm.websock.readyState === 1){
-            console.log('连接成功')
-          }
-
-      })
+//      vm.$watch('',()=>{
+//          if(vm.websock.readyState === 1){
+//            console.log('连接成功')
+//          }
+//
+//      })
 
     },
     created () {
@@ -382,13 +412,16 @@
         .then(response => {
           if (response.status == 200 && response.data) {
             vm.roomData = response.data
-            console.log(response)
+//            console.log(response)
           } else {
             vm.$toast('获取房间信息失败');
           }
         }).catch(response => {
 
       })
+    },
+    beforeDestroy () {
+      this.websock.onclose
     },
     components: {},
   }

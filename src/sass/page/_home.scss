@@ -59,12 +59,16 @@
     height: 3.4rem;
   }
 }
-
+.home_head{
+  .van-nav-bar__right{
+    right: 3px;
+  }
+}
 //首页中间app
 .ob_home_apps {
-  padding: 0.5rem;
+  padding: 0.2rem 0.2rem 0.1rem 0.2rem;
   @extend %textAlign;
-  border-bottom: 0.3rem solid #efeff4;
+  border-bottom: 0.1rem solid #efeff4;
   ul {
     li {
       @extend %display;
@@ -98,9 +102,16 @@
 }
 
 //房间列表
-//.ob_home_lists {
-//  margin-bottom:;
-//}
+.ob_home_lists {
+  .van-cell__value{
+    vertical-align: middle;
+    //line-height: 1.5rem;
+    span{
+     vertical-align: middle;
+
+    }
+  }
+}
 
 .sd_home_room_pic {
   @extend %float;
@@ -132,7 +143,10 @@
 }
 //房间顶部
 .room_topData{
-  position: absolute;
+  position: fixed;
+  z-index: 100;
+  max-width: 800px;
+  margin: 0 auto;
   //height: 3.4rem;
 top:46px;
   //padding: 0.2rem 0.4rem;
@@ -212,10 +226,22 @@ top:46px;
     }
   }
 }
+.roomDa{
+  .van-nav-bar{
+    z-index: 1000;
+    position: fixed;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    top: 0;
+  }
+}
 //房间聊天记录
 .room_wechat{
-  margin-top: 169px;
-  margin-bottom: 1.4rem;
+  position: absolute;
+  width: 100%;
+  top: 190px;
+  margin-bottom: 0.3rem;
   //ul li:last-child{
   //  margin-bottom: 1.5rem;
   //}
@@ -324,6 +350,12 @@ top:46px;
   border-top: 1px solid #cccccc;
   width: 100%;
   padding: 0 0.6rem;
+  .van-cell-group{
+    width: 46%;
+   .van-cell{
+     width: 100%;
+   }
+  }
 .van-button{
   padding: 0 0.2rem;
   margin-right: 0.2rem;
@@ -336,6 +368,7 @@ line-height: 0.9rem;
   .send_button{
     border-color: #ff4444;
     color: #ff4444;
+    margin-left: 0.1rem;
     //width: 0.8rem;
   }
 .van-cell-group{
@@ -346,9 +379,12 @@ line-height: 0.9rem;
     //padding: 0;
     //line-height: 0.9rem;
     //height: 0.9rem;
-    width: 3.9rem;
-margin-right: 0.2rem;
+    //width: 3.9rem;
+margin-right: 0.3rem;
     .van-cell__value{
+      span{
+        vertical-align: middle;
+      }
 
   }
   }
@@ -370,7 +406,7 @@ margin-right: 0.2rem;
       max-width: 800px;
       margin: 0 auto;
       height: 1.1rem;
-      z-index: 1000;
+      z-index: 100000;
       line-height: 1.1rem;
       width: 100%;
       background-color: #ff4444;

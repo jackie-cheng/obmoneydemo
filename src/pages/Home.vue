@@ -1,8 +1,8 @@
 <template>
   <div class="mr-root">
     <!--<Header></Header>-->
-    <van-nav-bar title="帝魂国际">
-      <span slot="left" class="ob_header_select" @click="selectRoad()">
+    <van-nav-bar title="帝魂国际" class="home_head">
+      <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
         {{roadSelect}}
         <van-icon name="arrow"/>
 
@@ -10,9 +10,12 @@
       <!--<select slot="left" class="ob_header_select">-->
       <!--<option value="">线路一</option>-->
       <!--</select>-->
-      <div slot="right" @click="showDownBox()" v-if="!nullLogin">
-        <van-icon name="contact"/>
-        <van-icon name="more-o"/>
+      <div slot="right"  v-if="!nullLogin&&userData&&!$_.isEmpty(userData)">
+        <van-icon name="contact" style="margin-right: 1.4rem"/>
+
+        <span  style="position: absolute;right: 0.7rem;top:-0.2rem;">{{userData.username}}</span>
+        <span style="position: absolute;right: 1rem;top:0.2rem">￥0.00</span>
+        <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox" >
       </div>
       <div slot="right" class="homeLogig" v-if="nullLogin">
        <router-link to="/login">登录</router-link>   <router-link to="/register" >注册</router-link>
@@ -122,6 +125,7 @@
         ],
         showDownNav: false,
         roomList:null,
+        userData:null
       }
     },
 
@@ -133,6 +137,8 @@ const vm = this
 
    if(!sessionStorage.getItem('userInfo')){
     vm.nullLogin = true
+   }else{
+     vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
    }
 
      const toast1 = vm.$toast.loading({
@@ -161,6 +167,14 @@ const vm = this
 
 
     },
+    mounted(){
+      this.$nextTick(() => {
+        document.querySelector('body').addEventListener('click', this.handleBodyClick);
+      })
+    },
+    beforeDestroy(){
+      document.querySelector('body').removeEventListener('click', this.handleBodyClick);
+    },
     methods: {
         //退出登录
       outLogin(){
@@ -171,13 +185,35 @@ const vm = this
       //选择线路
       selectRoad() {
         const vm = this
-        vm.showRoad = true
+        vm.showRoad = !vm.showRoad
+
+      },
+      handleBodyClick(e){
+        const vm = this
+//        console.log(vm.$refs.DownBox.contains(event.target))
+        const notOutside = vm.$refs.DownBox.contains(event.target);
+        const notOutside2 = vm.$refs.selectBox.contains(event.target);
+        if (!notOutside) {
+          vm.showDownNav=false
+
+        }
+        if (!notOutside2) {
+
+          vm.showRoad=false
+        }
+//        if(vm.showDownNav){
+//          vm.showDownNav=false
+//        }
+//        if(vm.showRoad){
+//          vm.showRoad=false
+//        }
 
       },
       selectedRoad(road) {
         const vm = this
         vm.roadSelect = road
         vm.showRoad = false
+
 //        console.log(road)
       },
       onChange() {
