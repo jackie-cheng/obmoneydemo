@@ -309,6 +309,7 @@
 //        console.log(JSON.stringify(sendData))
         vm.websock.send(JSON.stringify(sendData));
         vm.mySendMessage.push(sendData)
+          console.log(vm.mySendMessage)
           let aa = document.getElementById('msg_end')
           aa.click();
 //          let divUl = document.getElementsByClassName('room_wechatul')[0]
