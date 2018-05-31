@@ -293,8 +293,9 @@
         const vm = this
         vm.redata = JSON.parse(e.data);
 //        console.log(e.data)
+        console.log('收到的',vm.redata)
         vm.mySendMessage.push(vm.redata)
-        console.log(vm.mySendMessage)
+        console.log('收消息列表',vm.mySendMessage)
         let aa = document.getElementById('msg_end')
         aa.click();
 //        let divUl = document.getElementsByClassName('room_wechatul')[0]
@@ -308,8 +309,9 @@
         let sendData ={"phone":vm.userData.phone,"message":agentData,'sendTime':curTime}
 //        console.log(JSON.stringify(sendData))
         vm.websock.send(JSON.stringify(sendData));
+          console.log('发的消息',JSON.stringify(sendData))
         vm.mySendMessage.push(sendData)
-          console.log(vm.mySendMessage)
+          console.log('发送列表',vm.mySendMessage)
           let aa = document.getElementById('msg_end')
           aa.click();
 //          let divUl = document.getElementsByClassName('room_wechatul')[0]
