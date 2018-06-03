@@ -105,7 +105,7 @@
               vm.$toast('登录失败');
             }
           }).catch(response => {
-
+          vm.$toast('登录失败');
         })
       },
 

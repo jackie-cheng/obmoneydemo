@@ -13,15 +13,16 @@
 <div class="gongneng_list">
   <van-cell-group>
     <van-cell title="我的钱包" icon="pending-payment" is-link to="/wallet_record" />
-    <van-cell title="交易记录" icon="exchange-record" is-link to="/wallet_record" />
-    <van-cell title="统计记录" icon="edit-data" is-link to="/wallet_record" />
-    <van-cell title="我的回水" icon="pending-deliver" is-link to="/wallet_record" />
+    <van-cell title="交易记录" icon="exchange-record" is-link to="/trade_list" />
+    <van-cell title="统计记录" icon="edit-data" is-link to="/statistic_list" />
+    <van-cell title="我的回水" icon="pending-deliver" is-link to="/backwater_list" />
 
   </van-cell-group>
   <van-cell-group>
-    <van-cell title="积分记录" icon="exchange" is-link to="/wallet_record" />
-    <van-cell title="联系客服" icon="phone" is-link to="/wallet_record" />
+    <van-cell title="积分记录" icon="exchange" is-link to="/score_list" />
+    <van-cell title="联系客服" icon="phone" is-link to="/customerSerVice" />
     <van-cell title="我的推广" icon="new" is-link to="/wallet_record" />
+    <van-cell title="签到" icon="new" is-link to="/sign_every" />
   </van-cell-group>
 </div>
     <!--<router-link to="/login">还没登录，去登录</router-link>-->

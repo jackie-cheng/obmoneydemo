@@ -35,3 +35,36 @@
 
   }
 }
+
+//积分记录列表 时间选择器
+.mr-root{
+  .search_date{
+    margin: 0.6rem 0.3rem;
+.yd-datetime-input{
+  text-align: center;display: inline-block;background-color: white;width: 2.6rem;height: 1rem;line-height: 1rem;border-radius: 0.2rem
+    }
+    .search_but{
+      margin-left: 1.5rem;
+      display: inline-block;
+      text-align: center;
+      border-radius: 0.1rem;
+      font-size: 0.36rem;
+      box-sizing: border-box;
+    height: 1rem;line-height: 1rem;width: 1.3rem;
+      color: #fff;
+      background-color: #f44;
+    }
+  }
+}
+//统计记录
+.statis_cla{
+  .tab_statistic{
+position: inherit;
+    .van-tabbar-item{
+      border-right:1px solid #ccc;
+      color: black;
+      font-weight:300;
+    }
+
+  }
+}

@@ -1,7 +1,7 @@
 <template>
-  <div class="mr-root roomDa">
+  <div class="mr-root roomDa" v-if="roomData&&!$_.isEmpty(roomData)">
     <van-nav-bar
-      title="666"
+      :title="roomData.name"
       left-arrow
       @click-left="onClickLeft"
     > <van-icon name="add-o" slot="right" />
@@ -97,11 +97,11 @@
     </main>
     <div class="footSet">
       <van-button @click="showCustomAction=true">投注</van-button>
-      <van-button >
+      <van-button @click="recallMenu=true">
         撤单
       </van-button>
       <van-cell-group>
-        <van-field v-model="messageValue" placeholder="发送聊天" />
+        <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess" />
       </van-cell-group>
       <!--<form action="/">-->
         <!--<van-search-->
@@ -152,11 +152,11 @@
           </ul>
         </div>
         <div class="touzhu_right" v-if="touzhuType==2">
-          <p>第一球</p>
+          <img src="../../assets/firstball.png" alt="">
           <ul>
             <li v-for="n in 20" :class="{curChosBall_class:curChosBallOne== n}" @click = 'curChosBallOne= n'><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
           </ul>
-          <p>第二球</p>
+          <img src="../../assets/secball.png" alt="">
           <ul>
             <li v-for="n in 20" :class="{curChosBall_class:curChosBallTwo== n}" @click = 'curChosBallTwo= n'><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
           </ul>
@@ -193,6 +193,26 @@
 
 </div>
     </van-actionsheet>
+    <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac">
+      <div class="recallMenu_action">
+        <table class="ob_pay_record_table">
+          <tr>
+            <th width="30%">期号</th>
+            <th width="20%">投注内容</th>
+            <th width="30%">金额</th>
+            <th width="20%">操作</th>
+          </tr>
+          <tr v-for="n in 4">
+            <td width="30%">888</td>
+            <td width="20%">大</td>
+            <!--如果为充值，则颜色添加红色，添加样式pay_money-->
+            <td width="30%" class="pay_money">1000.00</td>
+            <td width="20%" class="recallMenu_but" @click="toRecall(n)"> <span>撤单</span></td>
+          </tr>
+        </table>
+
+      </div>
+    </van-actionsheet>
   </div>
 </template>
 <script>
@@ -210,6 +230,7 @@
         curChosBallTwo:1,//当前选中球2
         touzhuType:1,
         touzhuNum:null,
+        recallMenu:false,
         showCustomAction:false,
         activeNames: ['2'],
         roomId: null,
@@ -222,9 +243,12 @@
       }
     },
     methods: {
+      toRecall(){
+        const vm = this
+        vm.$toast('撤单成功');
+      },
       sendMess(){
         const vm = this
-
         if(!sessionStorage.getItem('userInfo')){
           vm.$router.push('/login')
         }else if(vm.$_.isEmpty(vm.messageValue)){

@@ -443,7 +443,7 @@ position: absolute;
         width: 1.9rem;
         height: 1.9rem;
         line-height: 1.9rem;
-        margin-left: 0.1rem;
+        margin-left: 0.3rem;
 
       }
       &.active_monbut+li{
@@ -545,8 +545,9 @@ margin-left: 1.1rem;
 .curChosBall_class{
   background-color: #f2dd41;
 }
-    p{
-
+    img{
+width: 3.2rem;
+      height: 0.89rem;
     }
     ul{
       li{
@@ -565,4 +566,18 @@ font-weight: bold;
     }
   }
 }
-
+//撤单
+.recallMenu_action{
+  margin-top: 1.1rem;
+  height: 13rem;
+  .recallMenu_but{
+    span{
+      color: $red_color;
+      border: 1px solid $red_color;
+      font-size: small;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.1rem;
+      cursor: pointer;
+    }
+  }
+}

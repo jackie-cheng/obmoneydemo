@@ -33,7 +33,7 @@
               </el-button>
             </template>
             <template slot="append" v-if="disableBut">
-              <el-button style="background-color: #c8c9cc;color: white;">{{seconds}}s后获取</el-button>
+              <el-button style="background-color: #c8c9cc;color: white;border-color: #c8c9cc">{{seconds}}s后获取</el-button>
             </template>
           </el-input>
         </el-form-item>
@@ -92,7 +92,7 @@
       };
 
       return {
-        seconds: 20,
+        seconds: 60,
         disableBut: false,//验证码60S
         ruleForm2: {
           username: '',
@@ -206,12 +206,12 @@
         let param = new URLSearchParams(); //创建form对象
         param.append('phone', vm.ruleForm2.phone);//通过append向form对象添加数据
         param.append('photoCode', vm.ruleForm2.photoCode);//添加form表单中其他数据
-        vm.seconds = 20
+        vm.seconds = 60
         vm.disableBut = true
         vm.getTimesec()
         setTimeout(() => {
           vm.disableBut = false
-        }, 20000)
+        }, 60000)
         let config = {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };  //添加请求头

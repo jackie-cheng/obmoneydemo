@@ -11,6 +11,7 @@ import { appInitInject, } from './utils/common'
 appInitInject()
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'vue-ydui/dist/ydui.base.css';
 
 Vue.use(ElementUI);
 /* eslint-disable no-new */

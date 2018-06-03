@@ -11,11 +11,11 @@
       <!--<option value="">线路一</option>-->
       <!--</select>-->
       <div slot="right">
-        <van-icon name="contact" style="margin-right: 1.4rem"/>
+        <van-icon name="contact" style="margin-right: 1.7rem"/>
 <template  v-if="!nullLogin&&userData&&!$_.isEmpty(userData)">
 
-  <span  style="position: absolute;right: 0.7rem;top:-0.2rem;">{{userData.username}}</span>
-  <span style="position: absolute;right: 1rem;top:0.2rem">￥0.00</span>
+  <span  style="position: absolute;right: 0.8rem;top:-0.2rem;">{{userData.username}}</span>
+  <span style="position: absolute;right: 1.1rem;top:0.2rem">￥0.00</span>
 </template>
 
         <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox" >
@@ -31,8 +31,8 @@
 
     <!--顶部下拉菜单-->
     <div class="ob_moreOperate_content" v-if="showDownNav">
-      <van-cell  title="交易记录"/>
-      <van-cell  title="统计记录"/>
+      <van-cell  title="交易记录" to="/trade_list"/>
+      <van-cell  title="统计记录" to="/statistic_list"/>
       <van-cell  title="关闭声音"/>
       <van-cell  title="个人中心" to="/user"/>
       <van-cell  title="退出账号" @click="outLogin"/>

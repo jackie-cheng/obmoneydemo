@@ -113,7 +113,41 @@ export default new Router({
         require(['../pages/my_wallet/wechatIn.vue'], resolve)
       }
     },
-
-
+    {
+      path: '/statistic_list',
+      component: resolve => {
+        require(['../pages/recordList/statisticList.vue'], resolve)
+      }
+    },
+    {
+      path: '/trade_list',
+      component: resolve => {
+        require(['../pages/recordList/tradeList.vue'], resolve)
+      }
+    },
+    {
+      path: '/score_list',
+      component: resolve => {
+        require(['../pages/recordList/scoreList.vue'], resolve)
+      }
+    },
+    {
+      path: '/backwater_list',
+      component: resolve => {
+        require(['../pages/recordList/backWater.vue'], resolve)
+      }
+    },
+    {
+      path: '/backWater_rule',
+      component: resolve => {
+        require(['../pages/recordList/backWaterRule.vue'], resolve)
+      }
+    },
+    {
+      path: '/sign_every',
+      component: resolve => {
+        require(['../pages/user/signEvery.vue'], resolve)
+      }
+    },
   ]
 })
