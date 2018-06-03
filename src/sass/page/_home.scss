@@ -474,6 +474,9 @@ position: absolute;
   .foot_but{
     margin-top: 1.8rem;
     padding: 0 0.3rem;
+    input{
+      background-color: white;
+    }
   }
   .touzhu_total{
     @extend %display;
