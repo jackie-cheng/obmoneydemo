@@ -108,7 +108,7 @@ export default new Router({
       }
     },
     {
-      path: '/wechat_in',
+      path: '/wechat_in/:id',
       component: resolve => {
         require(['../pages/my_wallet/wechatIn.vue'], resolve)
       }

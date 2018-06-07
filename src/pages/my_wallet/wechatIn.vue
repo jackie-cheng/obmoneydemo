@@ -1,10 +1,10 @@
 <template>
-    <div class="mr-root wechat_in">
+    <div class="mr-root wechat_in" v-if="curRecharge&&curRecharge!=null">
 
         <!--header-->
-        <van-nav-bar title="微信充值" left-arrow @click-left="onClickLeft()"/>
+        <van-nav-bar :title="curRecharge.accountType+'充值'" left-arrow @click-left="onClickLeft()"/>
         <!--页面内容-->
-      <img src="../../assets/wechatIn.png" alt="">
+      <img :src="'http://47.106.11.246:8080'+curRecharge.twoDimensionalCode" alt="">
       <van-cell-group>
         <van-field
           center
@@ -36,7 +36,11 @@
     export default{
         name: 'wechatIn',
         data () {
-            return {shouAccount:null}
+            return {
+              curRecharge:null,
+                shouAccount:null,
+              userToken:null,
+            }
         },
       methods: {
         copyText(){
@@ -49,10 +53,31 @@
         },
         onClickLeft(){
           this.$router.go(-1)
+        },
+        obRecharge(){
+            const vm = this
+          let url = '/a/receivingbankaccount/receivingBankAccount/getfind?id=' + vm.$route.params.id
+          vm.$axios.get(url)
+            .then(response => {
+
+              if (response.status == 200&&response.data) {
+
+                console.log(response.data)
+                vm.curRecharge = response.data
+              } else {
+                vm.$toast('获取充值信息失败');
+              }
+            }).catch(response => {
+            vm.$toast('获取充值信息失败');
+          })
         }
       },
         created () {
             const vm = this
+
+               vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+     vm.userToken =  vm.userData.accessToken
+          vm.obRecharge()
         },
         components: {},
     }

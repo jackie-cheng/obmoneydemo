@@ -398,7 +398,11 @@ margin-right: 0.3rem;
     max-width: 800px;
     margin: 0 auto;
     .van-actionsheet__content{
-
+      //position: fixed;
+      //overflow-y: scroll;
+      //height: auto;
+      //width: 100%;
+      //-webkit-overflow-scrolling: touch;   /*这句是为了滑动更顺畅*/
       background-color: #efeff4;
     }
     .van-actionsheet__header{
@@ -411,6 +415,7 @@ margin-right: 0.3rem;
       width: 100%;
       background-color: #ff4444;
       color: white;
+      -webkit-overflow-scrolling: touch;   /*这句是为了滑动更顺畅*/
       i{
         color: white;
       }
@@ -422,7 +427,7 @@ margin-right: 0.3rem;
   background-color: #6a6b6e;
   max-width: 800px;
   margin: 0 auto;
-  position: fixed;
+  //position: fixed;
   bottom: 0;
   ul{
 position: absolute;
