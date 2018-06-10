@@ -165,6 +165,7 @@
 //用户首页
 .user_index_class{
   .user_header{
+    position: relative;
 height: 5rem;
     width: 100%;
     color: white;
@@ -203,9 +204,25 @@ margin-right: 0.5rem;
 
       }
     }
+    .van-hairline--top-bottom::after{
+      border: none;
+    }
+    .van-tabbar--fixed{
+      position: absolute;
+
+      background-color: #912a26;
+
+      .van-tabbar-item{
+        color: white;
+        &:nth-child(1){
+          border-right: 0.1px solid white;
+        }
+      }
+
+    }
   }
   .gongneng_list{
-    margin-top: 0.7rem;
+    margin-top: 0.5rem;
     .van-cell-group{
       margin-bottom: 0.3rem;
     }

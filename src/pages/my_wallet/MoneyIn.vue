@@ -65,14 +65,18 @@
             }).catch(response => {
             vm.$toast('获取充值列表失败');
           })
-        }
+        },
+
+
       },
         created () {
             const vm = this
           if(!sessionStorage.getItem('userInfo')){
             vm.$router.push('/login')
+          }else{
+            vm.obList()
           }
-          vm.obList()
+
         },
         components: {},
     }

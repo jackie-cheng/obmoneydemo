@@ -10,7 +10,7 @@
           center
 
           label="收款账户"
-          placeholder="6666666666666"
+          :placeholder="curRecharge.account"
           disabled="true"
         >
           <van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>
@@ -19,7 +19,7 @@
           center
 
           label="收款姓名"
-          placeholder="帝魂国际"
+          :placeholder="curRecharge.realName"
           disabled="true"
         >
           <van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>
@@ -29,7 +29,7 @@
       <van-cell-group class="shuru_money">
         <van-field v-model="shouAccount" type="number" placeholder="输入金额" maxlength="4" />
       </van-cell-group>
-      <van-button type="danger" style="width: 70%;margin: 0.8rem 1.5rem">提交</van-button>
+      <van-button type="danger" style="width: 70%;margin: 0.8rem 1.5rem" @click="moneySubmit">提交</van-button>
     </div>
 </template>
 <script>
@@ -69,6 +69,30 @@
               }
             }).catch(response => {
             vm.$toast('获取充值信息失败');
+          })
+        },
+        moneySubmit(){
+          const vm = this
+          if(vm.$_.isEmpty(vm.shouAccount)){
+            vm.$toast('请输入充值金额');
+            return
+          }
+          let params={
+              gameid: vm.userToken,
+            payType:vm.curRecharge.accountType,
+            applyMoneyAmount:vm.shouAccount,
+          }
+          vm.$axios.post('/f/GeamUserRank/upSave',params)
+            .then(response => {
+
+              if (response.status == 200&&response.data) {
+console.log( response)
+//                vm.cardList = response.data
+              } else {
+                vm.$toast('充值失败');
+              }
+            }).catch(response => {
+            vm.$toast('充值失败');
           })
         }
       },

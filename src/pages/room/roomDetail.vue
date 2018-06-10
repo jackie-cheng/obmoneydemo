@@ -96,12 +96,13 @@
 
     </main>
     <div class="footSet">
-      <van-button @click="showCustomAction=true">投注</van-button>
+      <van-button @click="showCustomAction=true" v-if="roomData.guessFlag=='1'">投注</van-button>
+      <van-button @click="startGuess" v-if="roomData.guessFlag!='1'" class="disButton">投注</van-button>
       <van-button @click="recallMenu=true">
         撤单
       </van-button>
       <van-cell-group>
-        <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess" />
+        <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess"  :disabled="roomData.guessFlag!='1'"/>
       </van-cell-group>
       <!--<form action="/">-->
         <!--<van-search-->
@@ -243,6 +244,10 @@
       }
     },
     methods: {
+      startGuess(){
+        const vm = this
+        vm.$toast('当前竞猜已关闭');
+      },
       toRecall(){
         const vm = this
         vm.$toast('撤单成功');
@@ -252,6 +257,9 @@
         if(!sessionStorage.getItem('userInfo')){
           vm.$router.push('/login')
         }else if(vm.$_.isEmpty(vm.messageValue)){
+          return
+        }else if(vm.roomData.guessFlag!='1'){
+          vm.$toast('当前房间聊天已关闭');
           return
         }
         else{

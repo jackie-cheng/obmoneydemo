@@ -9,6 +9,10 @@ import router from './router'
 Vue.config.productionTip = false
 import { appInitInject, } from './utils/common'
 appInitInject()
+router.beforeEach((to, from, next) => {
+  window.document.title = to.meta.title;
+  next()
+})
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'vue-ydui/dist/ydui.base.css';

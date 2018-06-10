@@ -42,10 +42,10 @@
         </el-form-item>
 
         <el-form-item prop="qqNum">
-          <el-input type="password" v-model="ruleForm2.qqNum" auto-complete="off" placeholder="请输入您的QQ号"></el-input>
+          <el-input  v-model="ruleForm2.qqNum" auto-complete="off" placeholder="请输入您的QQ号"></el-input>
         </el-form-item>
         <el-form-item prop="recomMan">
-          <el-input type="password" v-model="ruleForm2.recomMan" auto-complete="off"
+          <el-input  v-model="ruleForm2.recomMan" auto-complete="off"
                     placeholder="请输入您的介绍人（没有可不填）"></el-input>
         </el-form-item>
         <div class="goRegis">

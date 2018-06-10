@@ -89,8 +89,10 @@
     <!--房间list-->
     <section class="ob_home_lists">
       <van-cell-group v-for="r in roomList" :key="r.no">
-        <van-cell :title="r.name" value="进入房间" label="最低30元起，大双小单4.6倍，大胆期限红100万" :to="'/roomDetail/'+r.roomnumber">
-          <div class="sd_home_room_pic" slot="icon"></div>
+        <van-cell :title="r.name" value="进入房间" :label="'当前在线'+r.count+'人'" @click="intoRoom(r)">
+          <div class="sd_home_room_pic" slot="icon">
+            <img :src="'http://47.106.11.246:8080'+r.roomIcon" alt="" v-if="r.roomIcon!=''" :to="'/roomDetail/'+r.roomnumber">
+          </div>
         </van-cell>
       </van-cell-group>
 
@@ -117,6 +119,7 @@
     name: 'home',
     data() {
       return {
+        homeData:null,
         nullLogin:false,
         roadSelect: '线路一',
         showRoad: false,
@@ -137,7 +140,7 @@
     },
     created() {
 const vm = this
-
+      vm.obHomeData()
    if(!sessionStorage.getItem('userInfo')){
     vm.nullLogin = true
    }else{
@@ -179,6 +182,14 @@ const vm = this
       document.querySelector('body').removeEventListener('click', this.handleBodyClick);
     },
     methods: {
+      intoRoom(r){
+        const vm = this
+if(r.openFlag=='1'){
+  vm.$router.push('/roomDetail/'+r.roomnumber)
+}else{
+  vm.$toast.fail('房间已关闭');
+}
+      },
         //退出登录
       outLogin(){
           const vm = this
@@ -189,6 +200,25 @@ const vm = this
       selectRoad() {
         const vm = this
         vm.showRoad = !vm.showRoad
+
+      },
+//获取首页数据
+      obHomeData() {
+        const vm = this
+//        let params = {
+//          pageNo:1,
+//          pageSize:10,
+//        }
+        vm.$axios.get(`/api/frontPictureController/getAllPicture`)
+          .then(response => {
+            if (response.status == 200&&response.data) {
+              vm.homeData = response.data
+            } else {
+              vm.$toast('获取首页数据失败');
+            }
+          }).catch(response => {
+
+        })
 
       },
       handleBodyClick(e){
