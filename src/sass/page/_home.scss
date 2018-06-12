@@ -128,9 +128,16 @@
   background-color: $jige_color;
   border-radius: 8px;
   margin-right: 8px;
+
+}
+.sd_home_room_picteo{
+
   img{
+    @extend %float;
     width: 1.45rem;
     @include height(true, 1.45rem, 1.45rem);
+    border-radius: 8px;
+    margin-right: 8px;
   }
 }
 
@@ -368,7 +375,7 @@ top:46px;
     border: 1px solid #ccc;
   }
   .van-cell-group{
-    width: 46%;
+    width: 50%;
    .van-cell{
      width: 100%;
    }
@@ -385,7 +392,10 @@ line-height: 0.9rem;
   .send_button{
     border-color: #ff4444;
     color: #ff4444;
-    margin-left: 0.1rem;
+    position: absolute;
+    right: 0.2rem;
+    bottom: 0.2rem;
+    //margin-left: 0.1rem;
     //width: 0.8rem;
   }
 .van-cell-group{

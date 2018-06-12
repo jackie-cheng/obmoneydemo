@@ -14,7 +14,7 @@
       <!--信息-->
       <div class="room_topData_up">
 <div class="room_topData_lift"> <span>距<em>333</em>期止</span>
-  <p>01:25</p>
+  <p> <yd-countdown :time="666" timetype="second" format="{%m}分{%s}秒"></yd-countdown></p>
 </div>
         <div class="room_topData_lift"><span>总余额</span>
           <p>01:25</p></div>
@@ -102,7 +102,8 @@
         撤单
       </van-button>
       <van-cell-group>
-        <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess"  :disabled="roomData.guessFlag!='1'"/>
+        <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess"  v-if="roomData.guessFlag=='1'"/>
+        <van-field v-model="messageValue" placeholder="房间禁言中" disabled  v-if="roomData.guessFlag!='1'"/>
       </van-cell-group>
       <!--<form action="/">-->
         <!--<van-search-->
@@ -218,7 +219,9 @@
 </template>
 <script>
   import Vue from 'vue'
+  import {CountDown} from 'vue-ydui/dist/lib.px/countdown';
 
+  Vue.component(CountDown.name, CountDown);
   export default{
     name: 'roomDetail',
     data () {
@@ -284,7 +287,7 @@
 //        console.log(vm.mySendMessage)
 //        vm.websocketsend(agentData)
         //若是ws开启状态
-        if (vm.websock.readyState === 1) {
+        if (vm.websock.readyState == 1) {
           vm.websocketsend(agentData)
 
         }else{
@@ -308,9 +311,10 @@
       initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.106.11.246:8080/websocket");
-        if(vm.websock.onopen){
-         console.log("WebSocket连接成功")
+        vm.websock = new WebSocket("ws://localhost:8080/websocket");
+        if(vm.websock.readyState != 1){
+         console.log("WebSocket连接中")
+//          vm.initWebSocket()
         }
         console.log(vm.websock)
         vm.websock.onmessage = vm.websocketonmessage;

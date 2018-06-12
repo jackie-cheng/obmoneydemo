@@ -114,6 +114,24 @@ export default new Router({
       }
     },
     {
+      path:'/accountSet',
+      meta: {
+        title: '提现账户设置',
+      },
+      component:resolve=>{
+        require(['../pages/user/accountSet.vue'],resolve)
+      }
+    },
+    {
+      path:'/accountSetDetail',
+      meta: {
+        title: '添加账户',
+      },
+      component:resolve=>{
+        require(['../pages/user/accountSetDetail.vue'],resolve)
+      }
+    },
+    {
       path:'/safeSet',
       meta: {
         title: '安全设置',

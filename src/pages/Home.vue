@@ -90,7 +90,9 @@
     <section class="ob_home_lists">
       <van-cell-group v-for="r in roomList" :key="r.no">
         <van-cell :title="r.name" value="进入房间" :label="'当前在线'+r.count+'人'" @click="intoRoom(r)">
-          <div class="sd_home_room_pic" slot="icon">
+          <div class="sd_home_room_pic" slot="icon" v-if="r.roomIcon==''">
+          </div>
+          <div class="sd_home_room_picteo"  slot="icon">
             <img :src="'http://47.106.11.246:8080'+r.roomIcon" alt="" v-if="r.roomIcon!=''" :to="'/roomDetail/'+r.roomnumber">
           </div>
         </van-cell>
@@ -145,6 +147,7 @@ const vm = this
     vm.nullLogin = true
    }else{
      vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+
    }
 
      const toast1 = vm.$toast.loading({
@@ -163,7 +166,7 @@ const vm = this
          toast1.clear();
          if (response.status == 200&&response.data) {
              vm.roomList = response.data.rows
-              console.log(response)
+
          } else {
            vm.$toast('获取房间列表失败');
          }
@@ -206,13 +209,14 @@ if(r.openFlag=='1'){
       obHomeData() {
         const vm = this
 //        let params = {
-//          pageNo:1,
-//          pageSize:10,
+//          id:vm.userData.accessToken,
+//          user_level:'黄金会员',
 //        }
-        vm.$axios.get(`/api/frontPictureController/getAllPicture`)
+        vm.$axios.get(`http://47.106.11.246:8086/api/frontPictureController/getAllPicture`)
           .then(response => {
             if (response.status == 200&&response.data) {
               vm.homeData = response.data
+              console.log(response)
             } else {
               vm.$toast('获取首页数据失败');
             }

@@ -1,21 +1,20 @@
 <template>
   <div class="mr-root">
     <van-nav-bar
-      title="安全设置"
+      title="提现账户设置"
       left-arrow
       @click-left="onClickLeft"
 
     />
-    <div>
+    <div class="accountSet_class">
       <van-cell-group>
-        <van-cell title="支付密码" is-link to="/payPassword" />
-        <van-cell title="修改密码" is-link to="/modifyPassword" />
-        <van-cell title="提现账户设置" is-link to="/accountSet" />
+      <van-cell title="支付宝" value="" label="15937442239" class="first_cell">
+      <template slot="icon">
+        <img src="../../assets/qq.png" alt="">
+      </template>
+      </van-cell>
+      <van-cell title="添加银行卡" icon="add-o" to="/accountSetDetail" />
       </van-cell-group>
-
-
-
-
     </div>
 
 
@@ -27,7 +26,7 @@
 
   export default {
 
-    name: 'modifyPass',
+    name: 'accountSet',
     data(){
       return {
 
@@ -53,6 +52,8 @@
 //     修改密码
       obNewPass(){
         const vm = this
+        vm.$toast('功能还没做');
+        return
         if (vm.$_.isEmpty(vm.phoneNum)) {
           vm.$toast('密码不能为空');
           return

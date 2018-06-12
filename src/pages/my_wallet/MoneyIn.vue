@@ -6,7 +6,7 @@
         <!--页面内容-->
 
 
-      <van-cell-group>
+      <van-cell-group v-if="cardList&&!$_.isEmpty(cardList)">
         <van-cell :to="'/wechat_in/'+car.id" v-for = "(car,index) in cardList" :key = 'car.id'>
           <template slot="title">
             <img :src="'http://47.106.11.246:8080'+car.iconPhoto" alt="">
@@ -53,7 +53,7 @@
         },
         obList(){
           const vm = this
-          vm.$axios.get('/a/receivingbankaccount/receivingBankAccount/findList')
+          vm.$axios.get('/f/GeamUserRank/findList')
             .then(response => {
 
               if (response.status == 200&&response.data) {

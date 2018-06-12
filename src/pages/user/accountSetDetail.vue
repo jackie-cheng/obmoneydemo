@@ -1,21 +1,28 @@
 <template>
   <div class="mr-root">
     <van-nav-bar
-      title="安全设置"
+      title="添加账户"
       left-arrow
       @click-left="onClickLeft"
 
     />
-    <div>
+    <div class="accountSet_class">
       <van-cell-group>
-        <van-cell title="支付密码" is-link to="/payPassword" />
-        <van-cell title="修改密码" is-link to="/modifyPassword" />
-        <van-cell title="提现账户设置" is-link to="/accountSet" />
+        <van-cell title="账户类型" value="支付宝" />
+      </van-cell-group>
+      <van-cell-group class="frist_accountDel">
+        <van-cell title="账户姓名"  value="张三" />
+        <van-field
+          v-model="accountNum"
+          label="账号"
+          icon="clear"
+          placeholder="请输入账号"
+          required
+          @click-icon="accountNum = ''"
+        />
       </van-cell-group>
 
-
-
-
+      <van-button type="danger" @click="addAccount()">确认添加</van-button>
     </div>
 
 
@@ -27,11 +34,11 @@
 
   export default {
 
-    name: 'modifyPass',
+    name: 'accountSetDe',
     data(){
       return {
 
-        phoneNum:'',
+        accountNum:'',
 
       }
     },
@@ -49,10 +56,19 @@
         this.$router.go(-1)
       },
 
-
+      addAccount(){
+        const vm = this
+        if (vm.$_.isEmpty(vm.accountNum)) {
+          vm.$toast('账号不能为空');
+          return
+        }
+        vm.$toast('添加成功');
+      },
 //     修改密码
       obNewPass(){
         const vm = this
+        vm.$toast('功能还没做');
+        return
         if (vm.$_.isEmpty(vm.phoneNum)) {
           vm.$toast('密码不能为空');
           return
