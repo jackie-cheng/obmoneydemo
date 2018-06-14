@@ -40,7 +40,13 @@
     </div>
     <!--图片部分-->
     <section class="ob_index_imgs">
-      <van-swipe :autoplay="3000">
+      <van-swipe :autoplay="3000" v-if="homeData&&homeData.length>0">
+        <van-swipe-item  to="/notice" v-for="(image,index) in homeData" :key="index">
+          <img :src="'http://47.106.11.246:8080'+image.pictureAddress"/>
+        </van-swipe-item>
+
+      </van-swipe>
+      <van-swipe :autoplay="3000" v-else>
         <van-swipe-item  to="/notice">1</van-swipe-item>
         <van-swipe-item  to="/notice">2</van-swipe-item>
         <van-swipe-item  to="/notice">3</van-swipe-item>
@@ -212,11 +218,11 @@ if(r.openFlag=='1'){
 //          id:vm.userData.accessToken,
 //          user_level:'黄金会员',
 //        }
-        vm.$axios.get(`http://47.106.11.246:8086/api/frontPictureController/getAllPicture`)
+        vm.$axios.get(`/api/frontPictureController/getAllPicture`)
           .then(response => {
             if (response.status == 200&&response.data) {
-              vm.homeData = response.data
-              console.log(response)
+              vm.homeData = response.data.info
+//              console.log(response.data.info)
             } else {
               vm.$toast('获取首页数据失败');
             }

@@ -132,6 +132,15 @@ export default new Router({
       }
     },
     {
+      path:'/addBank',
+      meta: {
+        title: '添加银行卡',
+      },
+      component:resolve=>{
+        require(['../pages/my_wallet/addBank.vue'],resolve)
+      }
+    },
+    {
       path:'/safeSet',
       meta: {
         title: '安全设置',

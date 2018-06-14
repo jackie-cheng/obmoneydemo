@@ -311,14 +311,14 @@
       initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://localhost:8080/websocket");
-        if(vm.websock.readyState != 1){
-         console.log("WebSocket连接中")
-//          vm.initWebSocket()
-        }
+        vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket");
+//        if(vm.websock.readyState != 1){
+//         console.log("WebSocket连接中")
+////          vm.initWebSocket()
+//        }
         console.log(vm.websock)
-        vm.websock.onmessage = vm.websocketonmessage;
-        vm.websock.onclose = vm.websocketclose;
+//        vm.websock.onmessage = vm.websocketonmessage;
+//        vm.websock.onclose = vm.websocketclose;
         // 路由跳转时结束websocket链接
 //        vm.$router.afterEach(function () {
 //          vm.websock.onclose
@@ -357,9 +357,15 @@
       websocketclose(e){  //关闭
         console.log("connection closed (" + e.code + ")");
       },
-      creatGet(){
+//      获取聊天记录
+      obChatRecord(){
           const vm = this
-        vm.$axios.get(`/api/chatWebsocket/startChat`)
+        let params={
+          roomNumber: 6,
+          pageNumber:1,
+          pageSize:10,
+        }
+        vm.$axios.get(`/chatRecord/queryChatRecordByRoomnumber`,{params})
           .then(response => {
             if (response.status == 200 && response.data) {
               console.log(response)
@@ -391,6 +397,8 @@
 //          ws.close()
 //        })
 //      }
+
+
     getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -433,6 +441,7 @@
     },
     created () {
       const vm = this
+      vm.obChatRecord()
       if(sessionStorage.getItem('userInfo')){
               vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
       vm.userToken = vm.userData.accessToken

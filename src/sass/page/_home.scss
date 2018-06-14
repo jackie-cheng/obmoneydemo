@@ -23,8 +23,9 @@
     color: #fff;
     padding: 10px 0;
     .van-cell__title {
+      text-align: center;
       width: 3rem;
-      margin: 0 auto;
+      //margin: 0 auto;
     }
     &:not(:last-child) {
       &:after {

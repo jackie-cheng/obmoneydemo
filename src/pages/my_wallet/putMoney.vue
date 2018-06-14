@@ -49,7 +49,7 @@
         vm.$router.push('/login')
       }else{
         vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-        vm.userToken =  vm.userData.accessToken
+        vm.userToken =  vm.userData.no
       }
     },
   }

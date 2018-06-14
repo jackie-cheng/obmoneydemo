@@ -15,7 +15,7 @@
           v-model="photoCode"
           placeholder="请输入图片验证码"
         >
-          <template slot="button"><img src="http://47.106.11.246:8080/api/Registercontroller/photoCode.do"
+          <template slot="button"><img src="http://47.106.11.246:8086/api/Registercontroller/photoCode.do"
                                        @click="showPhotoCode()"     ref="Imgdata"></template>
           <!--<van-button slot="button" size="small" type="primary" v-if="!disableBut" @click="obMobileCode()">发送验证码</van-button>-->
         </van-field>

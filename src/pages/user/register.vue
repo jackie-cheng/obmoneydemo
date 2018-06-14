@@ -22,7 +22,7 @@
         <el-form-item prop="photoCode" class="twoInput">
           <el-input v-model="ruleForm2.photoCode" placeholder="请输入图片验证码">
 
-            <template slot="append"><img src="http://47.106.11.246:8080/api/Registercontroller/photoCode.do"
+            <template slot="append"><img src="http://47.106.11.246:8086/api/Registercontroller/photoCode.do"
                                          @click="showPhotoCode()" ref="Imgdata"></template>
           </el-input>
         </el-form-item>

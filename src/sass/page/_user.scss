@@ -285,3 +285,28 @@ margin-right: 0.5rem;
   }
 }
 
+//添加银行卡
+.addBack_class{
+  .tishi_bank{
+    margin: 0.35rem 0.2rem;
+    font-size: 0.35rem;
+    color: #666;
+  }
+  .frist_accountDel{
+    margin-top: 0.35rem;
+  }
+  .van-button {
+    width: 80%;
+    display: block;
+    max-width: 8rem;
+    margin: 0.4rem auto;
+    line-height: 1rem;
+    height: 1rem;
+    //max-height: 40px;
+
+  }
+  .yd-cell-left{
+    min-width: 90px;
+  }
+}
+

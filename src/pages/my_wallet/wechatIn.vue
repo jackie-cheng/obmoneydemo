@@ -27,7 +27,7 @@
       </van-cell-group>
 
       <van-cell-group class="shuru_money">
-        <van-field v-model="shouAccount" type="number" placeholder="输入金额" maxlength="4" />
+        <van-field v-model="shouAccount" type="number" placeholder="输入金额"  />
       </van-cell-group>
       <van-button type="danger" style="width: 70%;margin: 0.8rem 1.5rem" @click="moneySubmit">提交</van-button>
     </div>
@@ -39,6 +39,7 @@
             return {
               curRecharge:null,
                 shouAccount:null,
+              userId:null,
               userToken:null,
             }
         },
@@ -56,7 +57,7 @@
         },
         obRecharge(){
             const vm = this
-          let url = '/a/receivingbankaccount/receivingBankAccount/getfind?id=' + vm.$route.params.id
+          let url = '/f/GeamUserRank/getfind?id=' + vm.$route.params.id
           vm.$axios.get(url)
             .then(response => {
 
@@ -77,22 +78,31 @@
             vm.$toast('请输入充值金额');
             return
           }
+          const toast1 = vm.$toast.loading({
+            mask: true,
+            duration: 10000,       // 持续展示 toast
+            message: '提交中...'
+          });
           let params={
-              gameid: vm.userToken,
+              gameid: vm.userId,
             payType:vm.curRecharge.accountType,
             applyMoneyAmount:vm.shouAccount,
           }
+
           vm.$axios.post('/f/GeamUserRank/upSave',params)
             .then(response => {
 
               if (response.status == 200&&response.data) {
-console.log( response)
+console.log( response.data.a)
+                vm.$toast(response.data.a);
 //                vm.cardList = response.data
               } else {
                 vm.$toast('充值失败');
               }
+//              toast1.clear();
             }).catch(response => {
             vm.$toast('充值失败');
+//            toast1.clear();
           })
         }
       },
@@ -100,7 +110,7 @@ console.log( response)
             const vm = this
 
                vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-     vm.userToken =  vm.userData.accessToken
+     vm.userId =  vm.userData.no
           vm.obRecharge()
         },
         components: {},

@@ -5,15 +5,15 @@
       <!--页面内容-->
       <section class="ob_home_lists money_out">
         <van-cell-group>
-          <van-cell title="中国工商银行" value="" label="尾号1578储蓄卡" is-link>
+          <van-cell title="中国工商银行" value="" label="尾号1578储蓄卡" is-link @click="showBank=true">
           <div class="sd_home_room_pic" slot="icon"></div>
           </van-cell>
           <van-cell title="提现金额" value="">
             <van-field v-model="outNumber" placeholder="请输入用户名" />
           </van-cell>
-          <van-cell title="中国工商银行" value="">
-            <van-field v-model="value" placeholder="请输入用户名" />
-          </van-cell>
+          <!--<van-cell title="中国工商银行" value="">-->
+            <!--<van-field v-model="value" placeholder="请输入用户名" />-->
+          <!--</van-cell>-->
         </van-cell-group>
 
           <div class="ob_myWallet_btns">
@@ -22,6 +22,15 @@
 
 
       </section>
+      <van-actionsheet v-model="showBank" title="选择提现银行卡">
+        <van-cell title="中国银行">
+          <!--<van-icon slot="right-icon" name="success" class="van-cell__right-icon" />-->
+        </van-cell>
+        <van-cell title="中国建设银行">
+          <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank"/>
+        </van-cell>
+        <van-cell title="添加新的银行卡" icon="add-o" to="/addBank" />
+      </van-actionsheet>
     </div>
 </template>
 
@@ -30,6 +39,7 @@
         name: 'money_out',
         data() {
             return {
+              showBank:false,
               userToken:null,
               bankData:null,
               outNumber:null,
@@ -41,7 +51,7 @@
           },
           obOutData(){
             const vm = this
-            let url = '/f/geamUserAccountDown/getUserBank?id=' + vm.userToken
+            let url = '/f/geamUserAccountDown/getUserBank?id=5f1e9a8781d5479eb9661c1412808146'
             vm.$axios.get(url)
               .then(response => {
 
@@ -89,12 +99,15 @@
             vm.$router.push('/login')
           }else{
             vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-            vm.userToken =  vm.userData.accessToken
+            vm.userToken =  vm.userData.no
             vm.obOutData()
           }
         },
     }
 </script>
 
-<style>
+<style scoped="scoped">
+  .xuanzhong_bank{
+    color: red;font-weight: bold
+  }
 </style>

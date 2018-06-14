@@ -39,14 +39,18 @@
       },
       obMoney(){
         const vm = this
-        let url = '/f/geamUserAccountDown/getUserAccount?id=' + vm.userToken
+        let url = '/f/geamUserAccountDown/getUserAccount?id=5f1e9a8781d5479eb9661c1412808146'
         vm.$axios.get(url)
           .then(response => {
 
             if (response.status == 200&&response.data) {
+if(response.data.state==1){
+  vm.moneyData = response.data
+}else{
+  vm.$toast(response.data.a);
+}
+//              console.log(response.data)
 
-              console.log(response.data)
-              vm.moneyData = response.data
             } else {
               vm.$toast('获取余额信息失败');
             }
@@ -65,7 +69,9 @@
         vm.$router.push('/login')
       }else{
         vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-        vm.userToken =  vm.userData.accessToken
+        console.log(vm.userData)
+        vm.userToken =  vm.userData.no
+        vm.obMoney()
       }
     },
   }
