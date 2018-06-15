@@ -44,7 +44,7 @@
         data () {
             return {
               cardList:null,
-
+              userData:null
             }
         },
       methods: {
@@ -53,7 +53,12 @@
         },
         obList(){
           const vm = this
-          vm.$axios.get('/f/GeamUserRank/findList')
+          let params={
+            token: vm.userData.token,
+            uuid:vm.userData.uuid,
+            terminalType :vm.userData.terminalType,
+          }
+          vm.$axios.get('/user/GeamUserRank/findList',{params})
             .then(response => {
 
               if (response.status == 200&&response.data) {
@@ -74,6 +79,7 @@
           if(!sessionStorage.getItem('userInfo')){
             vm.$router.push('/login')
           }else{
+            vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
             vm.obList()
           }
 

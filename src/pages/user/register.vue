@@ -22,7 +22,7 @@
         <el-form-item prop="photoCode" class="twoInput">
           <el-input v-model="ruleForm2.photoCode" placeholder="请输入图片验证码">
 
-            <template slot="append"><img src="http://47.106.11.246:8086/api/Registercontroller/photoCode.do"
+            <template slot="append"><img src="http://47.106.11.246:8086/api/Registercontroller/photoCode"
                                          @click="showPhotoCode()" ref="Imgdata"></template>
           </el-input>
         </el-form-item>
@@ -180,7 +180,7 @@
 
         let img = vm.$refs.Imgdata
 
-        img.src = "http://47.106.11.246:8080/api/Registercontroller/photoCode.do?time=" + new Date().getTime();
+        img.src = "http://47.106.11.246:8086/api/Registercontroller/photoCode?time=" + new Date().getTime();
       },
 
 //      获取短信验证码
@@ -195,7 +195,7 @@
         if (!vm.ruleForm2.phone) {
           vm.$toast('手机号不能为空');
           return
-        } else if (vm.ruleForm2.phone < 12999999999 || vm.ruleForm2.phone > 18999999999) {
+        } else if (vm.ruleForm2.phone < 12999999999 || vm.ruleForm2.phone > 19999999999) {
           vm.$toast('请填写正确手机号')
           return
         }
@@ -216,7 +216,7 @@
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };  //添加请求头
 //        vm.$axios.post('core/upload', param, config)
-        vm.$axios.post(`/api/Registercontroller/sendMsg.do`, param)
+        vm.$axios.post(`/api/Registercontroller/sendMsg`, param)
           .then(response => {
 
             if (response.status == 200) {
@@ -283,8 +283,9 @@
             paramtwo.append('password', vm.ruleForm2.pass);//添加form表单中其他数据
             paramtwo.append('qq', vm.ruleForm2.qqNum);//添加form表单中其他数据
             paramtwo.append('introducer', vm.ruleForm2.recomMan);//添加form表单中其他数据
-            vm.$axios.post('/api/Registercontroller/registUser.do', paramtwo).then(function (response) {
-              if (response.status == 200 && response.data) {
+            vm.$axios.post('/api/Registercontroller/registUser', paramtwo).then(function (response) {
+
+              if (response.status == 200 && !vm.$_.isEmpty(response.data)) {
                 toast1.clear();
                 if (response.data.status != 'fail') {
                   vm.$toast.success('注册成功');
@@ -298,6 +299,8 @@
                 vm.$toast.fail('请求出错');
               }
 
+            }).catch(response => {
+              vm.$toast.fail('请求出错');
             })
 
 

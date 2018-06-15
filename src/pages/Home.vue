@@ -99,7 +99,7 @@
           <div class="sd_home_room_pic" slot="icon" v-if="r.roomIcon==''">
           </div>
           <div class="sd_home_room_picteo"  slot="icon">
-            <img :src="'http://47.106.11.246:8080'+r.roomIcon" alt="" v-if="r.roomIcon!=''" :to="'/roomDetail/'+r.roomnumber">
+            <img :src="'http://47.106.11.246:8080'+r.roomIcon" alt="" v-if="r.roomIcon!=''">
           </div>
         </van-cell>
       </van-cell-group>
@@ -133,10 +133,6 @@
         showRoad: false,
         roads: ["线路一", "线路二"],
         list: ["交易记录", "统计记录", "关闭声音", "个人中心", "退出账号"],
-        images: [
-          'https://img.yzcdn.cn/1.jpg',
-          'https://img.yzcdn.cn/2.jpg'
-        ],
         showDownNav: false,
         roomList:null,
         userData:null
@@ -165,13 +161,13 @@ const vm = this
 //     vm.userToken =  vm.userData.accessToken
      let params = {
        pageNo:1,
-       pageSize:10,
+       pageSize:20,
      }
      vm.$axios.get(`/api/RoomController/queryRoomList`, {params})
        .then(response => {
          toast1.clear();
          if (response.status == 200&&response.data) {
-             vm.roomList = response.data.rows
+             vm.roomList = response.data.resultInfo
 
          } else {
            vm.$toast('获取房间列表失败');

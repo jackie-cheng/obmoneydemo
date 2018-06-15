@@ -3,13 +3,20 @@
       <!--header-->
       <van-nav-bar title="余额提现" left-arrow @click-left="onClickLeft()"/>
       <!--页面内容-->
-      <section class="ob_home_lists money_out">
+      <section class=" money_out">
         <van-cell-group>
           <van-cell title="中国工商银行" value="" label="尾号1578储蓄卡" is-link @click="showBank=true">
           <div class="sd_home_room_pic" slot="icon"></div>
           </van-cell>
-          <van-cell title="提现金额" value="">
-            <van-field v-model="outNumber" placeholder="请输入用户名" />
+          <van-cell title="提现金额" value="" class="canbe_outNum">
+            <div>
+              <van-field v-model="outNumber"  type="number" pattern="[0-9]*" placeholder="请输入提现金额" />
+            </div>
+
+          </van-cell>
+          <van-cell :title="'可提现金额￥'+canbeOut"  class="canbe_out">
+            <span class="van-cell-value" @click="outNumber=canbeOut">全部提现</span>
+            <!--<van-field v-model="outNumber" placeholder="请输入用户名" />-->
           </van-cell>
           <!--<van-cell title="中国工商银行" value="">-->
             <!--<van-field v-model="value" placeholder="请输入用户名" />-->
@@ -17,7 +24,8 @@
         </van-cell-group>
 
           <div class="ob_myWallet_btns">
-            <router-link to="/wallet_in"> <van-button size="large" type="danger" @click="moneyOut">充值</van-button></router-link>
+           <van-button size="large" type="danger" @click="moneyOut" v-if="outNumber&&outNumber!=''">确认提现</van-button>
+            <van-button size="large" type="danger"  style="opacity: 0.6" v-else >确认提现</van-button>
           </div>
 
 
@@ -39,8 +47,9 @@
         name: 'money_out',
         data() {
             return {
+              canbeOut:365.6,
               showBank:false,
-              userToken:null,
+              userData:null,
               bankData:null,
               outNumber:null,
             }
@@ -51,8 +60,13 @@
           },
           obOutData(){
             const vm = this
-            let url = '/f/geamUserAccountDown/getUserBank?id=5f1e9a8781d5479eb9661c1412808146'
-            vm.$axios.get(url)
+            let params={
+              token: vm.userData.token,
+              id:vm.userData.uuid,
+              terminalType :vm.userData.terminalType,
+            }
+            let url = '/user/geamUserAccountDown/getUserBank'
+            vm.$axios.get(url,{params})
               .then(response => {
 
                 if (response.status == 200&&response.data) {
@@ -77,7 +91,7 @@
               bankid:'所选银行的id',
               Account :vm.outNumber,
             }
-            vm.$axios.post('/f/geamUserAccountDown/getDown',params)
+            vm.$axios.post('/user/geamUserAccountDown/getDown',params)
               .then(response => {
 
                 if (response.status == 200&&response.data) {
@@ -99,7 +113,6 @@
             vm.$router.push('/login')
           }else{
             vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-            vm.userToken =  vm.userData.no
             vm.obOutData()
           }
         },

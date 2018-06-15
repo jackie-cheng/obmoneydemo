@@ -23,7 +23,7 @@
       },
       obMoney(){
         const vm = this
-        let url = '/f/geamUserAccountDown/getUserAccount?id=' + vm.userToken
+        let url = '/user/geamUserAccountDown/getUserAccount?id=' + vm.userToken
         vm.$axios.get(url)
           .then(response => {
 

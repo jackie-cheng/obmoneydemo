@@ -50,6 +50,7 @@
       return {
           username:'',
           pass: '',
+        terminalType:'',
       }
     },
     computed:{
@@ -60,8 +61,32 @@
     },
     created(){
       const vm = this
+vm.IsPC()
+
     },
     methods:{
+      IsPC() {
+          const vm = this
+        var userAgentInfo = navigator.userAgent;
+
+        var Agents = ["Android", "iPhone",
+          "SymbianOS", "Windows Phone",
+          "iPad", "iPod"];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+          if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+          }
+        }
+      if(flag){
+        vm.terminalType = 'PC'
+      }else if (userAgentInfo.indexOf('Android') > -1 || userAgentInfo.indexOf('Linux') > -1) {
+        vm.terminalType = 'Android'
+        } else if (userAgentInfo.indexOf('iPhone') > -1) {
+        vm.terminalType = 'ios'
+        }
+      },
       onClickLeft() {
           const vm = this
         vm.$router.push('/')
@@ -85,25 +110,27 @@
         let param = new URLSearchParams(); //创建form对象
         param.append('username', vm.username);//通过append向form对象添加数据
         param.append('password', vm.pass);//添加form表单中其他数据
-
-        vm.$axios.post(`/api/LoginController/login.do`, param)
+        param.append('terminalType', vm.terminalType);
+        vm.$axios.post(`/api/userLoginController/login`, param)
           .then(response => {
-            toast1.clear();
-            if (response.status == 200&&!vm.$_.isEmpty(response.data)) {
-              if (response.data.status != 'fail') {
-                  console.log(response)
-                sessionStorage.setItem('userInfo',JSON.stringify(response.data))
+            if (response.status == 200&&!vm.$_.isEmpty(response.data.resultInfo)) {
+
+              if (response.data.resultInfo.status != 'fail') {
+
+                sessionStorage.setItem('userInfo',JSON.stringify(response.data.resultInfo))
 //console.log(response.data)
+                vm.$toast('登录成功');
                 vm.$router.push('/')
 //              } else {
-                vm.$toast(response.data.message);
+                vm.$toast(response.data.resultInfo.message);
               }else{
-                vm.$toast(response.data.message);
+                vm.$toast(response.data.resultInfo.message);
               }
 
             } else {
               vm.$toast('登录失败');
             }
+//            toast1.clear();
           }).catch(response => {
           vm.$toast('登录失败');
         })

@@ -622,7 +622,8 @@ font-weight: bold;
 .money_out{
   .van-cell-group{
     .van-cell{
-      padding: 0.5rem;
+      padding: 20px 15px;
+      //padding: 0.5rem;
       .van-cell__text{
         font-size: 0.5rem;
       }
@@ -630,5 +631,44 @@ font-weight: bold;
         font-size: 0.4rem;
       }
     }
+    .canbe_outNum{
+      .van-cell{
+        padding: 5px 15px;
+      }
+      padding: 5px 15px;
+      .van-cell__text{
+        font-size: 0.4rem;
+        margin-left: 0.3rem;
+      }
+display: inherit;
+      .van-cell__value{
+        input{
+          font-size: 0.4rem;
+          font-weight: bold;
+          height: 1rem;
+          line-height: 1rem;
+        }
+      }
+    }
+    .canbe_out{
+      padding: 10px 15px;
+      .van-cell__text{
+        font-size: 0.35rem;
+        color: #666;
+      }
+      .van-cell__value{
+        font-size: 0.35rem;
+        color:  $red_color;
+
+      }
+    }
   }
+.ob_myWallet_btns{
+  width: 80%;
+  display: block;
+  max-width: 8rem;
+  margin: 0.4rem auto;
+  line-height: 1rem;
+  height: 1rem;
+}
 }

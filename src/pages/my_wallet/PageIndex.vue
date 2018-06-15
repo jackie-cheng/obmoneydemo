@@ -30,7 +30,7 @@
     data() {
       return {
         userToken:null,
-
+        userData:null,
       }
     },
     methods: {
@@ -39,8 +39,13 @@
       },
       obMoney(){
         const vm = this
-        let url = '/f/geamUserAccountDown/getUserAccount?id=5f1e9a8781d5479eb9661c1412808146'
-        vm.$axios.get(url)
+                  let params={
+                    token: vm.userData.token,
+                    uuid:vm.userData.uuid,
+                    terminalType :vm.userData.terminalType,
+          }
+        let url = '/user/geamUserAccountDown/getUserAccount'
+        vm.$axios.get(url,{params})
           .then(response => {
 
             if (response.status == 200&&response.data) {
@@ -69,8 +74,8 @@ if(response.data.state==1){
         vm.$router.push('/login')
       }else{
         vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-        console.log(vm.userData)
-        vm.userToken =  vm.userData.no
+//        console.log(vm.userData)
+//        vm.userToken =  vm.userData.token
         vm.obMoney()
       }
     },

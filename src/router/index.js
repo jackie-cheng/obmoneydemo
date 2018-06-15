@@ -155,7 +155,16 @@ export default new Router({
         title: '客服',
       },
       component:resolve=>{
-        require(['../pages/CustomerSerVice.vue'],resolve)
+        require(['../pages/cusService/CustomerService.vue'],resolve)
+      }
+    },
+    {
+      path:'/serviceChat',
+      meta: {
+        title: '客服聊天',
+      },
+      component:resolve=>{
+        require(['../pages/cusService/serviceChat.vue'],resolve)
       }
     },
     {

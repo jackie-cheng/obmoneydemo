@@ -27,9 +27,10 @@
       </van-cell-group>
 
       <van-cell-group class="shuru_money">
-        <van-field v-model="shouAccount" type="number" placeholder="输入金额"  />
+        <van-field v-model="shouAccount" type="number" pattern="[0-9]*" placeholder="输入金额"  />
       </van-cell-group>
-      <van-button type="danger" style="width: 70%;margin: 0.8rem 1.5rem" @click="moneySubmit">提交</van-button>
+      <van-button type="danger"  @click="moneySubmit" v-if="!$_.isEmpty(shouAccount)&&!isNaN(shouAccount)">提交</van-button>
+      <van-button type="danger"  style="opacity: 0.6" v-else>提交</van-button>
     </div>
 </template>
 <script>
@@ -39,8 +40,8 @@
             return {
               curRecharge:null,
                 shouAccount:null,
-              userId:null,
-              userToken:null,
+
+              userData:null,
             }
         },
       methods: {
@@ -57,13 +58,18 @@
         },
         obRecharge(){
             const vm = this
-          let url = '/f/GeamUserRank/getfind?id=' + vm.$route.params.id
-          vm.$axios.get(url)
+          let params={
+            token: vm.userData.token,
+            id:vm.userData.uuid,
+            terminalType :vm.userData.terminalType,
+          }
+          let url = '/user/GeamUserRank/getfind'
+          vm.$axios.get(url,{params})
             .then(response => {
 
               if (response.status == 200&&response.data) {
 
-                console.log(response.data)
+//                console.log(response.data)
                 vm.curRecharge = response.data
               } else {
                 vm.$toast('获取充值信息失败');
@@ -108,10 +114,13 @@ console.log( response.data.a)
       },
         created () {
             const vm = this
+          if(!sessionStorage.getItem('userInfo')){
+            vm.$router.push('/login')
+          }else{
+            vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+            vm.obRecharge()
+          }
 
-               vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
-     vm.userId =  vm.userData.no
-          vm.obRecharge()
         },
         components: {},
     }

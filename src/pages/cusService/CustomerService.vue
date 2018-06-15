@@ -21,19 +21,19 @@
 </template>
 
 <script>
-  import tabbar from '../components/tabbar'
+  import tabbar from '../../components/tabbar'
 
   export default {
     name: 'CustomerService',
     data() {
       return {
         note: {
-          backgroundImage: "url(" + require("../assets/service.png") + ")",
+          backgroundImage: "url(" + require("../../assets/service.png") + ")",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
         },
         note2: {
-          backgroundImage: "url(" + require("../assets/qq.png") + ")",
+          backgroundImage: "url(" + require("../../assets/qq.png") + ")",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
         },
@@ -48,23 +48,24 @@
         },
       serviceChat(){
         const vm = this
-        let params = {
-          senderUserid:'2311213',// 发送者用户ID
-        senderPhone:'12456',// 发送者手机账号
-          msgContent:'6666'// 消息内容
-        }
-        vm.$axios.post(`/chatRecord/addChatRecord`, params)
-          .then(response => {
-
-            if (response.status == 200&&response.data) {
-
-              console.log(response)
-            } else {
-              vm.$toast('获取房间列表失败');
-            }
-          }).catch(response => {
-
-        })
+        vm.$router.push('/serviceChat')
+//        let params = {
+//          senderUserid:'2311213',// 发送者用户ID
+//        senderPhone:'12456',// 发送者手机账号
+//          msgContent:'6666'// 消息内容
+//        }
+//        vm.$axios.post(`/chatRecord/addChatRecord`, params)
+//          .then(response => {
+//
+//            if (response.status == 200&&response.data) {
+//
+//              console.log(response)
+//            } else {
+//              vm.$toast('获取房间列表失败');
+//            }
+//          }).catch(response => {
+//
+//        })
 
       },
     },

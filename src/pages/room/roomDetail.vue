@@ -311,7 +311,7 @@
       initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket");
+        vm.websock = new WebSocket("ws://47.106.11.246:8080/websocket");
 //        if(vm.websock.readyState != 1){
 //         console.log("WebSocket连接中")
 ////          vm.initWebSocket()
