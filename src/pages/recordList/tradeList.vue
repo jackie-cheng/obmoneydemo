@@ -6,10 +6,13 @@
       <van-tab v-for="(menu,index) in menuList" :key="index" :title="menu">
 
         <!--交易记录-->
-        <div style="height: 80vh" v-if="activeIndex==0">
+        <div style="height: 80vh;position: relative" v-if="activeIndex==0">
           <!--时间查询-->
           <div class="search_date">
-            <yd-datetime   v-model="datetimeStar" type="date"></yd-datetime>
+            <span style="position: relative">
+                <yd-datetime   v-model="datetimeStar" type="date"></yd-datetime>
+            </span>
+
             <span style="margin: 0 0.2rem">至</span>
             <yd-datetime   v-model="datetimeEnd" type="date" :start-date="datetimeStar"></yd-datetime>
             <span class="search_but" @click="searchList">查询</span>

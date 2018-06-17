@@ -11,7 +11,6 @@
   color: #ff4444;
 }
 .mr-root {
-
   .van-nav-bar {
     background-color: #ff4444;
     color: #fff;
@@ -36,6 +35,18 @@
     margin: 0 auto;
     position: absolute;
   }
+}
+.yd-mask{
+  max-width: 800px;
+  margin: 0 auto;
+
+
+}
+.yd-datetime{
+  max-width: 800px;
+  margin: 0 auto;
+  //position: absolute!important;
+  left: auto!important;
 }
 
 

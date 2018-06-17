@@ -91,12 +91,22 @@
             message: '提交中...'
           });
           let params={
-              gameid: vm.userId,
+            token: vm.userData.token,
+            uuid:vm.userData.uuid,
+            terminalType :vm.userData.terminalType,
+
+            Geamid: vm.userData.uuid,
             payType:vm.curRecharge.accountType,
             applyMoneyAmount:vm.shouAccount,
           }
-
-          vm.$axios.post('/f/GeamUserRank/upSave',params)
+          let param = new URLSearchParams(); //创建form对象
+          param.append('token', vm.userData.token);//通过append向form对象添加数据
+          param.append('uuid', vm.userData.uuid);//添加form表单中其他数据
+          param.append('terminalType',vm.userData.terminalType);
+          param.append('Geamid', vm.userData.uuid);//通过append向form对象添加数据
+          param.append('payType', vm.curRecharge.accountType);//添加form表单中其他数据
+          param.append('applyMoneyAmount',vm.shouAccount);
+          vm.$axios.post('/user/GeamUserRank/upSave',param)
             .then(response => {
 
               if (response.status == 200&&response.data) {

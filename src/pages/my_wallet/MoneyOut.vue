@@ -63,6 +63,7 @@
             let params={
               token: vm.userData.token,
               uuid:vm.userData.uuid,
+              id:'9bc34c34cbb144b3ac60fc09852b136c',
               terminalType :vm.userData.terminalType,
             }
             let url = '/user/geamUserAccountDown/getUserBank'
