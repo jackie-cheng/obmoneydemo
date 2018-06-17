@@ -70,7 +70,7 @@
 
               if (response.status == 200&&response.data) {
 
-//                console.log(response.data)
+
                 vm.curRecharge = response.data
               } else {
                 vm.$toast('获取充值信息失败');
