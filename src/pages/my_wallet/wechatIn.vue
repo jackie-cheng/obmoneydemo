@@ -60,7 +60,8 @@
             const vm = this
           let params={
             token: vm.userData.token,
-            id:vm.userData.uuid,
+            id:vm.$route.params.id,
+            uuid:vm.userData.uuid,
             terminalType :vm.userData.terminalType,
           }
           let url = '/user/GeamUserRank/getfind'
