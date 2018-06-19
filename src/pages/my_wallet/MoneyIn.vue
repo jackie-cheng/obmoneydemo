@@ -53,12 +53,8 @@
         },
         obList(){
           const vm = this
-          let params={
-            token: vm.userData.token,
-            uuid:vm.userData.uuid,
-            terminalType :vm.userData.terminalType,
-          }
-          vm.$axios.get('/user/GeamUserRank/findList',{params})
+
+          vm.$axios.get('/user/GeamUserRank/findList')
             .then(response => {
 
               if (response.status == 200&&response.data) {

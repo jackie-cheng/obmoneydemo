@@ -19,6 +19,7 @@ export function appInitInject (store, router) {
 
   //
   // axios.defaults.withCredentials = true
+
   axios.defaults.baseURL = 'http://47.106.11.246:8086'
   axios.defaults.headers.post['Content-Type'] = 'application/json'
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -48,14 +49,9 @@ export function appInitInject (store, router) {
 
   // initWxPreivew()
 }
+/**
+ * 设置 token
+ */
 
-
-
-
-// export function registerFilters () {
-//
-//   Vue.use(vueFilter)
-//
-// }
 
 

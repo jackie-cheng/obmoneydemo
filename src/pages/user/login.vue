@@ -118,6 +118,8 @@ vm.IsPC()
               if (response.data.resultInfo.status != 'fail') {
 
                 sessionStorage.setItem('userInfo',JSON.stringify(response.data.resultInfo))
+
+
 //console.log(response.data)
                 vm.$toast('登录成功');
                 vm.$router.push('/')

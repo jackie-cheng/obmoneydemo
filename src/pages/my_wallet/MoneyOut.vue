@@ -61,10 +61,9 @@
           obOutData(){
             const vm = this
             let params={
-              token: vm.userData.token,
-              uuid:vm.userData.uuid,
+
               id:'9bc34c34cbb144b3ac60fc09852b136c',
-              terminalType :vm.userData.terminalType,
+
             }
             let url = '/user/geamUserAccountDown/getUserBank'
             vm.$axios.get(url,{params})
@@ -72,7 +71,7 @@
 
                 if (response.status == 200&&response.data) {
 
-                  console.log(response.data)
+                  console.log(response)
                   vm.bankData = response.data
                 } else {
                   vm.$toast('获取银行列表失败');
