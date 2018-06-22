@@ -1,7 +1,7 @@
 <template>
   <div class="mr-root">
     <!--<Header></Header>-->
-    <van-nav-bar title="帝魂国际" class="home_head">
+    <van-nav-bar title="6-21晚更新" class="home_head">
       <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
         {{roadSelect}}
         <van-icon name="arrow"/>
@@ -122,6 +122,7 @@
 </template>
 
 <script>
+  import mixin_app__token from '../utils/mixin_app__token'
   import tabbar from '../components/tabbar'
   //  import Header from '../components/Header'
   export default {
@@ -139,17 +140,18 @@
         userData: null
       }
     },
-
+    mixins: [mixin_app__token],
     components: {
       tabbar
     },
     created() {
       const vm = this
+
       vm.obHomeData()
-      if (!sessionStorage.getItem('userInfo')) {
+      if (!localStorage.getItem('userInfo')) {
         vm.nullLogin = true
       } else {
-        vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
+        vm.userData = JSON.parse(localStorage.getItem('userInfo'))
 
       }
 
@@ -158,7 +160,7 @@
         duration: 10000,       // 持续展示 toast
         message: '加载中...'
       });
-//     vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+//     vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
 //     vm.userToken =  vm.userData.accessToken
       let params = {
         pageNo: 1,
@@ -199,7 +201,9 @@
       //退出登录
       outLogin(){
         const vm = this
-        sessionStorage.removeItem('userInfo')
+        localStorage.removeItem('userInfo')
+//        window.location.href = '/login'
+//        location.reload()
         vm.$router.push('/login')
       },
       //选择线路

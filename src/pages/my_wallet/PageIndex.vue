@@ -70,10 +70,10 @@ if(response.data.state==1){
     },
     created() {
       const vm = this
-      if(!sessionStorage.getItem('userInfo')){
+      if(!localStorage.getItem('userInfo')){
         vm.$router.push('/login')
       }else{
-        vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+        vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
 //        console.log(vm.userData)
 //        vm.userToken =  vm.userData.token
         vm.obMoney()

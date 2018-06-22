@@ -150,8 +150,8 @@
     created () {
       const vm = this
       vm.obChatRecord()
-      if(sessionStorage.getItem('userInfo')){
-              vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
+      if(localStorage.getItem('userInfo')){
+              vm.userData = JSON.parse(localStorage.getItem('userInfo'))
       vm.userToken = vm.userData.accessToken
       }
 

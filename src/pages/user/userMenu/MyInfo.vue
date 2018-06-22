@@ -51,7 +51,7 @@
     },
     created(){
 const vm = this
-      vm.userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+      vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
     },
     methods:{
       onClickLeft(){

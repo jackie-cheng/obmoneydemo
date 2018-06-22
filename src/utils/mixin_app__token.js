@@ -8,11 +8,15 @@ export default {
   beforeCreate(){
     // 获取token
     let vm = this
-      let userData =  JSON.parse(sessionStorage.getItem('userInfo'))
+    console.log('beforeCreate')
+      let userData =  JSON.parse(localStorage.getItem('userInfo'))
     let token = userData || ''
-    axios.defaults.headers.common['uuid'] = userData.uuid;
-    axios.defaults.headers.common['token'] = userData.token;
-    axios.defaults.headers.common['terminalType'] = userData.terminalType;
+    if(!!userData){
+      axios.defaults.headers.common['uuid'] = userData.uuid;
+      axios.defaults.headers.common['token'] = userData.token;
+      axios.defaults.headers.common['terminalType'] = userData.terminalType;
+    }
+
   },
 
   //用于停下服务，上线时

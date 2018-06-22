@@ -8,7 +8,7 @@ import router from './router'
 // Vue.prototype.axios = axios
 Vue.config.productionTip = false
 import { appInitInject, } from './utils/common'
-import mixin_app__token from './utils/mixin_app__token'
+
 appInitInject()
 router.beforeEach((to, from, next) => {
   window.document.title = to.meta.title;
@@ -31,7 +31,7 @@ Vue.use(ElementUI);
 new Vue({
   el: '#app',
   router,
-  mixins: [mixin_app__token],
+
   components: { App },
   template: '<App/>'
 })

@@ -42,7 +42,7 @@
 
 <script>
 
-
+  import * as axios from 'axios'
   export default {
 
     name: 'login',
@@ -117,14 +117,18 @@ vm.IsPC()
 
               if (response.data.resultInfo.status != 'fail') {
 
-                sessionStorage.setItem('userInfo',JSON.stringify(response.data.resultInfo))
-
-
+                localStorage.setItem('userInfo',JSON.stringify(response.data.resultInfo))
+//                window.reload()
+//                let userData = response.data.resultInfo
+//                axios.defaults.headers.common['uuid'] = userData.uuid;
+//                axios.defaults.headers.common['token'] = userData.token;
+//                axios.defaults.headers.common['terminalType'] = userData.terminalType;
 //console.log(response.data)
                 vm.$toast('登录成功');
                 vm.$router.push('/')
+//                window.location.href = '/login'
 //              } else {
-                vm.$toast(response.data.resultInfo.message);
+//                vm.$toast(response.data.resultInfo.message);
               }else{
                 vm.$toast(response.data.resultInfo.message);
               }

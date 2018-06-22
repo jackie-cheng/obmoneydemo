@@ -59,6 +59,10 @@
   border: 1px solid $border_color;
   .van-swipe-item {
     height: 3.4rem;
+    img{
+      height: 3.4rem;
+      width: 100%;
+    }
   }
 }
 .home_head{

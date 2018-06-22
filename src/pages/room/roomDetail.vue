@@ -64,22 +64,23 @@
           <!--<span>{{mes.message}}</span>-->
         <!--</li>-->
 
-        <li :class="{right_wechat:!mess.nickname,lift_wechat:mess.nickname}"  v-for="mess in mySendMessage">
-          <template v-if="!mess.nickname">
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.sendTime">2018-05-29 09:21</p>
-            <p style="text-align: right;margin-right: 1rem;color: #ce5c4d">{{userData.username}}</p>
+        <li :class="{right_wechat:mess.mySendTime,lift_wechat:!mess.mySendTime}"  v-for="mess in mySendMessage">
+          <template v-if="!mess.mySendTime">
+            <!--{{JSON.parse(mess.msgContent)}}-->
+            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="JSON.parse(mess.msgContent).mySendTime">2018-05-29 09:21</p>
+            <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{JSON.parse(mess.msgContent).senderPhone}}</p>
             <a v-if="userData.photourl">
               <img :src="userData.photourl" alt="">
             </a>
             <a v-else>
               <img src="../../assets/qq.png" alt="">
             </a>
-            <span>{{mess.message}}</span>
+            <span>{{JSON.parse(mess.msgContent).message}}</span>
 
           </template>
           <template v-else>
-            <p v-text="mess.sendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
-            <p v-text="mess.nickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
+            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
+            <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
             <img :src="mess.photourl" alt="">
             </a>
@@ -90,7 +91,7 @@
           </template>
           <div style="clear:both"></div>
         </li>
-        <div style="margin-bottom: 1rem"><a id="msg_end" name="1" href="#1">&nbsp</a></div>
+        <div style="margin-bottom: 1rem"><a id="msg_end" name="1">&nbsp</a></div>
         <!--<div id="msg_end" style="height:0px; overflow:hidden"></div>-->
       </ul>
 
@@ -257,7 +258,7 @@
       },
       sendMess(){
         const vm = this
-        if(!sessionStorage.getItem('userInfo')){
+        if(!localStorage.getItem('userInfo')){
           vm.$router.push('/login')
         }else if(vm.$_.isEmpty(vm.messageValue)){
           return
@@ -311,25 +312,25 @@
       initWebSocket(){ //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.websock = new WebSocket("ws://47.106.11.246:8080/websocket");
+
+        vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=0&roomNumber="+vm.$route.params.id+"&token="+vm.userToken);
 //        if(vm.websock.readyState != 1){
 //         console.log("WebSocket连接中")
 ////          vm.initWebSocket()
 //        }
         console.log(vm.websock)
-//        vm.websock.onmessage = vm.websocketonmessage;
-//        vm.websock.onclose = vm.websocketclose;
+        vm.websock.onmessage = vm.websocketonmessage;
+        vm.websock.onclose = vm.websocketclose;
         // 路由跳转时结束websocket链接
 //        vm.$router.afterEach(function () {
 //          vm.websock.onclose
 //        })
-//        vm.websocketonmessage
       },
       websocketonmessage(e){ //数据接收
         const vm = this
         vm.redata = JSON.parse(e.data);
 //        console.log(e.data)
-        console.log('收到的',vm.redata)
+        console.log('收到的',JSON.parse(vm.redata.msgContent))
         vm.mySendMessage.push(vm.redata)
         console.log('收消息列表',vm.mySendMessage)
         let aa = document.getElementById('msg_end')
@@ -342,7 +343,9 @@
         websocketsend(agentData){//数据发送
         const vm = this
           let curTime =vm.getNowFormatDate()
-        let sendData ={"phone":vm.userData.phone,"message":agentData,'sendTime':curTime}
+        let sendData ={"roomNumber":vm.$route.params.id,"uuid":vm.userData.uuid,"senderPhone":vm.userData.phone,"message":agentData,'mySendTime':curTime,
+          'sendernickname':vm.userData.nickname
+        }
 //        console.log(JSON.stringify(sendData))
         vm.websock.send(JSON.stringify(sendData));
           console.log('发的消息',JSON.stringify(sendData))
@@ -361,7 +364,7 @@
       obChatRecord(){
           const vm = this
         let params={
-          roomNumber: 6,
+          roomNumber: vm.$route.params.id,
           pageNumber:1,
           pageSize:10,
         }
@@ -441,16 +444,18 @@
     },
     created () {
       const vm = this
-      vm.obChatRecord()
-      if(sessionStorage.getItem('userInfo')){
-              vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
-      vm.userToken = vm.userData.accessToken
+//      vm.obChatRecord()
+      if(localStorage.getItem('userInfo')){
+              vm.userData = JSON.parse(localStorage.getItem('userInfo'))
+      vm.userToken = vm.userData.token
+
       }
-//      vm.websocket()
       vm.initWebSocket()
+//      vm.websocket()
+
 //      vm.creatGet()
       vm.roomId = vm.$route.params.id
-//      vm.userData = JSON.parse(sessionStorage.getItem('userInfo'))
+//      vm.userData = JSON.parse(localStorage.getItem('userInfo'))
 //      vm.userToken = vm.userData.accessToken
       let params = {
         roomnumber: vm.roomId,
@@ -459,7 +464,7 @@
       vm.$axios.get(`/api/RoomController/queryRoomByRoomNo`, {params})
         .then(response => {
           if (response.status == 200 && response.data) {
-            vm.roomData = response.data
+            vm.roomData = response.data.resultInfo
 //            console.log(response)
           } else {
             vm.$toast('获取房间信息失败');
