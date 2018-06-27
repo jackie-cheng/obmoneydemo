@@ -58,8 +58,18 @@
             .then(response => {
 
               if (response.status == 200&&response.data) {
+                if(response.data.statusCode){
+                  vm.$dialog.confirm({
+                    message: response.data.resultInfo
+                  }).then(() => {
+                    vm.$router.push('/login')
+                  }).catch(() => {
+                    vm.$router.push('/')
+                  });
+                }else{
+                  vm.cardList = response.data
+                }
 
-                vm.cardList = response.data
               } else {
                 vm.$toast('获取充值列表失败');
               }

@@ -49,12 +49,18 @@
           .then(response => {
 
             if (response.status == 200&&response.data) {
-if(response.data.state==1){
-  vm.moneyData = response.data
-}else{
-  vm.$toast(response.data.a);
-}
-//              console.log(response.data)
+              if(response.data.statusCode){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  vm.$router.push('/')
+                });
+              }else{
+                vm.moneyData = response.data
+              }
+
 
             } else {
               vm.$toast('获取余额信息失败');

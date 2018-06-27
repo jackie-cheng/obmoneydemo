@@ -70,9 +70,18 @@
               .then(response => {
 
                 if (response.status == 200&&response.data) {
+                  if(response.data.statusCode){
+                    vm.$dialog.confirm({
+                      message: response.data.resultInfo
+                    }).then(() => {
+                      vm.$router.push('/login')
+                    }).catch(() => {
+                      vm.$router.push('/')
+                    });
+                  }else{
+                    vm.bankData = response.data
+                  }
 
-                  console.log(response)
-                  vm.bankData = response.data
                 } else {
                   vm.$toast('获取银行列表失败');
                 }
@@ -95,8 +104,18 @@
               .then(response => {
 
                 if (response.status == 200&&response.data) {
-                  console.log( response)
-                  vm.$toast('提现成功');
+                  if(response.data.statusCode){
+                    vm.$dialog.confirm({
+                      message: response.data.resultInfo
+                    }).then(() => {
+                      vm.$router.push('/login')
+                    }).catch(() => {
+                      vm.$router.push('/')
+                    });
+                  }else{
+                    vm.$toast('提现成功');
+                  }
+
 //                vm.cardList = response.data
                 } else {
                   vm.$toast('提现失败');

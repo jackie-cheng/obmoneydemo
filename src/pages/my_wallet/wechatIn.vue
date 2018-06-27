@@ -66,9 +66,19 @@
             .then(response => {
 
               if (response.status == 200&&response.data) {
+                if(response.data.statusCode){
+                  vm.$dialog.confirm({
+                    message: response.data.resultInfo
+                  }).then(() => {
+                    vm.$router.push('/login')
+                  }).catch(() => {
+                    vm.$router.push('/')
+                  });
+                }else{
+                  vm.curRecharge = response.data
+                }
 
 
-                vm.curRecharge = response.data
               } else {
                 vm.$toast('获取充值信息失败');
               }
@@ -107,8 +117,18 @@
             .then(response => {
 
               if (response.status == 200&&response.data) {
-console.log( response.data.a)
-                vm.$toast(response.data.a);
+                if(response.data.statusCode){
+                  vm.$dialog.confirm({
+                    message: response.data.resultInfo
+                  }).then(() => {
+                    vm.$router.push('/login')
+                  }).catch(() => {
+                    vm.$router.push('/')
+                  });
+                }else{
+                  vm.$toast(response.data.a);
+                }
+
 //                vm.cardList = response.data
               } else {
                 vm.$toast('充值失败');

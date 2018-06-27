@@ -8,15 +8,19 @@
     </van-nav-bar>
 
     <!--聊天信息-->
-    <main class="room_wechat">
-      <ul class ='room_wechatul'>
+    <!--<main class="room_wechat">-->
 
-        <li :class="{right_wechat:!mess.nickname,lift_wechat:mess.nickname}"  v-for="mess in mySendMessage">
-          <template v-if="!mess.nickname">
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.sendTime">2018-05-29 09:21</p>
-            <p style="text-align: right;margin-right: 1rem;color: #ce5c4d">{{userData.username}}</p>
-            <a v-if="userData.photourl">
-              <img :src="userData.photourl" alt="">
+
+      <ul class ='room_wechatul kefu_chart'>
+        <!--<p style="width: 100%;text-align: center">下拉可查看聊天记录</p>-->
+
+        <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"  v-for="mess in mySendMessage">
+          <template v-if="mess.sendernickname!=userName">
+            <!--{{JSON.parse(mess.msgContent)}}-->
+            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.mySendTime">2018-05-29 09:21</p>
+            <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
+            <a v-if="mess.photourl">
+              <img :src="mess.photourl" alt="">
             </a>
             <a v-else>
               <img src="../../assets/qq.png" alt="">
@@ -25,25 +29,24 @@
 
           </template>
           <template v-else>
-            <p v-text="mess.sendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
-            <p v-text="mess.nickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
+            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
+            <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
-            <img :src="mess.photourl" alt="">
+              <img :src="mess.photourl" alt="">
             </a>
             <a v-else>
-            <img src="../../assets/qq.png" alt="">
+              <img src="../../assets/qq.png" alt="">
             </a>
             <span>{{mess.message}}</span>
           </template>
           <div style="clear:both"></div>
         </li>
-        <div style="margin-bottom: 1rem"><a id="msg_end" name="1" href="#1">&nbsp</a></div>
-        <!--<div id="msg_end" style="height:0px; overflow:hidden"></div>-->
+
       </ul>
 
-    </main>
+
     <div class="footSet">
-      <van-cell-group>
+      <van-cell-group style="width: 80%">
         <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess"/>
         <!--<van-field v-model="messageValue" placeholder="房间禁言中" disabled  v-if="roomData.guessFlag!='1'"/>-->
       </van-cell-group>
@@ -57,53 +60,186 @@
 </template>
 <script>
   import Vue from 'vue'
-
+  import {PullRefresh} from 'vue-ydui/dist/lib.px/pullrefresh';
+  Vue.component(PullRefresh.name, PullRefresh);
   export default{
     name: 'roomDetail',
     data () {
       return {
+        page: 1,
         userData:null,
-
+        userName:null,
+        newUuid:null,//游客id
           mySendMessage:[],
-        othersSendMessage:[],
 
         roomId: null,
         userToken: null,
         roomData: null,
         websock: null,
         messageValue: null,//websock要发送的值
-        resData: {}, //websock接收到的值
+
 
       }
     },
     methods: {
+      loadList() {
+        const vm = this
+        if(!localStorage.getItem('userInfo')){
+          vm.$router.push('/login')
+          return
+        }
+        let params={
+          roomNumber: vm.$route.params.id,
+          pageNumber:this.page,
+          pageSize:10,
+        }
+        const url = 'user/chatRecord/queryChatRecordByRoomnumber';
 
+        vm.$axios.get(url, {params}).then((response) => {
+          if(response.data.statusCode){
+            vm.$dialog.confirm({
+              message: response.data.resultInfo
+            }).then(() => {
+              vm.$router.push('/login')
+            }).catch(() => {
+              vm.$router.push('/')
+            });
+          }else{
+            const _list = (response.data||[]).map(a=>JSON.parse(a.msgContent));
+            _list.reverse()
+            vm.mySendMessage= [..._list, ...vm.mySendMessage];
+            vm.$toast(_list.length > 0 ? '为您更新了' + _list.length + '条内容' : '已是最新内容');
+            vm.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
+//
+            vm.page++;
+          }
+        });
+      },
 
       onClickLeft() {
           const vm = this
         vm.$router.push('/')
       },
-
-
-//      获取聊天记录
-      obChatRecord(){
-          const vm = this
-        let params={
-          roomNumber: 6,
-          pageNumber:1,
-          pageSize:10,
+      sendMess(){
+        const vm = this
+     if(vm.$_.isEmpty(vm.messageValue)){
+          vm.$toast('不能发送空值');
+          return
         }
-        vm.$axios.get(`/chatRecord/addChatRecord?senderUserid=11&senderPhone=12&&chatType=customerservicechat`,{params})
-          .then(response => {
-            if (response.status == 200 && response.data) {
-              console.log(response)
-            } else {
-              vm.$toast('获取房间信息失败');
-            }
-          }).catch(response => {
+        else{
+          vm.threadPoxi()
+        }
 
-        })
+//        console.log(vm.messageValue)
       },
+      threadPoxi(){  // 实际调用的方法
+        //参数
+        const vm = this
+        const agentData = vm.messageValue;
+        vm.messageValue=null
+//       vm.mySendMessage.push(agentData)
+//        console.log(vm.mySendMessage)
+//        vm.websocketsend(agentData)
+        //若是ws开启状态
+        if (vm.websock.readyState == 1) {
+          vm.websocketsend(agentData)
+
+        }else{
+          vm.$toast('聊天还未建立');
+          vm.initWebSocket()
+        }
+//        // 若是 正在开启状态，则等待300毫秒
+//        else if (vm.websock.readyState === 0) {
+//          setTimeout(function () {
+//            vm.websocketsend(agentData)
+//          }, 300);
+//        }
+//        // 若未开启 ，则等待500毫秒
+//        else {
+//          vm.initWebSocket();
+//          setTimeout(function () {
+//            vm.websocketsend(agentData)
+//          }, 500);
+//        }
+      },
+      initWebSocket(){
+        //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
+        //ws地址
+        const vm = this
+        vm.newUuid ='youke'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
+
+        if(localStorage.getItem('userInfo')){
+          vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&userId="+vm.userData.uuid+"&chartId="+vm.userData.uuid);
+        }else {
+          vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&chartId="+vm.newUuid+"&userId="+vm.newUuid);
+          vm.userName=vm.newUuid
+        }
+
+
+//        if(vm.websock.readyState != 1){
+//         console.log("WebSocket连接中")
+////          vm.initWebSocket()
+//        }
+        console.log(vm.websock)
+        vm.websock.onmessage = vm.websocketonmessage;
+        vm.websock.onclose = vm.websocketclose;
+        // 路由跳转时结束websocket链接
+//        vm.$router.afterEach(function () {
+//          vm.websock.onclose
+//        })
+      },
+      websocketonmessage(e){ //数据接收
+        const vm = this
+        vm.redata = JSON.parse(e.data.msgContent);
+//        let content = document.getElementsByClassName('room_wechatul')[0];
+//        content.scrollTop=content.scrollHeight
+//        console.log(e.data)
+        console.log('收到的',vm.redata)
+        vm.mySendMessage.push(vm.redata)
+
+//        content.scrollTop=content.scrollHeight-100
+        console.log('收消息列表',vm.mySendMessage)
+
+//        let divUl = document.getElementsByClassName('room_wechatul')[0]
+//        divUl.scrollTop = divUl.scrollHeight;
+//{"phone":"","message":""}
+//        console.log('jieshou',vm.redata);
+      },
+      websocketsend(agentData){//数据发送
+        const vm = this
+        let curTime =vm.getNowFormatDate()
+
+        if(localStorage.getItem('userInfo')){
+          let sendData ={"uuid": vm.userData.uuid,"message":agentData,'mySendTime':curTime,
+            'sendernickname':vm.userData.username
+          }
+          vm.websock.send(JSON.stringify(sendData));
+//          console.log('发的消息',JSON.stringify(sendData))
+          vm.mySendMessage.push(sendData)
+        }else {
+          let sendData ={"uuid": vm.newUuid,"message":agentData,'mySendTime':curTime,
+            'sendernickname':vm.newUuid
+          }
+          vm.websock.send(JSON.stringify(sendData));
+//          console.log('发的消息',JSON.stringify(sendData))
+          vm.mySendMessage.push(sendData)
+        }
+//          let content = document.getElementsByClassName('room_wechatul')[0];
+//          content.scrollTop=content.scrollHeight
+
+//        console.log(JSON.stringify(sendData))
+
+//          let content = document.getElementsByClassName('room_wechatul')[0];
+//          content.scrollTop=content.scrollHeight-50
+//          console.log('发送列表',content.scrollHeight)
+//          let divUl = document.getElementsByClassName('room_wechatul')[0]
+//          divUl.scrollTop = divUl.scrollHeight;
+//        vm.mySendMessage=  vm.mySendMessage.push(agentData)
+      },
+      websocketclose(e){  //关闭
+        console.log("connection closed (" + e.code + ")");
+      },
+
 
 
 
@@ -139,6 +275,11 @@
     },
     mounted(){
         const vm = this
+      vm.$watch('mySendMessage',()=>{
+        let content = document.getElementsByClassName('room_wechatul')[0];
+        console.log(content.scrollHeight)
+        content.scrollTop=content.scrollHeight+90
+      }, {deep: true})
 //      vm.$watch('',()=>{
 //          if(vm.websock.readyState === 1){
 //            console.log('连接成功')
@@ -149,11 +290,12 @@
     },
     created () {
       const vm = this
-      vm.obChatRecord()
       if(localStorage.getItem('userInfo')){
               vm.userData = JSON.parse(localStorage.getItem('userInfo'))
       vm.userToken = vm.userData.accessToken
+        vm.userName = vm.userData.username
       }
+      vm.initWebSocket()
 
     },
     beforeDestroy () {
