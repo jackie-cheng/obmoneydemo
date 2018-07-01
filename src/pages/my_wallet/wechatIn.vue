@@ -13,7 +13,7 @@
           :placeholder="curRecharge.account"
           disabled="true"
         >
-          <van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>
+          <!--<van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>-->
         </van-field>
         <van-field
           center
@@ -22,15 +22,32 @@
           :placeholder="curRecharge.realName"
           disabled="true"
         >
-          <van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>
+
+          <!--<van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>-->
+        </van-field>
+        <van-field
+          center
+          label="汇款金额"
+          placeholder="请输入汇款金额"
+          v-model="shouAccount" type="number" pattern="[0-9]*"
+        >
         </van-field>
       </van-cell-group>
 
-      <van-cell-group class="shuru_money">
-        <van-field v-model="shouAccount" type="number" pattern="[0-9]*" placeholder="输入金额"  />
-      </van-cell-group>
+      <!--<van-cell-group class="shuru_money">-->
+        <!--<van-field v-model="shouAccount" type="number" pattern="[0-9]*" placeholder="输入金额"  />-->
+      <!--</van-cell-group>-->
       <van-button type="danger"  @click="moneySubmit" v-if="!$_.isEmpty(shouAccount)&&!isNaN(shouAccount)">提交</van-button>
       <van-button type="danger"  style="opacity: 0.6" v-else>提交</van-button>
+      <div class="inWord">
+        <p>温馨提示：</p>
+        <p>1、我公司不定时更换收款二维码，请每次转账前先保存我公司二维码</p>
+        <p>2、长按二维码，系统会自动保存二维码到您的手机相册</p>
+        <p>3、启动微信，点击“扫一扫”，点击“从相册选取二维码”，选择二维码扫码支付</p>
+        <p>4、完成转账后，填写汇款支付宝账号，汇款金额，再点击“已完成转账，提交入款申请”</p>
+        <p>5、请转账完成后，再提交入款申请，避免额度延迟到账</p>
+        <p>6、请勿重复提交入款申请，如遇见任何问题请立即联系客服</p>
+      </div>
     </div>
 </template>
 <script>

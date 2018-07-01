@@ -155,13 +155,26 @@
       width: 80%;
       max-width: 8rem;
       margin: 0 auto;
-      height: 1.1rem;
-      line-height: 1.1rem;
+      height: 1rem;
+      line-height: 1rem;
     }
   }
 
 }
+//修改密码
+.modifyPass{
 
+  .nextBut {
+    text-align: center;
+    .van-button {
+      width: 80%;
+      max-width: 8rem;
+      margin: 0 auto;
+      height: 1.1rem;
+      line-height: 1.1rem;
+    }
+  }
+}
 //用户首页
 .user_index_class{
   .user_header{

@@ -8,7 +8,6 @@ export default {
   beforeCreate(){
     // 获取token
     let vm = this
-    console.log('beforeCreate')
       let userData =  JSON.parse(localStorage.getItem('userInfo'))
     let token = userData || ''
     if(!!userData){

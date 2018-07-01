@@ -51,9 +51,9 @@
     </div>
     <!--聊天信息-->
     <!--<main class="room_wechat">-->
-    <yd-pullrefresh :callback="loadList" ref="pullrefreshDemo">
+    <yd-pullrefresh :callback="loadList" ref="pullrefreshDemo" class ='room_wechatul'>
 
-      <ul class ='room_wechatul'>
+      <ul style="margin-bottom: 90px;min-height: 400px">
         <p style="width: 100%;text-align: center;color: #00A3CF;margin-bottom: 0.3rem" @click="loadList">下拉或点击可查看聊天记录</p>
 
         <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"  v-for="mess in mySendMessage">
@@ -352,12 +352,12 @@ if(vm.userToken){
       },
       websocketonmessage(e){ //数据接收
         const vm = this
-//        console.log('收到的',JSON.parse(e.data))
+        console.log('收到的',JSON.parse(e.data))
         let pullData = JSON.parse(e.data)
         vm.redata = JSON.parse(pullData.msgContent);
 //        let content = document.getElementsByClassName('room_wechatul')[0];
 //        content.scrollTop=content.scrollHeight
-//        console.log(e.data)
+        console.log(vm.redata)
 
         vm.mySendMessage.push(vm.redata)
 

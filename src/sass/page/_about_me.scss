@@ -46,8 +46,8 @@
 //微信充值
 .wechat_in{
   img{
-    height:7rem;
-    width: 5.66rem;
+    height:5rem;
+    width: 5rem;
     display: block;
     margin: 0.3rem auto;
   }
@@ -69,6 +69,10 @@
     margin: 0.4rem auto;
     line-height: 1rem;
     height: 1rem;
+  }
+  .inWord{
+    color: #f39519;
+    padding: 0 0.5rem;
   }
 }
 //充值记录

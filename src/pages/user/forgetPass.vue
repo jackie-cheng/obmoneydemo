@@ -15,7 +15,7 @@
           v-model="photoCode"
           placeholder="请输入图片验证码"
         >
-          <template slot="button"><img src="http://47.106.11.246:8086/api/Registercontroller/photoCode.do"
+          <template slot="button"><img :src="photoCodeUrl"
                                        @click="showPhotoCode()"     ref="Imgdata"></template>
           <!--<van-button slot="button" size="small" type="primary" v-if="!disableBut" @click="obMobileCode()">发送验证码</van-button>-->
         </van-field>
@@ -27,6 +27,8 @@
           <van-button slot="button" size="small" type="primary" v-if="!disableBut" @click="obMobileCode()">发送验证码</van-button>
           <van-button slot="button" size="small"  disabled v-if="disableBut">{{seconds}}后获取</van-button>
         </van-field>
+        <van-field v-model="phoneNum" placeholder="请输入您的新密码"  icon="clear"
+                   @click-icon="phoneNum = ''" />
       </van-cell-group>
       <!--<el-input-->
         <!--placeholder="请输入您的手机号"-->
@@ -59,6 +61,7 @@
     name: 'forgetPass',
     data(){
       return {
+        photoCodeUrl:null,
         photoCode:null,
         seconds: 20,
         disableBut: false,//验证码60S
@@ -74,19 +77,32 @@
     },
     created(){
       const vm = this
+      vm.showPhotoCode()
     },
     methods:{
       onClickLeft() {
         this.$router.go(-1)
       },
-//      更换图片
       showPhotoCode(){
         const vm = this
 
-        let img = vm.$refs.Imgdata
-
-        img.src = "http://47.106.11.246:8080/api/Registercontroller/photoCode.do?time=" + new Date().getTime();
+//        let img = vm.$refs.Imgdata
+//
+//        img.src = "http://47.106.11.246:8086/api/Registercontroller/photoCode?time=" + new Date().getTime();
+        vm.$axios.get(`/api/Registercontroller/photoCode`)
+          .then(response => {
+            if (response.status == 200 && response.data) {
+              vm.photoCodeUrl = response.data.img
+              vm.photoCodeKey = response.data.key
+              console.log(response)
+            } else {
+              vm.$toast('获取图片验证码失败');
+            }
+          }).catch(response => {
+          vm.$toast('获取图片验证码失败');
+        })
       },
+
       getTimesec() {
         const vm = this
         vm._timer = setInterval(function () {

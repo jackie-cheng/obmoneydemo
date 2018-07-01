@@ -13,7 +13,7 @@
                ref="ruleForm2"
                class="demo-ruleForm">
         <el-form-item prop="username">
-          <el-input v-model="ruleForm2.username" auto-complete="off" placeholder="请输入您的昵称"></el-input>
+          <el-input v-model="ruleForm2.username" auto-complete="off" placeholder="请输入您的昵称" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"></el-input>
         </el-form-item>
         <el-form-item prop="phone">
           <el-input v-model.number="ruleForm2.phone" auto-complete="off" placeholder="请输入您的手机号"></el-input>
@@ -22,7 +22,7 @@
         <el-form-item prop="photoCode" class="twoInput">
           <el-input v-model="ruleForm2.photoCode" placeholder="请输入图片验证码">
 
-            <template slot="append"><img src="http://47.106.11.246:8086/api/Registercontroller/photoCode"
+            <template slot="append"><img :src="photoCodeUrl"
                                          @click="showPhotoCode()" ref="Imgdata"></template>
           </el-input>
         </el-form-item>
@@ -38,11 +38,11 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="pass">
-          <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="请输入您的登录密码"></el-input>
+          <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="请输入您的登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"></el-input>
         </el-form-item>
 
         <el-form-item prop="qqNum">
-          <el-input  v-model="ruleForm2.qqNum" auto-complete="off" placeholder="请输入您的QQ号"></el-input>
+          <el-input  v-model="ruleForm2.qqNum" auto-complete="off" placeholder="请输入您的QQ号" type="number"></el-input>
         </el-form-item>
         <el-form-item prop="recomMan">
           <el-input  v-model="ruleForm2.recomMan" auto-complete="off"
@@ -92,6 +92,8 @@
       };
 
       return {
+        photoCodeKey:null,
+        photoCodeUrl:null,
         seconds: 60,
         disableBut: false,//验证码60S
         ruleForm2: {
@@ -106,7 +108,7 @@
         rules2: {
           pass: [
             {validator: validatePass, trigger: 'blur', required: true,},
-            {min: 6, max: 15, message: '长度在 6 到 18 个字符', trigger: 'blur'}
+            {min: 8, max: 20, message: '长度在 8 到 20 个字符', trigger: 'blur'}
           ],
           phone: [
             {validator: checkAge, trigger: 'blur', required: true,}
@@ -125,7 +127,7 @@
           ],
           username: [
             {required: true, message: '请输入姓名(中文或拼音)', trigger: 'blur'},
-            {min: 2, max: 18, message: '长度在 2 到 18 个字符', trigger: 'blur'}
+            {min: 3, max: 18, message: '长度在 3 到 18 个字符', trigger: 'blur'}
           ],
         },
       }
@@ -155,6 +157,7 @@
     },
     created(){
       const vm = this
+      vm.showPhotoCode()
     },
     methods: {
       getTimesec() {
@@ -178,9 +181,21 @@
       showPhotoCode(){
         const vm = this
 
-        let img = vm.$refs.Imgdata
-
-        img.src = "http://47.106.11.246:8086/api/Registercontroller/photoCode?time=" + new Date().getTime();
+//        let img = vm.$refs.Imgdata
+//
+//        img.src = "http://47.106.11.246:8086/api/Registercontroller/photoCode?time=" + new Date().getTime();
+        vm.$axios.get(`/api/Registercontroller/photoCode`)
+          .then(response => {
+            if (response.status == 200 && response.data) {
+              vm.photoCodeUrl = response.data.img
+              vm.photoCodeKey = response.data.key
+              console.log(response)
+            } else {
+              vm.$toast('获取图片验证码失败');
+            }
+          }).catch(response => {
+          vm.$toast('获取图片验证码失败');
+        })
       },
 
 //      获取短信验证码
@@ -206,6 +221,7 @@
         let param = new URLSearchParams(); //创建form对象
         param.append('phone', vm.ruleForm2.phone);//通过append向form对象添加数据
         param.append('photoCode', vm.ruleForm2.photoCode);//添加form表单中其他数据
+        param.append('key', vm.photoCodeKey);//添加form表单中其他数据
         vm.seconds = 60
         vm.disableBut = true
         vm.getTimesec()

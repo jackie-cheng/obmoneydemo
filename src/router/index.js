@@ -114,6 +114,15 @@ export default new Router({
       }
     },
     {
+      path:'/mPayPassword',
+      meta: {
+        title: '修改支付密码',
+      },
+      component:resolve=>{
+        require(['../pages/user/modifyPayPassword.vue'],resolve)
+      }
+    },
+    {
       path:'/accountSet',
       meta: {
         title: '提现账户设置',

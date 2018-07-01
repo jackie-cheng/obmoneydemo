@@ -8,7 +8,8 @@
     />
     <div>
       <van-cell-group>
-        <van-cell title="支付密码" is-link to="/payPassword" />
+        <van-cell title="修改支付密码" is-link to="/mPayPassword" />
+        <van-cell title="设置支付密码" is-link to="/payPassword" />
         <van-cell title="修改密码" is-link to="/modifyPassword" />
         <van-cell title="提现账户设置" is-link to="/accountSet" />
       </van-cell-group>
@@ -30,7 +31,7 @@
     name: 'modifyPass',
     data(){
       return {
-
+        userData:null,
         phoneNum:'',
 
       }
@@ -43,6 +44,11 @@
     },
     created(){
       const vm = this
+      if(!localStorage.getItem('userInfo')){
+        vm.$router.push('/login')
+      }else{
+        vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
+      }
     },
     methods:{
       onClickLeft() {

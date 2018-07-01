@@ -6,24 +6,60 @@
       @click-left="onClickLeft"
 
     />
-    <div style="margin-top: 2rem">
+    <!--<div style="max-width: 800px">-->
 
-      <!-- 密码输入框 -->
-      <van-password-input
-        :value="value"
-        info="密码为 6 位数字"
-        @focus="showKeyboard = true"
-      />
-    </div>
+      <!--&lt;!&ndash; 密码输入框 &ndash;&gt;-->
+      <!--<span style="position: relative">-->
+      <!--<yd-keyboard v-model="showKeyboard" :callback="done1" ref="keyboardDemo1" :title="'支付密码为6位数字'"-->
+                   <!--:input-text="'请设置您的支付密码'"-->
+      <!--&gt;</yd-keyboard>-->
+        <!--</span>-->
+    <!--</div>-->
 
 
     <!-- 数字键盘 -->
-    <van-number-keyboard
-      :show="showKeyboard"
-      @input="onInput"
-      @delete="onDelete"
-      @blur="showKeyboard = false"
-    />
+    <!--<van-number-keyboard-->
+      <!--:show="showKeyboard"-->
+      <!--@input="onInput"-->
+      <!--@delete="onDelete"-->
+      <!--@blur="showKeyboard = false"-->
+    <!--/>-->
+    <div class="modifyPass">
+      <yd-cell-group style="margin-top: 0.6rem">
+        <yd-cell-item>
+
+          <span slot="left">支付密码：</span>
+
+          <yd-input slot="right" required v-model="payPass"
+                    type="number"
+                    max="6"    placeholder="请输入6位纯数字支付密码"></yd-input>
+
+
+        </yd-cell-item>
+      </yd-cell-group>
+      <!--<van-cell-group>-->
+      <!--<van-field v-model="oldPass" placeholder="请输入原登录密码"  label="原登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"  clearable/>-->
+      <!--<van-field v-model="newPass" placeholder="请输入新登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" label="新登录密码"-->
+
+      <!--type = 'password'-->
+      <!--icon="password-view"-->
+      <!--@click-icon="$toast('question')" />-->
+      <!--<van-field v-model="secNewPass" placeholder="请再次输入新登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"-->
+      <!--clearable-->
+      <!--label="确认新密码"  icon="clear"-->
+      <!--@click-icon="secNewPass = ''" />-->
+
+      <!--</van-cell-group>-->
+
+      <div class="nextBut">
+        <van-button type="danger" @click="obNewPass()" v-if="payPass.length==6">确定</van-button>
+        <van-button type="danger" style="opacity: 0.6" v-else>确定</van-button>
+      </div>
+
+
+
+
+    </div>
 
 
   </div>
@@ -31,12 +67,25 @@
 
 <script>
 
+  import Vue from 'vue';
+  import {Input} from 'vue-ydui/dist/lib.px/input'
+  import {CellGroup, CellItem} from 'vue-ydui/dist/lib.px/cell';
+  /* 使用px：import {CellGroup, CellItem} from 'vue-ydui/dist/lib.px/cell'; */
 
+  Vue.component(CellGroup.name, CellGroup);
+  Vue.component(CellItem.name, CellItem);
+  /* 使用px：import {Input} from 'vue-ydui/dist/lib.px/input'; */
+
+  Vue.component(Input.name, Input);
+  import {KeyBoard} from 'vue-ydui/dist/lib.px/keyboard';
+  Vue.component(KeyBoard.name, KeyBoard);
   export default {
 
     name: 'modifyPass',
     data(){
       return {
+        userData:null,
+        payPass:'',
         value: '',
         showKeyboard: true,
 //        phoneNum:'',
@@ -49,36 +98,62 @@
     components:{
 
     },
+    mounted(){
+      const vm = this
+      vm.$watch('payPass', function () {
+        vm.payPass=vm.payPass.replace(/^ +| +$/g,'')
+        vm.payPass=vm.payPass.slice(0,6)
+        vm.payPass=vm.payPass.replace(/\./,'')
+      }, {deep: true})
+
+    },
     created(){
       const vm = this
+      if(!localStorage.getItem('userInfo')){
+        vm.$router.push('/login')
+      }else{
+        vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
+      }
     },
     methods:{
       onClickLeft() {
         this.$router.go(-1)
       },
-      onInput(key) {
-        this.value = (this.value + key).slice(0, 6);
-      },
-      onDelete() {
-        this.value = this.value.slice(0, this.value.length - 1);
+      done1(val) {
+        const vm = this
+        console.log('输入的密码是：' + val);
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 3000,       // 持续展示 toast
+          message: '密码提交中...'
+        });
+//        this.$dialog.loading.open('验证支付密码');
+//
+//        /* 模拟异步验证密码 */
+//        setTimeout(() => {
+//          this.$refs.keyboardDemo1.$emit('ydui.keyboard.error', '对不起，您的支付密码不正确，请重新输入。');
+//          this.$dialog.loading.close();
+//        }, 2000);
       },
 
 //     修改密码
       obNewPass(){
         const vm = this
-        if (vm.$_.isEmpty(vm.phoneNum)) {
-          vm.$toast('密码不能为空');
-          return
-        }
+//        if (vm.$_.isEmpty(vm.phoneNum)) {
+//          vm.$toast('密码不能为空');
+//          return
+//        }
         const toast1 = vm.$toast.loading({
           mask: true,
           duration: 10000,       // 持续展示 toast
           message: '密码更新中...'
         });
-        let param = new URLSearchParams(); //创建form对象
-        param.append('password', vm.phoneNum);//添加form表单中其他数据
+        let params = {
+          Token: vm.userData.token,
+          userPayPwd: vm.payPass,
+        }
 
-        vm.$axios.post(`/api/LoginController/login.do`, param)
+        vm.$axios.post(`/user/geamUserAccountDown/updateNewPayPwd`, params)
           .then(response => {
             toast1.clear();
             if (response.status == 200) {
@@ -90,7 +165,7 @@
               }
 
             } else {
-              vm.$toast('获取验证码失败');
+              vm.$toast('设置失败');
             }
           }).catch(response => {
 
