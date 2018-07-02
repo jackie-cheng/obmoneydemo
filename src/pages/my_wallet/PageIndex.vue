@@ -9,7 +9,7 @@
         <i class="iconfont wallet_icon"></i>
         <div class="ob_myWallet_num">
           <em>账户资金</em>
-          <p class="money_num">188.00</p>
+          <p class="money_num">{{moneyData.balance}}</p>
         </div>
         <div class="ob_myWallet_btns">
           <router-link to="/wallet_in"> <van-button size="large" type="danger">充值</van-button></router-link>
@@ -29,6 +29,7 @@
     name: 'my_wallet',
     data() {
       return {
+        moneyData:null,
         userToken:null,
         userData:null,
       }
@@ -58,7 +59,7 @@
                   vm.$router.push('/')
                 });
               }else{
-                vm.moneyData = response.data
+                vm.moneyData = response.data.a
               }
 
 

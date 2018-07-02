@@ -80,7 +80,7 @@ const vm = this
             console.log(response)
             if (response.status == 200) {
 
-              vm.$toast('上传成功');
+              vm.$toast.success('上传成功');
               vm.userData.photourl = response.data.address
               localStorage.setItem('userInfo',JSON.stringify(vm.userData))
             } else {

@@ -55,29 +55,53 @@
 
       <ul style="margin-bottom: 90px;min-height: 400px">
         <p style="width: 100%;text-align: center;color: #00A3CF;margin-bottom: 0.3rem" @click="loadList">下拉或点击可查看聊天记录</p>
-
         <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"  v-for="mess in mySendMessage">
-          <template v-if="mess.sendernickname!=userName">
+          <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&!mess.fristSend">
             <!--{{JSON.parse(mess.msgContent)}}-->
             <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.mySendTime">2018-05-29 09:21</p>
             <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="">
+              <img :src="mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
-              <img src="../../assets/qq.png" alt="">
+              <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
             <span>{{mess.message}}</span>
 
           </template>
-          <template v-else>
+          <template v-if="!mess.sendernickname">
+            <!--{{JSON.parse(mess.msgContent)}}-->
+            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess">2018-05-29 09:21</p>
+
+          </template>
+
+          <template v-if="mess.fristSend">
+            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
+            <p  style="text-align: center;margin: 0.2rem auto;background-color: #dfdfdf;width: 50%" >尊贵的
+              <img src="../../assets/userRank1.png" alt=""  style="width:1rem;height: 0.5rem" v-if="mess.message=='1'">
+              <img src="../../assets/userRank2.png" alt=""  style="width:1rem;height: 0.5rem" v-if="mess.message=='2'">
+              <img src="../../assets/userRank3.png" alt=""  style="width:1rem;height: 0.5rem" v-if="mess.message=='3'">
+              <img src="../../assets/userRank4.png" alt=""  style="width:1rem;height: 0.5rem" v-if="mess.message=='4'">
+              <img src="../../assets/userRank5.png" alt=""  style="width:1rem;height: 0.5rem" v-if="mess.message=='5'">
+              <em style="color: blue">{{mess.sendernickname}}</em>  进入房间</p>
+            <!--<p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>-->
+            <!--<a v-if="mess.photourl">-->
+              <!--<img :src="mess.photourl" alt="">-->
+            <!--</a>-->
+            <!--<a v-else>-->
+              <!--<img src="../../assets/qq.png" alt="">-->
+            <!--</a>-->
+            <!--<span>{{mess.message}}</span>-->
+          </template>
+
+          <template v-if="mess.sendernickname==userName&&!mess.fristSend">
             <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="">
+              <img :src="mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
-              <img src="../../assets/qq.png" alt="">
+              <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
             <span>{{mess.message}}</span>
           </template>
@@ -149,7 +173,7 @@
           </ul>
         </div>
         <div class="touzhu_right" v-if="touzhuType==2">
-          <img src="../../assets/firstball.png" alt="">
+          <img src="../../assets/firstball.png" alt="" >
           <ul>
             <li v-for="n in 20" :class="{curChosBall_class:curChosBallOne== n}" @click = 'curChosBallOne= n'><p class="foz_bol"> {{n}}</p><p> {{n}}</p></li>
           </ul>
@@ -227,6 +251,13 @@
         userData:null,
         userName:null,
         userToken:null,
+          userRankImg:{
+            '1':'../../assets/userRank1.png',
+            '2':'../../assets/userRank2.png',
+            '3':'../../assets/userRank3.png',
+            '4':'../../assets/userRank4.png',
+            '5':'../../assets/userRank5.png',
+          },
           mySendMessage:[],
         othersSendMessage:[],
         curChosBallOne:1,//当前选中球1
@@ -333,15 +364,27 @@
         const vm = this
 if(vm.userToken){
   vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=0&roomNumber="+vm.$route.params.id+"&token="+vm.userToken);
+  vm.websock.onopen = () => {
+          // Web Socket 已连接上，使用 send() 方法发送数据
+    let curTime =vm.getNowFormatDate()
+    let sendData ={"roomNumber":vm.$route.params.id,"uuid":vm.userData.uuid,"senderPhone":vm.userData.phone,"message":vm.userData.userRank.levelno,'mySendTime':curTime,
+      'sendernickname':vm.userData.username,"fristSend":true
+    }
+//    console.log(JSON.stringify(sendData))
+    vm.websock.send(JSON.stringify(sendData));
+          console.log('发的消息',JSON.stringify(sendData))
+    vm.mySendMessage.push(sendData)
+
+  }
+
+
+
 }else {
   vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=0&roomNumber="+vm.$route.params.id);
 }
 
 
-//        if(vm.websock.readyState != 1){
-//         console.log("WebSocket连接中")
-////          vm.initWebSocket()
-//        }
+
         console.log(vm.websock)
         vm.websock.onmessage = vm.websocketonmessage;
         vm.websock.onclose = vm.websocketclose;
@@ -354,20 +397,23 @@ if(vm.userToken){
         const vm = this
         console.log('收到的',JSON.parse(e.data))
         let pullData = JSON.parse(e.data)
-        vm.redata = JSON.parse(pullData.msgContent);
-//        let content = document.getElementsByClassName('room_wechatul')[0];
-//        content.scrollTop=content.scrollHeight
-        console.log(vm.redata)
+        if(pullData.chatType!='9'){
+          vm.redata = JSON.parse(pullData.msgContent);
 
-        vm.mySendMessage.push(vm.redata)
+          console.log(vm.redata)
 
-//        content.scrollTop=content.scrollHeight-100
-//        console.log('收消息列表',vm.mySendMessage)
+          vm.mySendMessage.push(vm.redata)
+        }else{
 
-//        let divUl = document.getElementsByClassName('room_wechatul')[0]
-//        divUl.scrollTop = divUl.scrollHeight;
-//{"phone":"","message":""}
-//        console.log('jieshou',vm.redata);
+          vm.redata = pullData.msgContent
+
+          console.log('系统消息',vm.redata)
+
+          vm.mySendMessage.push(vm.redata)
+        }
+
+
+
       },
         websocketsend(agentData){//数据发送
         const vm = this
@@ -484,9 +530,26 @@ if(vm.userToken){
 //      });
       vm.$watch('mySendMessage',()=>{
         let content = document.getElementsByClassName('room_wechatul')[0];
-        console.log(content.scrollHeight)
+//        console.log('scrollHeight',content.scrollHeight)
+//        console.log('scrollTop',content.scrollTop)
         content.scrollTop=content.scrollHeight+90
+
       }, {deep: true})
+      vm.$watch('websock',()=>{
+        console.log(1)
+        if(vm.websock.readyState == 1){
+          let curTime =vm.getNowFormatDate()
+          let sendData ={"roomNumber":vm.$route.params.id,"uuid":vm.userData.uuid,"senderPhone":vm.userData.phone,"message":vm.userData.userRank.levelno,'mySendTime':curTime,
+            'sendernickname':vm.userData.username,"fristSend":true
+          }
+        console.log(JSON.stringify(sendData))
+          vm.websock.send(JSON.stringify(sendData));
+//          console.log('发的消息',JSON.stringify(sendData))
+          vm.mySendMessage.push(sendData)
+        }
+
+      }, {deep: true})
+
     },
     created () {
       const vm = this
@@ -496,7 +559,7 @@ if(vm.userToken){
       vm.userToken = vm.userData.token
 vm.userName = vm.userData.username
       }
-      vm.initWebSocket()
+
 //      vm.websocket()
 
 //      vm.creatGet()
@@ -511,6 +574,7 @@ vm.userName = vm.userData.username
         .then(response => {
           if (response.status == 200 && response.data) {
             vm.roomData = response.data.resultInfo
+            vm.initWebSocket()
 //            console.log(response)
           } else {
             vm.$toast('获取房间信息失败');

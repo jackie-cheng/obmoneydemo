@@ -11,11 +11,11 @@
       <!--<option value="">线路一</option>-->
       <!--</select>-->
       <div slot="right">
-        <van-icon name="contact" style="margin-right: 1.7rem"/>
+        <van-icon name="contact" style="margin-right: 1.78rem"/>
         <template v-if="!nullLogin&&userData&&!$_.isEmpty(userData)">
 
-          <span style="position: absolute;right: 0.8rem;top:-0.2rem;">{{userData.username}}</span>
-          <span style="position: absolute;right: 1.1rem;top:0.2rem">￥0.00</span>
+          <span style="position: absolute;right: 0.5rem;top:-0.2rem;">{{userData.username}}</span>
+          <span style="position: absolute;right: 0.5rem;top:0.2rem">￥{{userData.balance}}</span>
         </template>
 
         <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox">
