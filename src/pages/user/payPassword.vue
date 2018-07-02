@@ -37,23 +37,11 @@
 
         </yd-cell-item>
       </yd-cell-group>
-      <!--<van-cell-group>-->
-      <!--<van-field v-model="oldPass" placeholder="请输入原登录密码"  label="原登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"  clearable/>-->
-      <!--<van-field v-model="newPass" placeholder="请输入新登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" label="新登录密码"-->
 
-      <!--type = 'password'-->
-      <!--icon="password-view"-->
-      <!--@click-icon="$toast('question')" />-->
-      <!--<van-field v-model="secNewPass" placeholder="请再次输入新登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"-->
-      <!--clearable-->
-      <!--label="确认新密码"  icon="clear"-->
-      <!--@click-icon="secNewPass = ''" />-->
-
-      <!--</van-cell-group>-->
 
       <div class="nextBut">
         <van-button type="danger" @click="obNewPass()" v-if="payPass.length==6">确定</van-button>
-        <van-button type="danger" style="opacity: 0.6" v-else>确定</van-button>
+        <van-button type="danger" style="opacity: 0.6" v-else @click="$toast('支付密码为6位纯数字')">确定</van-button>
       </div>
 
 
@@ -148,27 +136,31 @@
           duration: 10000,       // 持续展示 toast
           message: '密码更新中...'
         });
-        let params = {
-          Token: vm.userData.token,
-          userPayPwd: vm.payPass,
-        }
-
-        vm.$axios.post(`/user/geamUserAccountDown/updateNewPayPwd`, params)
+        let param = new URLSearchParams(); //创建form对象
+        param.append('token', vm.userData.token);//通过append向form对象添加数据
+        param.append('userPayPwd', vm.payPass);//添加form表单中其他数据
+        vm.$axios.post(`/user/geamUserAccountDown/updateNewPayPwd`, param)
           .then(response => {
-            toast1.clear();
+//            toast1.clear();
             if (response.status == 200) {
-              if (response.data.status != 'fail') {
+              if (response.data.status == 'success') {
 
-                console.log('成功')
+                vm.$toast.success('修改成功');
+                vm.userData.paymentPassword = true
+                localStorage.setItem('userInfo',JSON.stringify(vm.userData))
+                setTimeout(() => {
+                  this.$router.go(-1)
+                }, 500);
+
               } else {
                 vm.$toast(response.data.message);
               }
 
             } else {
-              vm.$toast('设置失败');
+              vm.$toast('请求失败');
             }
           }).catch(response => {
-
+          toast1.clear();
         })
       },
 

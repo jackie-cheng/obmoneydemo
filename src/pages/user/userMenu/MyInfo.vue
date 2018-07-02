@@ -19,7 +19,12 @@
     <!--</van-cell-group>-->
     <van-cell-group v-if="userData&&!$_.isEmpty(userData)">
       <div class="myInfo_touxiang">
-<span>个人头像</span> <img src="../../../assets/qq.png" alt="">
+        <van-uploader :after-read="onRead" accept="image/gif, image/jpeg, image/png" multiple>
+          <span>个人头像</span>
+          <img src="../../../assets/qq.png" alt="" v-if="userData&&userData.photourl==null">
+          <img :src="'http://47.106.11.246:8086'+userData.photourl" alt="" v-if="userData&&userData.photourl!=null">
+        </van-uploader>
+
       </div>
       <van-cell title="推广id" value="132456" />
       <van-cell title="手机号" :value="userData.phone"/>
@@ -56,6 +61,34 @@ const vm = this
     methods:{
       onClickLeft(){
         this.$router.go(-1)
+      },
+      onRead(file) {
+        const vm = this
+        console.log(file.file)
+        console.log(file.file.name)
+        let param = new FormData(); //创建form对象
+        param.append('fileName', file.file,file.file.name);//通过append向form对象添加数据
+        param.append('token',vm.userData.token);
+//        param.append('fileName', file.file.name);//通过append向form对象添加数据
+//        param.append('chunk', '0');//添加form表单中其他数据
+
+        let config = {
+          headers: {'Content-Type': 'multipart/form-data'}
+        };  //添加请求头
+        vm.$axios.post('/api/upLoadImg/fileUpload', param, config)
+          .then(response => {
+            console.log(response)
+            if (response.status == 200) {
+
+              vm.$toast('上传成功');
+              vm.userData.photourl = response.data.address
+              localStorage.setItem('userInfo',JSON.stringify(vm.userData))
+            } else {
+              vm.$toast('请求失败');
+            }
+          }).catch(response => {
+          vm.$toast('请求失败');
+        })
       }
     }
   }

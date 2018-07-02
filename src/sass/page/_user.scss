@@ -246,12 +246,16 @@ margin-right: 0.5rem;
   color: #333;
   font-size: 14px;
   border-bottom: 1px solid #e5e5e5;
+  .van-uploader{
+    width: 100%;
+  }
   img {
     width: 1.6rem;
     height: 1.6rem;
     border-radius: 100%;
     background-color: white;
-    margin-left: 60%;
+    float: right;
+    margin-right: 0.5rem;
   }
 }
 //提现账户设置

@@ -88,6 +88,7 @@ type="number"
       const vm = this
       vm.$watch('oldPass', function () {
         vm.oldPass=vm.oldPass.replace(/^ +| +$/g,'')
+        vm.oldPass=vm.oldPass.slice(0,6)
       }, {deep: true})
       vm.$watch('newPass', function () {
         vm.newPass=vm.newPass.replace(/^ +| +$/g,'')
@@ -118,6 +119,7 @@ type="number"
           return
         }else if(vm.newPass.length!=6){
           vm.$toast('密码为6位数字');
+          return
         }
       },
 
@@ -136,29 +138,23 @@ type="number"
           duration: 10000,       // 持续展示 toast
           message: '密码更新中...'
         });
-        let params = {
-          Token: vm.userData.token,
-          userPayPwd: vm.newPass,
-          oldPayPwd:vm.oldPass,
-        }
-//        let param = new URLSearchParams(); //创建form对象
-//        param.append('Token', vm.userData.token);//通过append向form对象添加数据
-//        param.append('userPwd', vm.newPass);//添加form表单中其他数据
-//        param.append('oldPwd', vm.oldPass);
-        vm.$axios.post(`/user/geamUserAccountDown/ updateUserPayPwd`, params)
+        let param = new URLSearchParams(); //创建form对象
+        param.append('token', vm.userData.token);//通过append向form对象添加数据
+        param.append('userPayPwd', vm.newPass);//添加form表单中其他数据
+        param.append('oldPayPwd', vm.oldPass);
+        vm.$axios.post(`/user/geamUserAccountDown/updateUserPayPwd`, param)
           .then(response => {
-            toast1.clear();
+//            toast1.clear();
             if (response.status == 200) {
-              if (response.data.status != 0) {
+              if (response.data.status == 'success') {
 
-                vm.$toast('修改成功，正跳转登录');
-//   localStorage.removeItem('userInfo')
-//                setTimeout(() => {
-//                vm.$router.push('/login')
-//                }, 2000);
+                vm.$toast.success('修改成功');
+                setTimeout(() => {
+                  this.$router.go(-1)
+        }, 2000);
 
               } else {
-                vm.$toast(response.data.message);
+                vm.$toast('原密码输入错误');
               }
 
             } else {

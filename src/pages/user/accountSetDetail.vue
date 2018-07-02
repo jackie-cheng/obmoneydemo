@@ -62,7 +62,7 @@
           vm.$toast('账号不能为空');
           return
         }
-        vm.$toast('添加成功');
+        vm.$toast.success('添加成功');
       },
 //     修改密码
       obNewPass(){

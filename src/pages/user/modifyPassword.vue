@@ -117,6 +117,7 @@
           return
         }else if(vm.newPass.length<8){
           vm.$toast('密码最低为八位');
+          return
         }
       },
 
@@ -133,32 +134,37 @@
           message: '密码更新中...'
         });
         let params = {
-          Token: vm.userData.token,
+          token: vm.userData.token,
           userPwd: vm.newPass,
           oldPwd:vm.oldPass,
         }
-//        let param = new URLSearchParams(); //创建form对象
-//        param.append('Token', vm.userData.token);//通过append向form对象添加数据
-//        param.append('userPwd', vm.newPass);//添加form表单中其他数据
-//        param.append('oldPwd', vm.oldPass);
-        vm.$axios.post(`/user/geamUserAccountDown/updateUserPwd`, params)
+        let param = new URLSearchParams(); //创建form对象
+        param.append('token', vm.userData.token);//通过append向form对象添加数据
+        param.append('userPwd', vm.newPass);//添加form表单中其他数据
+        param.append('oldPwd', vm.oldPass);
+        vm.$axios.post(`/user/geamUserAccountDown/updateUserPwd`, param)
           .then(response => {
-            toast1.clear();
+//            toast1.clear();
             if (response.status == 200) {
-              if (response.data.status != 0) {
-
-                vm.$toast('修改成功，正跳转登录');
-//   localStorage.removeItem('userInfo')
-//                setTimeout(() => {
-//                vm.$router.push('/login')
-//                }, 2000);
+              if (response.data.status == 'success') {
+                const toast1 = vm.$toast.success({
+                  mask: true,
+                  duration: 2000,       // 持续展示 toast
+                  message: '修改成功，正跳转登录'
+                });
+//                vm.$toast('修改成功，正跳转登录');
+   localStorage.removeItem('userInfo')
+                setTimeout(() => {
+                  toast1.clear();
+                vm.$router.push('/login')
+                }, 2000);
 
               } else {
-                vm.$toast(response.data.message);
+                vm.$toast('原密码输入错误');
               }
 
             } else {
-              vm.$toast('获取验证码失败');
+              vm.$toast('请求失败');
             }
           }).catch(response => {
           toast1.clear();
