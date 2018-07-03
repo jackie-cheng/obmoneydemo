@@ -87,8 +87,10 @@
                   vm.$dialog.confirm({
                     message: response.data.resultInfo
                   }).then(() => {
+                    localStorage.removeItem('userInfo')
                     vm.$router.push('/login')
                   }).catch(() => {
+                    localStorage.removeItem('userInfo')
                     vm.$router.push('/')
                   });
                 }else{
@@ -138,8 +140,10 @@
                   vm.$dialog.confirm({
                     message: response.data.resultInfo
                   }).then(() => {
+                    localStorage.removeItem('userInfo')
                     vm.$router.push('/login')
                   }).catch(() => {
+                    localStorage.removeItem('userInfo')
                     vm.$router.push('/')
                   });
                 }else{

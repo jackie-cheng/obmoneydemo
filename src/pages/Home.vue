@@ -55,11 +55,14 @@
       </van-swipe>
     </section>
     <!--消息提示-->
-    <van-cell-group>
-      <van-cell title="欢迎来到帝魂国际!" is-link to="/notice">
-        <em class="iconfont notice_icon" slot="icon"></em>
-      </van-cell>
-    </van-cell-group>
+    <van-notice-bar @click="routerNotice()"
+      text="欢迎来到帝魂国际!2欢迎来到帝魂国际3欢迎来到帝魂国际4欢迎来到帝魂国际5欢迎来到帝魂国际6欢迎来到帝魂国际7欢迎来到帝魂国际8欢迎来到帝魂国际欢迎来到帝魂国际欢迎来到帝魂国际"
+    />
+    <!--<van-cell-group>-->
+      <!--<van-cell title="欢迎来到ce国际!" is-link to="/notice">-->
+        <!--<em class="iconfont notice_icon" slot="icon"></em>-->
+      <!--</van-cell>-->
+    <!--</van-cell-group>-->
     <!--App -->
     <section class="ob_home_apps">
       <ul>
@@ -190,6 +193,10 @@
       document.querySelector('body').removeEventListener('click', this.handleBodyClick);
     },
     methods: {
+      routerNotice(){
+         const vm = this
+        vm.$router.push('/notice')
+      },
       intoRoom(r){
         const vm = this
         if (r.openFlag == '1') {

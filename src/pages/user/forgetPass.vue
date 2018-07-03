@@ -182,7 +182,6 @@
         vm.$axios.post(`/api/Registercontroller/judgeCerificationCode`, param)
           .then(response => {
             if (response.status == 200) {
-                console.log(response)
               if (response.data.status.indexOf("success") != -1) {
                 vm.$toast.success('验证成功');
                 setTimeout(() => {
@@ -218,16 +217,18 @@
           message: '加载中...'
         });
         let param = new URLSearchParams(); //创建form对象
-        param.append('phone', vm.phoneNum);//通过append向form对象添加数据
+        param.append('phoneNumber', vm.phoneNum);//通过append向form对象添加数据
         param.append('userPwd', vm.newPass);//添加form表单中其他数据
 
-        vm.$axios.post(`/user/geamUserAccountDown/updateNewPwd`, param)
+        vm.$axios.post(`/api/userLoginController/updateNewPwd`, param)
           .then(response => {
             if (response.status == 200) {
-              console.log(response)
               if (response.data.status.indexOf("success") != -1) {
                 vm.$toast.success('密码重置成功');
-                       vm.$router.push('/login')
+                setTimeout(() => {
+                  vm.$router.push('/login')
+                }, 800);
+
               } else {
                 vm.$toast(response.data.message);
               }

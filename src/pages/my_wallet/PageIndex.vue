@@ -7,14 +7,14 @@
 
       <div class="ob_myWallet_content">
         <i class="iconfont wallet_icon"></i>
-        <div class="ob_myWallet_num">
+        <div class="ob_myWallet_num" v-if="moneyData&&moneyData!=null">
           <em>账户资金</em>
           <p class="money_num">{{moneyData.balance}}</p>
         </div>
         <div class="ob_myWallet_btns">
           <router-link to="/wallet_in"> <van-button size="large" type="danger">充值</van-button></router-link>
-          <router-link to="/wallet_out"><van-button size="large">提现</van-button></router-link>
-
+          <router-link to="/wallet_out"><van-button size="large" v-if="moneyData&&moneyData!=null&&Number(moneyData.balance)>0">提现</van-button></router-link>
+          <van-button size="large" disabled v-if="moneyData&&moneyData!=null&&Number(moneyData.balance)<1" style="color: #999;border-color: #ccc">提现</van-button>
         </div>
       </div>
 
@@ -54,8 +54,10 @@
                 vm.$dialog.confirm({
                   message: response.data.resultInfo
                 }).then(() => {
+                  localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
                 }).catch(() => {
+                  localStorage.removeItem('userInfo')
                   vm.$router.push('/')
                 });
               }else{

@@ -75,11 +75,43 @@
           if (!Number.isInteger(value)) {
             callback(new Error('请输入正确的手机号'));
           } else {
-            if (value < 12999999999 || value > 18999999999) {
+            if (value < 12999999999 || value > 19999999999) {
               callback(new Error('请输入正确的手机号'));
             } else {
+
               callback();
             }
+          }
+        }, 100);
+      };
+      var checkName = (rule, value, callback) => {
+        setTimeout(() => {
+          var regEn = /[`·！#￥（—）：；“”‘、，|《。》？【】~!@$%^&*()_+<>?:"{},.\/;'[\]]/im
+          if (!value) {
+            return callback(new Error('昵称不能为空'));
+          }
+          else if(regEn.test(value)) {
+            return  callback(new Error('昵称不能包含特殊字符'));
+          } else {
+            const vm = this
+            let params = {
+              'username': value //手机号
+            }
+            vm.$axios.get('/api/Registercontroller/checkUserName', {params})
+              .then(response => {
+                if (response.status == 200) {
+                  if (response.data.statusCode == '1') {
+                    callback();
+                  } else {
+                 return   callback(new Error('用户名不可用'));
+                  }
+                } else {
+                  vm.$toast('用户名检测失败');
+                }
+              }).catch(response => {
+              vm.$toast('用户名检测失败');
+            })
+
           }
         }, 100);
       };
@@ -126,7 +158,7 @@
             {required: true, message: '请输入短信验证码', trigger: 'blur'},
           ],
           username: [
-            {required: true, message: '请输入姓名(中文或拼音)', trigger: 'blur'},
+            {validator: checkName, trigger: 'blur'},
             {min: 3, max: 18, message: '长度在 3 到 18 个字符', trigger: 'blur'}
           ],
         },

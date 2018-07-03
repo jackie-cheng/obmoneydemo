@@ -19,7 +19,7 @@
     <!--</van-cell-group>-->
     <van-cell-group v-if="userData&&!$_.isEmpty(userData)">
       <div class="myInfo_touxiang">
-        <van-uploader :after-read="onRead" accept="image/gif, image/jpeg, image/png" multiple>
+        <van-uploader :after-read="onRead" accept="image/*" :max-size="1024*1024*6" @oversize="overSize" multiple>
           <span>个人头像</span>
           <img src="../../../assets/qq.png" alt="" v-if="userData&&userData.photourl==null">
           <img :src="'http://47.106.11.246:8086'+userData.photourl" alt="" v-if="userData&&userData.photourl!=null">
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import 'lrz/dist/lrz.all.bundle.js'
   import tabbar from '../../../components/tabbar'
   export default {
     name: 'home',
@@ -62,33 +63,56 @@ const vm = this
       onClickLeft(){
         this.$router.go(-1)
       },
+      overSize(){
+        const vm = this
+        vm.$toast.fail('上传失败，图片过大');
+      },
+
       onRead(file) {
         const vm = this
-        console.log(file.file)
-        console.log(file.file.name)
-        let param = new FormData(); //创建form对象
-        param.append('fileName', file.file,file.file.name);//通过append向form对象添加数据
-        param.append('token',vm.userData.token);
+//        console.log(file.file)
+        lrz(file.file, {
+          quality: 0.5
+        })
+          .then(function (rst) {
+            // 处理成功会执行
+//            console.log('customUploadImg:', 'lrz success')
+//            console.log(rst)
+//            console.log('rst',rst)
+//            console.log(file.file.name)
+            let param = new FormData(); //创建form对象
+            param.append('fileName', rst.file,file.file.name);//通过append向form对象添加数据
+            param.append('token',vm.userData.token);
 //        param.append('fileName', file.file.name);//通过append向form对象添加数据
 //        param.append('chunk', '0');//添加form表单中其他数据
 
-        let config = {
-          headers: {'Content-Type': 'multipart/form-data'}
-        };  //添加请求头
-        vm.$axios.post('/api/upLoadImg/fileUpload', param, config)
-          .then(response => {
-            console.log(response)
-            if (response.status == 200) {
+            let config = {
+              headers: {'Content-Type': 'multipart/form-data'}
+            };  //添加请求头
+            vm.$axios.post('/api/upLoadImg/fileUpload', param, config)
+              .then(response => {
+                console.log(response)
+                if (response.status == 200) {
 
-              vm.$toast.success('上传成功');
-              vm.userData.photourl = response.data.address
-              localStorage.setItem('userInfo',JSON.stringify(vm.userData))
-            } else {
+                  vm.$toast.success('上传成功');
+                  vm.userData.photourl = response.data.address
+                  localStorage.setItem('userInfo',JSON.stringify(vm.userData))
+                } else {
+                  vm.$toast('请求失败');
+                }
+              }).catch(response => {
               vm.$toast('请求失败');
-            }
-          }).catch(response => {
-          vm.$toast('请求失败');
-        })
+            })
+          })
+          .catch(function (err) {
+//            console.log('222')
+            vm.$toast('压缩失败');
+          })
+          .always(function () {
+            // 清空文件上传控件的值
+//            e.target.value = null
+          })
+
       }
     }
   }
