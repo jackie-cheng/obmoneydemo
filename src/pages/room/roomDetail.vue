@@ -7,57 +7,54 @@
     >
       <van-icon name="add-o" slot="right"/>
     </van-nav-bar>
-    <!--<van-row>-->
-    <!--<van-col span="12">span: 8</van-col>-->
-    <!--<van-col span="12">span: 8</van-col>-->
-    <!--</van-row>-->
+
     <div class="room_topData">
-      <!--信息-->
-      <div class="room_topData_up">
-        <div class="room_topData_lift"><span>距<em v-if="gameIssue">{{gameIssue.issue}}</em>期止</span>
+      <!--头部期数信息-->
+      <div class="room_topData_up" v-if="gameIssue">
+        <div class="room_topData_lift"><span>第<em>{{gameIssue.issue}}</em>期</span>
           <p>
-            <yd-countdown :time="666" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
+            <yd-countdown :time="gameIssue.duration" :callback="curGameOver" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
           </p>
         </div>
-        <div class="room_topData_lift"><span>总余额</span>
-          <p>666.88</p></div>
+        <div class="room_topData_lift"><span style="display: block">总余额</span>
+          <p v-if="moneyData">{{moneyData.balance}}</p><p v-else>--.--</p></div>
       </div>
-      <!--列-->
-      <!--<div class="room_topData_down">-->
-      <!--<span>第 <em>4854545</em> 期5+1+3=9（大单）</span>-->
-      <!--</div>-->
-      <van-collapse v-model="activeNames" class="room_topData_down">
+
+      <!--下拉查看历史开奖-->
+      <van-collapse v-model="activeNames" class="room_topData_down" v-if="gameRecordList">
         <van-collapse-item name="1">
-          <div slot="title"><span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
-            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大 <i
-              class="dan_color">单</i> ）</span></div>
+          <div slot="title"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
+            <i class="numblue_color">{{(gameRecordList[0].note).split("|")[0]}}</i>
+            +<i class="numblue_color">{{(gameRecordList[0].note).split("|")[1]}}</i>
+            +<i class="num_color">{{(gameRecordList[0].note).split("|")[2]}}</i>
+            =<i class="lastNum_color">
+              {{Number((gameRecordList[0].note).split("|")[0]) + Number((gameRecordList[0].note).split("|")[1])+Number((gameRecordList[0].note).split("|")[2])}}
+            </i>
+            （ <i class="daDan_color">大</i> <i class="daDan_color">单</i> ）</span>
+          </div>
           <p class="kai_jieguo">开奖结果</p>
           <ul>
-            <li>
-              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
-            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i
-                  class="dan_color">单</i>）</span>
-            </li>
-            <li>
-              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
-            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i
-                  class="dan_color">单</i>）</span>
-            </li>
-            <li>
-              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
-            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i
-                  class="dan_color">单</i>）</span>
-            </li>
-            <li>
-              <span>第 <em>4854545</em> 期 <i class="numblue_color">5</i>
-            +<i class="numblue_color">5</i>+<i class="num_color">5</i>=<i class="lastNum_color">5</i>（大<i
-                  class="dan_color">单</i>）</span>
-            </li>
+            <li v-for="openRecord in gameRecordList.slice(1,10)">
+              <template v-if="openRecord.status=='2'">
+                <span>
+                  第 <em>{{openRecord.issue}}</em> 期
+                  <i class="numblue_color">{{(openRecord.note).split("|")[0]}}</i>
+            +<i class="numblue_color">{{(openRecord.note).split("|")[1]}}</i>
+                +<i class="num_color">{{(openRecord.note).split("|")[2]}}</i>
+                  =<i class="lastNum_color">
+                  {{Number((openRecord.note).split("|")[0]) + Number((openRecord.note).split("|")[1])+Number((openRecord.note).split("|")[2])}}</i>
+                  （大<i class="dan_color">单</i>）
+                </span>
+              </template>
+              <template v-if="openRecord.status=='-1'"> <span>第 <em>{{openRecord.issue}}</em> 期</span><i style="color: red;margin-left: 0.5rem">开奖异常</i></template>
 
+            </li>
           </ul>
         </van-collapse-item>
       </van-collapse>
     </div>
+
+
     <!--聊天信息-->
 
     <yd-pullrefresh :callback="loadList" ref="pullrefreshDemo" class='room_wechatul'>
@@ -119,7 +116,7 @@
 
     </yd-pullrefresh>
 
-
+<!--底部信息-->
     <div class="footSet">
       <van-button @click="showCustomAction=true" v-if="roomData.guessFlag=='1'">投注</van-button>
       <van-button @click="startGuess" v-if="roomData.guessFlag!='1'" class="disButton">投注</van-button>
@@ -128,13 +125,15 @@
       </van-button>
       <van-cell-group>
         <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess" v-if="roomData.guessFlag=='1'"/>
-        <van-field v-model="messageValue" placeholder="房间禁言中" disabled v-if="roomData.guessFlag!='1'"/>
+        <van-field  placeholder="房间禁言中" disabled v-if="roomData.guessFlag!='1'"/>
       </van-cell-group>
 
-      <van-button class="send_button" @click="sendMess">
+      <van-button class="send_button" @click="sendMess" v-if="messageValue">
         发送
       </van-button>
-
+      <van-button class="nosend_button"  v-if="!messageValue">
+        发送
+      </van-button>
     </div>
     <van-actionsheet v-model="showCustomAction" title="定位球投注" class="touzhu_actionbac">
       <div class="touzhu_action">
@@ -263,6 +262,7 @@
     name: 'roomDetail',
     data () {
       return {
+        moneyData:null,//获取用户余额
         gameIssue: null,//房间游戏期次
         gameRecordList: null,//开奖记录
         page: 1,
@@ -293,39 +293,47 @@
       }
     },
     methods: {
+        //当期游戏倒计时走完，封盘
+      curGameOver(){
+        const vm = this
+        console.log('当期游戏倒计时走完，封盘')
+        return
+      },
       loadList() {
         const vm = this
-        if (!localStorage.getItem('userInfo')) {
-          vm.$router.push('/login')
-          return
-        }
         let params = {
           roomNumber: vm.$route.params.id,
-          pageNumber: this.page,
+          pageNo: this.page,
           pageSize: 10,
         }
-        const url = 'user/chatRecord/queryChatRecordByRoomnumber';
+        const url = 'api/chatRecord/queryChatRecordByRoomnumber';
 
         vm.$axios.get(url, {params}).then((response) => {
-          if (response.data.statusCode) {
-            vm.$dialog.confirm({
-              message: response.data.resultInfo
-            }).then(() => {
-              localStorage.removeItem('userInfo')
-              vm.$router.push('/login')
-            }).catch(() => {
-              localStorage.removeItem('userInfo')
-              vm.$router.push('/')
-            });
-          } else {
-            const _list = (response.data || []).map(a => JSON.parse(a.msgContent));
+
+            const _list = (response.data.resultInfo || []).map(a => JSON.parse(a.msgContent));
             _list.reverse()
             vm.mySendMessage = [..._list, ...vm.mySendMessage];
             vm.$toast(_list.length > 0 ? '为您更新了' + _list.length + '条内容' : '已是最新内容');
             vm.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
 //
             vm.page++;
-          }
+
+        });
+      },
+      loadListOne() {
+        const vm = this
+        let params = {
+          roomNumber: vm.$route.params.id,
+          pageNo: this.page,
+          pageSize: 10,
+        }
+        const url = 'api/chatRecord/queryChatRecordByRoomnumber';
+
+        vm.$axios.get(url, {params}).then((response) => {
+          const _list = (response.data.resultInfo || []).map(a => JSON.parse(a.msgContent));
+          _list.reverse()
+          vm.mySendMessage = [..._list, ...vm.mySendMessage];
+          vm.page++;
         });
       },
       startGuess(){
@@ -478,7 +486,7 @@
         })
       },
 
-//      获取房间游戏期次
+//      获取房间 当前游戏期次
       obGameIssue(){
         const vm = this
         let params = {
@@ -494,6 +502,41 @@
             }
           }).catch(response => {
 
+        })
+      },
+      //      获取用户账户余额
+      obMoney(){
+        const vm = this
+        let params={
+          token: vm.userData.token,
+          uuid:vm.userData.uuid,
+          terminalType :vm.userData.terminalType,
+        }
+        let url = '/user/geamUserAccountDown/getUserAccount'
+        vm.$axios.get(url,{params})
+          .then(response => {
+
+            if (response.status == 200&&response.data) {
+              if(response.data.statusCode){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else{
+                vm.moneyData = response.data.a
+              }
+
+
+            } else {
+              vm.$toast('获取余额信息失败');
+            }
+          }).catch(response => {
+          vm.$toast('获取余额信息失败');
         })
       },
 //      websocket () {
@@ -569,6 +612,8 @@
         vm.userData = JSON.parse(localStorage.getItem('userInfo'))
         vm.userToken = vm.userData.token
         vm.userName = vm.userData.username
+        //登陆用户获取用户余额
+        vm.obMoney()
       }
       // 获取房间游戏期次
       vm.obGameIssue()
@@ -585,6 +630,9 @@
         .then(response => {
           if (response.status == 200 && response.data) {
             vm.roomData = response.data.resultInfo
+
+            //      获取10条记录  以下都要写在获取到房间数据之后  以为外部有v-if
+            vm.loadListOne()
             vm.initWebSocket()
 //            console.log(response)
           } else {
