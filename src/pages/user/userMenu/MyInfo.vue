@@ -19,7 +19,7 @@
     <!--</van-cell-group>-->
     <van-cell-group v-if="userData&&!$_.isEmpty(userData)">
       <div class="myInfo_touxiang">
-        <van-uploader :after-read="onRead" accept="image/*" :max-size="1024*1024*6" @oversize="overSize" multiple>
+        <van-uploader :after-read="onRead" accept="image/*" :max-size="1024*1024*0.5" @oversize="overSize" multiple>
           <span>个人头像</span>
           <img src="../../../assets/qq.png" alt="" v-if="userData&&userData.photourl==null">
           <img :src="'http://47.106.11.246:8086'+userData.photourl" alt="" v-if="userData&&userData.photourl!=null">
@@ -70,7 +70,7 @@ const vm = this
 
       onRead(file) {
         const vm = this
-//        console.log(file.file)
+
         lrz(file.file, {
           quality: 0.5
         })
@@ -78,10 +78,10 @@ const vm = this
             // 处理成功会执行
 //            console.log('customUploadImg:', 'lrz success')
 //            console.log(rst)
-//            console.log('rst',rst)
-//            console.log(file.file.name)
+            console.log(rst)
+            console.log(file.file.name)
             let param = new FormData(); //创建form对象
-            param.append('fileName', rst.file,file.file.name);//通过append向form对象添加数据
+            param.append('fileName', file.file,file.file.name);//通过append向form对象添加数据
             param.append('token',vm.userData.token);
 //        param.append('fileName', file.file.name);//通过append向form对象添加数据
 //        param.append('chunk', '0');//添加form表单中其他数据
@@ -106,7 +106,7 @@ const vm = this
           })
           .catch(function (err) {
 //            console.log('222')
-            vm.$toast('压缩失败');
+            vm.$message.error('压缩失败')
           })
           .always(function () {
             // 清空文件上传控件的值

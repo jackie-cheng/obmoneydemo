@@ -96,7 +96,7 @@
         const url = 'user/chatRecord/queryChatRecordByRoomnumber';
 
         vm.$axios.get(url, {params}).then((response) => {
-          if(response.data.statusCode){
+          if(response.data.statusCode==-100){
             vm.$dialog.confirm({
               message: response.data.resultInfo
             }).then(() => {

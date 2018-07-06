@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import vuex from 'vuex'
+import store from './store'
+Vue.use(vuex);
 // import axios from 'axios'
 // 将axios挂载到vue对象的原型下边以实现全局通用
 // Vue.prototype.axios = axios
@@ -31,6 +34,7 @@ Vue.use(ElementUI);
 new Vue({
   el: '#app',
   router,
+  store,//使用store
   mixins: [mixin_app__token],
   components: { App },
   template: '<App/>'

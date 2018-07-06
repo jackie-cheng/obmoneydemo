@@ -145,7 +145,15 @@
     margin-right: 8px;
   }
 }
-
+.daDan_color{
+  color: #ff4444;
+}
+.xiaoShuang_color{
+  color: #30549a;
+}
+.greenBo_color{
+  color: #02ad3f;
+}
 //底部
 .ob_footer {
   position: absolute;
@@ -196,6 +204,7 @@ top:46px;
   }
 }
   }
+
   .room_topData_down{
     i{
       margin-left: 0.1rem;
@@ -222,12 +231,7 @@ top:46px;
       color: #ff4444;
       font-weight:bold
     }
-    .daDan_color{
-      color: #ff4444;
-    }
-    .xiaShuang_color{
-      color: #30549a;
-    }
+
     .numblue_color{
       color: #30549a;
       border: 1px solid #30549a;
@@ -246,12 +250,30 @@ top:46px;
       @extend %textAlign;
       border-radius: 100%;
     }
-    .lastNum_color{
+    .lastNumRed_color{
       color: white;
       @extend %display;
       width:0.48rem;
       @include height(true, 0.48rem,0.48rem);
       background-color:#ff4444 ;
+      @extend %textAlign;
+      border-radius: 100%;
+    }
+    .lastNumBlue_color{
+      color: white;
+      @extend %display;
+      width:0.48rem;
+      @include height(true, 0.48rem,0.48rem);
+      background-color: #30549a ;
+      @extend %textAlign;
+      border-radius: 100%;
+    }
+    .lastNumGre_color{
+      color: white;
+      @extend %display;
+      width:0.48rem;
+      @include height(true, 0.48rem,0.48rem);
+      background-color:#02ad3f ;
       @extend %textAlign;
       border-radius: 100%;
     }
@@ -605,26 +627,58 @@ margin-left: 1.1rem;
     margin-bottom: 3.6rem;
     width: 87%;
     @extend %display;
-.curChosBall_class{
-  background-color: #f2dd41;
-}
+
     img{
 width: 3.2rem;
       height: 0.89rem;
     }
-    ul{
-      li{
+li{
+  background-color: white;
+  &.curChosBall_class{
+    background-color: #f2dd41;
+  }
+}
+      .betBallOne{
         @extend %display;
-        width: 1.52rem;
-        height: 2.2rem;
-        line-height: 1.1rem;
-        background-color: white;
-        margin: 0.1rem;
+        width: 1.42rem;
+        height: 1.8rem;
+        line-height: 1rem;
+        //background-color: white;
+        margin: 0.1rem 0;
         text-align: center;
         .foz_bol{
 font-weight: bold;
           font-size: 14px;
         }
+      }
+    //红绿蓝波
+    .betBallTwo{
+      @extend %display;
+      width: 1.22rem;
+      height: 1.8rem;
+      line-height: 1rem;
+      //background-color: white;
+      margin: 0.1rem 0;
+      text-align: center;
+      .foz_bol{
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+    //合计球样式
+    .betBallThree{
+      @extend %display;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      //line-height: 0.6rem;
+      //background-color: white;
+      margin: 0.1rem;
+      //margin-right: 0.2rem;
+      text-align: center;
+      .foz_bol{
+        font-weight: bold;
+        font-size: 14px;
       }
     }
   }

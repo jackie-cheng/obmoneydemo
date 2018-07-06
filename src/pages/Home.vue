@@ -1,7 +1,7 @@
 <template>
   <div class="mr-root">
     <!--<Header></Header>-->
-    <van-nav-bar title="7-4晚更新" class="home_head">
+    <van-nav-bar title="7-6晚更新" class="home_head">
       <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
         {{roadSelect}}
         <van-icon name="arrow"/>

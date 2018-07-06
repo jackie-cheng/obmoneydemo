@@ -10,7 +10,7 @@
 
     <div class="room_topData">
       <!--头部期数信息-->
-      <div class="room_topData_up" v-if="gameIssue">
+      <div class="room_topData_up" v-if="gameIssue&&!$_.isEmpty(gameIssue)">
         <div class="room_topData_lift"><span>第<em>{{gameIssue.issue}}</em>期</span>
           <p>
             <yd-countdown :time="gameIssue.duration" :callback="curGameOver" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
@@ -21,16 +21,26 @@
       </div>
 
       <!--下拉查看历史开奖-->
-      <van-collapse v-model="activeNames" class="room_topData_down" v-if="gameRecordList">
+      <van-collapse v-model="activeNames" class="room_topData_down" v-if="gameRecordList&&!$_.isEmpty(gameRecordList)">
         <van-collapse-item name="1">
-          <div slot="title"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
+          <div slot="title" v-if="gameRecordList[0].status=='2'"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
             <i class="numblue_color">{{(gameRecordList[0].note).split("|")[0]}}</i>
             +<i class="numblue_color">{{(gameRecordList[0].note).split("|")[1]}}</i>
             +<i class="num_color">{{(gameRecordList[0].note).split("|")[2]}}</i>
-            =<i class="lastNum_color">
-              {{Number((gameRecordList[0].note).split("|")[0]) + Number((gameRecordList[0].note).split("|")[1])+Number((gameRecordList[0].note).split("|")[2])}}
+            =<i :class="styleBull(Number((gameRecordList[0].note).split('|')[3]))">
+              {{Number((gameRecordList[0].note).split("|")[3])}}
             </i>
-            （ <i class="daDan_color">大</i> <i class="daDan_color">单</i> ）</span>
+            （ <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
+            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
+
+            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('dan')!=-1">单</i>
+            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i>）</span>
+          </div>
+          <div slot="title" v-if="gameRecordList[0].status=='-1'"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
+            <i style="color: red;margin-left: 0.5rem">开奖异常</i></span>
+          </div>
+          <div slot="title" v-if="gameRecordList[0].status=='1'"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
+            <i style="color: red;margin-left: 0.5rem">正在开奖</i></span>
           </div>
           <p class="kai_jieguo">开奖结果</p>
           <ul>
@@ -39,11 +49,15 @@
                 <span>
                   第 <em>{{openRecord.issue}}</em> 期
                   <i class="numblue_color">{{(openRecord.note).split("|")[0]}}</i>
-            +<i class="numblue_color">{{(openRecord.note).split("|")[1]}}</i>
+              +<i class="numblue_color">{{(openRecord.note).split("|")[1]}}</i>
                 +<i class="num_color">{{(openRecord.note).split("|")[2]}}</i>
-                  =<i class="lastNum_color">
-                  {{Number((openRecord.note).split("|")[0]) + Number((openRecord.note).split("|")[1])+Number((openRecord.note).split("|")[2])}}</i>
-                  （大<i class="dan_color">单</i>）
+                  =<i :class="styleBull(Number((openRecord.note).split('|')[3]))">
+                  {{Number((openRecord.note).split("|")[3])}}</i>
+                  （<i class="daDan_color" v-if="(openRecord.resultStr).split('|').indexOf('da')!=-1">大</i>
+            <i class="xiaoShuang_color" v-if="(openRecord.resultStr).split('|').indexOf('xiao')!=-1">小</i>
+
+            <i class="daDan_color" v-if="(openRecord.resultStr).split('|').indexOf('dan')!=-1">单</i>
+            <i class="xiaoShuang_color" v-if="(openRecord.resultStr).split('|').indexOf('shuang')!=-1">双</i>）
                 </span>
               </template>
               <template v-if="openRecord.status=='-1'"> <span>第 <em>{{openRecord.issue}}</em> 期</span><i style="color: red;margin-left: 0.5rem">开奖异常</i></template>
@@ -62,6 +76,7 @@
       <ul style="margin-bottom: 90px;min-height: 400px">
         <p style="width: 100%;text-align: center;color: #00A3CF;margin-bottom: 0.3rem" @click="loadList">
           下拉或点击可查看聊天记录</p>
+
         <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"
             v-for="mess in mySendMessage">
           <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&!mess.fristSend">
@@ -96,8 +111,8 @@
               <img src="../../assets/userRank5.png" alt="" style="width:1rem;height: 0.5rem" v-if="mess.message=='5'">
               <em style="color: blue">{{mess.sendernickname}}</em> 进入房间</p>
           </template>
-
-          <template v-if="mess.sendernickname==userName&&!mess.fristSend">
+          <!--用户自己发的消息-->
+          <template v-if="mess.sendernickname&&mess.sendernickname==userName&&!mess.fristSend">
             <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
               2018-05-29 09:21</p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
@@ -118,7 +133,7 @@
 
 <!--底部信息-->
     <div class="footSet">
-      <van-button @click="showCustomAction=true" v-if="roomData.guessFlag=='1'">投注</van-button>
+      <van-button @click="$store.state.show = true" v-if="roomData.guessFlag=='1'">投注</van-button>
       <van-button @click="startGuess" v-if="roomData.guessFlag!='1'" class="disButton">投注</van-button>
       <van-button @click="recallMenu=true">
         撤单
@@ -135,101 +150,8 @@
         发送
       </van-button>
     </div>
-    <van-actionsheet v-model="showCustomAction" title="定位球投注" class="touzhu_actionbac">
-      <div class="touzhu_action">
-        <div class="touzhu_lift">
-          <span :class="{active_touzhu:touzhuType==1}" @click="touzhuType=1"> <em>特<br/>码</em> </span>
-          <span :class="{active_touzhu:touzhuType==2}" @click="touzhuType=2"> <em>定 <br/> 位 <br/>球</em> </span>
-        </div>
-        <div class="touzhu_right" v-if="touzhuType==1">
-
-          <ul>
-            <li><p class="foz_bol"> 大</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 大</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 大</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 大</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 大</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 小</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 小</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 小</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 小</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 小</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 红</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 红</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 红</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 红</p>
-              <p> 2</p></li>
-            <li><p class="foz_bol"> 红</p>
-              <p> 2</p></li>
-          </ul>
-
-          <ul>
-            <li v-for="n in 20"><p class="foz_bol"> {{n}}</p>
-              <p> {{n}}</p></li>
-          </ul>
-        </div>
-        <div class="touzhu_right" v-if="touzhuType==2">
-          <img src="../../assets/firstball.png" alt="">
-          <ul>
-            <li v-for="n in 20" :class="{curChosBall_class:curChosBallOne== n}" @click='curChosBallOne= n'><p
-              class="foz_bol"> {{n}}</p>
-              <p> {{n}}</p></li>
-          </ul>
-          <img src="../../assets/secball.png" alt="">
-          <ul>
-            <li v-for="n in 20" :class="{curChosBall_class:curChosBallTwo== n}" @click='curChosBallTwo= n'><p
-              class="foz_bol"> {{n}}</p>
-              <p> {{n}}</p></li>
-          </ul>
-        </div>
-      </div>
-      <div class="touzhu_foot">
-
-        <div class="foot_but">
-          <ul>
-            <li :class="{active_monbut:touzhuNum==1000}" @click="touzhuNum=1000">
-              1000
-            </li>
-            <li :class="{active_monbut:touzhuNum==5000}" @click="touzhuNum=5000">
-              5000
-            </li>
-            <li :class="{active_monbut:touzhuNum==10000}" @click="touzhuNum=10000">
-              1W
-            </li>
-            <li :class="{active_monbut:touzhuNum==50000}" @click="touzhuNum=50000">
-              5W
-            </li>
-
-          </ul>
-          <!--<van-stepper-->
-          <!--v-model="touzhuNum"-->
-          <!--integer-->
-          <!--:min="1000"-->
-          <!--:max="100000"-->
-          <!--:step="1000"-->
-          <!--/>-->
-          <input type="number" v-model="touzhuNum" placeholder="单注金额" pattern="[0-9]*">
-          <span class="touzhu_total">总计：￥{{touzhuNum || 0}}</span>
-          <van-button size="small" class="touzhu_null" @click="touzhuNum=null">清空</van-button>
-          <van-button size="small" class="touzhu_ok">确认</van-button>
-        </div>
-
-
-      </div>
-    </van-actionsheet>
+   <!--下注组件-->
+    <userBetsCom :uuid = userData.uuid :gameid =gameIssue.id v-if="gameIssue&&!$_.isEmpty(gameIssue)"> </userBetsCom>
     <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac">
       <div class="recallMenu_action">
         <table class="ob_pay_record_table">
@@ -256,18 +178,24 @@
   import Vue from 'vue'
   import {CountDown} from 'vue-ydui/dist/lib.px/countdown';
   import {PullRefresh} from 'vue-ydui/dist/lib.px/pullrefresh';
+  import userBetsCom from '../../components/userBets.vue'
   Vue.component(PullRefresh.name, PullRefresh);
   Vue.component(CountDown.name, CountDown);
   export default{
     name: 'roomDetail',
     data () {
       return {
+        sumRandomNum:Math.floor(Math.random()*28),
+        gameOdd:null,//获取房间赔率
         moneyData:null,//获取用户余额
         gameIssue: null,//房间游戏期次
         gameRecordList: null,//开奖记录
         page: 1,
         userData: null,
         userName: null,
+        redBall: [1, 2, 7, 8, 12, 13, 18, 19, 23, 24],
+        blueBall: [3, 4, 9, 10, 14, 15, 20, 25, 26],
+        greenBall: [5, 6, 11, 16, 17, 21, 22, 27],
         userRankImg: {
           '1': '../../assets/userRank1.png',
           '2': '../../assets/userRank2.png',
@@ -293,10 +221,27 @@
       }
     },
     methods: {
+      //        数字求的颜色
+      styleBull(num){
+        const vm = this
+        if( vm.redBall.indexOf(num)!=-1){
+          return  'lastNumRed_color'
+        }else if(vm.greenBall.indexOf(num)!=-1){
+          return  'lastNumBlue_color'
+        }else if(vm.blueBall.indexOf(num)!=-1) {
+          return  'lastNumGre_color'
+        }
+      },
         //当期游戏倒计时走完，封盘
       curGameOver(){
         const vm = this
         console.log('当期游戏倒计时走完，封盘')
+                setTimeout(function () {
+                  //     封盘后 刷新当前游戏期次
+                  vm.obGameIssue()
+                  //     封盘后 刷新开奖记录
+                  vm.obGameRecord()
+        }, 100);
         return
       },
       loadList() {
@@ -504,6 +449,66 @@
 
         })
       },
+
+      //      获取房间 赔率
+      obGameOdd(){
+        const vm = this
+        let params = {
+          roomId : vm.$route.params.id,
+        }
+        vm.$axios.get(`/api/bet/getGameOdd`, {params})
+          .then(response => {
+            if (response.status == 200 && response.data) {
+              vm.gameOdd= response.data.resultInfo
+console.log('1',response)
+            } else {
+              vm.$toast('获取赔率失败');
+            }
+          }).catch(response => {
+
+        })
+      },
+
+      //      用户下注
+//      userBets(){
+//        const vm = this
+//        if(!localStorage.getItem('userInfo')){
+//          vm.$router.push('/login')
+//          return
+//        }
+//        let params = {
+//         roomId : vm.$route.params.id,
+//       gameId:'fb760bc3e97b4ffea3ba1f6205b90566',
+//        gameUserId:'22ee28f074994530a62cbf919cf05252',
+//       point:25.5,
+//        da:1
+//        }
+//        vm.$axios.get(`/user/bet/userBet`, {params})
+//          .then(response => {
+//            if (response.status == 200 && response.data) {
+//              if(response.data.statusCode){
+//                vm.$dialog.confirm({
+//                  message: response.data.resultInfo
+//                }).then(() => {
+//                  localStorage.removeItem('userInfo')
+//                  vm.$router.push('/login')
+//                }).catch(() => {
+//                  localStorage.removeItem('userInfo')
+//                  vm.$router.push('/')
+//                });
+//              }else{
+//                vm.gameOdd= response.data.resultInfo
+//                console.log('1',response)
+//              }
+//
+//            } else {
+//              vm.$toast('获取赔率失败');
+//            }
+//          }).catch(response => {
+//
+//        })
+//      },
+
       //      获取用户账户余额
       obMoney(){
         const vm = this
@@ -517,7 +522,7 @@
           .then(response => {
 
             if (response.status == 200&&response.data) {
-              if(response.data.statusCode){
+              if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
                   message: response.data.resultInfo
                 }).then(() => {
@@ -634,6 +639,8 @@
             //      获取10条记录  以下都要写在获取到房间数据之后  以为外部有v-if
             vm.loadListOne()
             vm.initWebSocket()
+            //      获取房间 赔率
+            vm.obGameOdd()
 //            console.log(response)
           } else {
             vm.$toast('获取房间信息失败');
@@ -645,7 +652,9 @@
     beforeDestroy () {
       this.websock.onclose
     },
-    components: {},
+    components:{
+      userBetsCom
+    },
   }
 </script>
 <style>
