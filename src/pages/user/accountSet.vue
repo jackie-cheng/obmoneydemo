@@ -7,13 +7,14 @@
 
     />
     <div class="accountSet_class">
-      <van-cell-group>
-      <van-cell title="支付宝" value="" label="15937442239" class="first_cell">
-      <template slot="icon">
-        <img src="../../assets/qq.png" alt="">
-      </template>
+      <van-cell-group v-if="bankData&&bankData.length>0">
+      <van-cell :title="bank.accountType=='银行卡'?bank.bankname:bank.accountType" :label="bank.accountDetail" v-for="(bank,index) in bankData" :key="index">
+      <!--<template slot="icon">-->
+        <!--<img src="../../assets/qq.png" alt="">-->
+      <!--</template>-->
+        <!--<div class="sd_home_room_set" slot="icon"></div>-->
       </van-cell>
-      <van-cell title="添加银行卡" icon="add-o" to="/accountSetDetail" />
+      <van-cell title="添加账户" icon="add-o" to="/addBank" />
       </van-cell-group>
     </div>
 
@@ -30,8 +31,8 @@
     name: 'accountSet',
     data(){
       return {
-
-        phoneNum:'',
+        bankData:[],
+        userData:null,
 
       }
     },
@@ -43,6 +44,12 @@
     },
     created(){
       const vm = this
+      if(!localStorage.getItem('userInfo')){
+        vm.$router.push('/login')
+      }else{
+        vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
+        vm.obOutData()
+      }
     },
     methods:{
       onClickLeft() {
@@ -50,39 +57,46 @@
       },
 
 
-//     修改密码
-      obNewPass(){
+      obOutData(){
         const vm = this
-        vm.$toast('功能还没做');
-        return
-        if (vm.$_.isEmpty(vm.phoneNum)) {
-          vm.$toast('密码不能为空');
-          return
+        let params={
+
+          token: vm.userData.token,
+
         }
-        const toast1 = vm.$toast.loading({
-          mask: true,
-          duration: 10000,       // 持续展示 toast
-          message: '密码更新中...'
-        });
-        let param = new URLSearchParams(); //创建form对象
-        param.append('password', vm.phoneNum);//添加form表单中其他数据
-
-        vm.$axios.post(`/api/LoginController/login.do`, param)
+        let url = '/user/geamUserAccountDown/getUserBank'
+        vm.$axios.get(url,{params})
           .then(response => {
-            toast1.clear();
-            if (response.status == 200) {
-              if (response.data.status != 'fail') {
 
-                console.log('成功')
-              } else {
-                vm.$toast(response.data.message);
+            if (response.status == 200&&response.data) {
+              if(response.data.statusCode==-100){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else{
+                vm.bankData = response.data.a
+                if(vm.bankData.length==0){
+                  vm.$dialog.confirm({
+                    message: '暂无提现账户，立即添加'
+                  }).then(() => {
+                    vm.$router.push('/addBank')
+                  }).catch(() => {
+                    vm.$router.go(-1)
+                  });
+                }
               }
 
             } else {
-              vm.$toast('获取验证码失败');
+              vm.$toast('获取银行列表失败');
             }
           }).catch(response => {
-
+          vm.$toast('获取银行列表失败');
         })
       },
 

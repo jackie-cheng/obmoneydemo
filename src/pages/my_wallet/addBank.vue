@@ -1,53 +1,118 @@
 <template>
   <div class="mr-root">
     <van-nav-bar
-      title="添加银行卡"
+      title="添加提现账户"
       left-arrow
       @click-left="onClickLeft"
 
     />
     <div class="addBack_class">
-      <div class="tishi_bank">
-        请绑定持卡人本人的银行卡
-      </div>
       <van-cell-group>
-        <van-cell title="持卡人" value="李思璐" />
-        <van-cell title="卡类型" value="中国工商银行" is-link />
-
+        <van-cell title="账户类型" :value="curAccountType" is-link arrow-direction="down" @click="showAccType=true"/>
       </van-cell-group>
-      <yd-cell-group>
-        <yd-cell-item>
-          <span slot="left">银行卡号</span>
-          <yd-input slot="right" v-model="bankNum" regex="bankcard" ref="input9" required placeholder="请输入银行卡号"
-          ></yd-input>
-        </yd-cell-item>
+      <template v-if="curAccountType== '银行卡'">
+        <div class="tishi_bank">
+          请绑定持卡人本人的银行卡
+        </div>
+
+        <van-cell-group>
+          <yd-cell-item>
+            <span slot="left">持卡人</span>
+            <yd-input slot="right" v-model="bankUserName" type="text"     placeholder="请输入姓名"
+            ></yd-input>
+          </yd-cell-item>
+          <!--<van-cell title="持卡人" value="李思璐" />-->
+          <van-cell title="卡类型" :value="selectBank" is-link @click="showBanksType=true" />
+
+        </van-cell-group>
+        <yd-cell-group>
+          <yd-cell-item>
+            <span slot="left">银行卡号</span>
+            <yd-input slot="right" v-model="bankNum" regex="bankcard" ref="input9"  required placeholder="请输入银行卡号"
+            ></yd-input>
+          </yd-cell-item>
 
         </yd-cell-group>
-      <van-cell-group class="frist_accountDel">
-        <van-field
-          v-model="selectBank"
-          label="开户行"
-          icon="clear"
-          placeholder="请输入开户行"
-          required
-          onkeyup="this.value=this.value.replace(/[, ]/g,'')"
-          @click-icon="selectBank = ''"
-        />
-        <van-field
-          v-model="bankAddress"
-          label="开户地址"
-          icon="clear"
-          placeholder="开户地址"
-          required
-          onkeyup="this.value=this.value.replace(/[, ]/g,'')"
-          @click-icon="bankAddress = ''"
-        />
-      </van-cell-group>
-      <van-button type="danger" v-if="$_.isEmpty(bankAddress)||$_.isEmpty(selectBank)||$_.isEmpty(bankNum)" style="opacity: 0.6">确认</van-button>
-      <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
+        <van-cell-group class="frist_accountDel">
+          <yd-cell-item>
+            <span slot="left">开户地址</span>
+            <yd-input slot="right" v-model="bankAddress"   placeholder="开户地址(选填)"
+            ></yd-input>
+          </yd-cell-item>
+          <!--<van-field-->
+            <!--v-model="selectBank"-->
+            <!--label="开户行"-->
+            <!--icon="clear"-->
+            <!--placeholder="请输入开户行"-->
+            <!--onkeyup="this.value=this.value.replace(/[, ]/g,'')"-->
+            <!--@click-icon="selectBank = ''"-->
+          <!--/>-->
+          <!--<van-field-->
+            <!--v-model="bankAddress"-->
+            <!--label="开户地址"-->
+            <!--icon="clear"-->
+            <!--placeholder="开户地址(选填)"-->
+            <!--&lt;!&ndash;onkeyup="this.value=this.value.replace(/[, ]/g,'')"&ndash;&gt;-->
+            <!--@click-icon="bankAddress = ''"-->
+          <!--/>-->
+        </van-cell-group>
+        <van-button type="danger" v-if="$_.isEmpty(bankUserName)||$_.isEmpty(bankNum)" style="opacity: 0.6">确认</van-button>
+        <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
+      </template>
+      <template v-if="curAccountType== '支付宝'">
+        <van-cell-group class="frist_accountDel">
+          <yd-cell-item>
+            <span slot="left">账户姓名</span>
+            <yd-input slot="right" v-model="bankUserName" type="text"   placeholder="请输入姓名"
+            ></yd-input>
+          </yd-cell-item>
+          <yd-cell-item>
+            <span slot="left">账号</span>
+            <yd-input slot="right" v-model="bankNum" type="text"    placeholder="请输入账号"
+            ></yd-input>
+          </yd-cell-item>
+        </van-cell-group>
+
+        <van-button type="danger" v-if="$_.isEmpty(bankUserName)||$_.isEmpty(bankNum)" style="opacity: 0.6">确认</van-button>
+        <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
+      </template>
+      <template v-if="curAccountType== '微信'">
+        <van-cell-group class="frist_accountDel">
+
+          <yd-cell-item>
+            <span slot="left">账户姓名</span>
+            <yd-input slot="right" v-model="bankUserName" type="text"    placeholder="请输入姓名"
+            ></yd-input>
+          </yd-cell-item>
+          <yd-cell-item>
+            <span slot="left">账号</span>
+            <yd-input slot="right" v-model="bankNum" type="text"    placeholder="请输入账号"
+            ></yd-input>
+          </yd-cell-item>
+        </van-cell-group>
+
+        <van-button type="danger" v-if="$_.isEmpty(bankNum)||$_.isEmpty(bankUserName)" style="opacity: 0.6">确认</van-button>
+        <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
+      </template>
+
     </div>
+    <van-actionsheet v-model="showAccType" title="选择账户类型">
+      <van-cell title="银行卡" @click="curAccountType= '银行卡'">
+        <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curAccountType== '银行卡'"/>
+      </van-cell>
+      <van-cell title="微信" @click="curAccountType= '微信'" >
+        <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curAccountType== '微信'"/>
+      </van-cell>
+      <van-cell title="支付宝" @click="curAccountType= '支付宝'">
+        <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curAccountType== '支付宝'"/>
+      </van-cell>
+    </van-actionsheet>
 
-
+    <van-actionsheet v-model="showBanksType" title="选择银行">
+      <van-cell :title="sBank" @click="selectBank= sBank" v-for="(sBank,index) in allBackList" :key="index">
+        <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="selectBank== sBank"/>
+      </van-cell>
+    </van-actionsheet>
   </div>
 </template>
 
@@ -63,10 +128,29 @@
     name: 'accountSetDe',
     data(){
       return {
-        selectBank:null,
-        bankAddress:null,
-        bankNum:'',
-
+        userData:null,
+        showBanksType: false,
+        bankUserName: null,//银行用户
+//        zhiUserName:null,//支付宝用户名
+//        weiUserName:null,//微信用户名
+        showAccType: false,
+        curAccountType: '请选择账户类型',
+        selectBank: '中国工商银行',
+        bankAddress: null,
+        bankNum: null,
+        allBackList: [ '中国工商银行',
+          '招商银行',
+          '中国农业银行',
+          '中国建设银行',
+          '中国银行',
+          '中国民生银行',
+          '中国光大银行',
+          '中信银行',
+          '交通银行',
+          '兴业银行',
+          '上海浦东发展银行',
+          '中国邮政储蓄银行',
+          '中国农业发展银行']
       }
     },
     computed:{
@@ -75,8 +159,36 @@
     components:{
 
     },
+    mounted(){
+      const vm = this
+
+      vm.$watch('curAccountType', function () {
+        vm.bankUserName=null
+        vm.bankNum=null
+      }, {deep: true})
+
+      vm.$watch('bankUserName', function () {
+          if(!vm.$_.isEmpty(vm.bankUserName)){
+            vm.bankUserName=vm.bankUserName.replace(/^ +| +$/g,'')
+//            vm.bankUserName=vm.bankUserName.slice(0,5)
+          }
+
+      }, {deep: true})
+      vm.$watch('bankNum', function () {
+          if(!vm.$_.isEmpty(vm.bankNum)){
+            vm.bankNum=vm.bankNum.replace(/^ +| +$/g,'')
+          }
+
+      }, {deep: true})
+
+    },
     created(){
       const vm = this
+      if(!localStorage.getItem('userInfo')){
+        vm.$router.push('/login')
+      }else{
+        vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
+      }
     },
     methods:{
       onClickLeft() {
@@ -85,48 +197,56 @@
 
       addAccount(){
         const vm = this
-        if (!vm.$refs.input9.valid) {
-          vm.$toast(vm.$refs.input9.errorMsg);
-          return
-        }
-        vm.$toast('添加成功');
-      },
-//     修改密码
-      obNewPass(){
-        const vm = this
-        vm.$toast('功能还没做');
-        return
-        if (vm.$_.isEmpty(vm.phoneNum)) {
-          vm.$toast('密码不能为空');
-          return
-        }
-        const toast1 = vm.$toast.loading({
-          mask: true,
-          duration: 10000,       // 持续展示 toast
-          message: '密码更新中...'
-        });
-        let param = new URLSearchParams(); //创建form对象
-        param.append('password', vm.phoneNum);//添加form表单中其他数据
+        if (vm.curAccountType=='银行卡') {
+            if(!vm.$refs.input9.valid){
+              vm.$toast(vm.$refs.input9.errorMsg);
+              return
+            }
 
-        vm.$axios.post(`/api/LoginController/login.do`, param)
+        }
+        let params={
+          accountType:vm.curAccountType,      // 账户类型
+          accountDetail:vm.bankNum,    // 收款账户
+          accountAddress:vm.curAccountType=='银行卡'?vm.bankAddress:null,   // 开户地址  -- 没有则空
+          bankname:vm.curAccountType=='银行卡'?vm.selectBank:null,    //支行名称
+          accountName:vm.bankUserName,  // 账户姓名
+          token: vm.userData.token,
+        }
+console.log(params)
+        let url = '/user/geamUserAccountDown/saveShow'
+        vm.$axios.get(url,{params})
           .then(response => {
-            toast1.clear();
-            if (response.status == 200) {
-              if (response.data.status != 'fail') {
 
-                console.log('成功')
-              } else {
-                vm.$toast(response.data.message);
+            if (response.status == 200&&response.data) {
+              if(response.data.statusCode==-100){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else{
+//                vm.$toast.success('添加账户成功');
+                vm.$dialog.confirm({
+                  message: '添加账户成功,点击返回'
+                }).then(() => {
+                  vm.$router.go(-1)
+
+                }).catch(() => {
+                  vm.$router.push('/addBank')
+                });
               }
 
             } else {
-              vm.$toast('获取验证码失败');
+              vm.$toast('添加账户失败');
             }
           }).catch(response => {
-
+          vm.$toast('添加账户失败');
         })
       },
-
 
     }
   }

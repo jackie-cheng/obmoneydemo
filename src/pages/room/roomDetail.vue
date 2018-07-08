@@ -151,7 +151,7 @@
       </van-button>
     </div>
    <!--下注组件-->
-    <userBetsCom :uuid = userData.uuid :gameid =gameIssue.id v-if="gameIssue&&!$_.isEmpty(gameIssue)"> </userBetsCom>
+    <userBetsCom :gameid =gameIssue.id v-if="gameIssue&&!$_.isEmpty(gameIssue)"> </userBetsCom>
     <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac">
       <div class="recallMenu_action">
         <table class="ob_pay_record_table">

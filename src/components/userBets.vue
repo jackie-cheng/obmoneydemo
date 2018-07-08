@@ -133,7 +133,7 @@
 
       }
     },
-props:['gameid','uuid'],
+props:['gameid'],
 computed:{
   totalAmount(){
       const vm = this
@@ -152,56 +152,7 @@ mounted(){
     vm.touzhuNum=vm.touzhuNum.replace(/\./g,'')
     vm.touzhuNum=vm.touzhuNum.replace(/-/g,'')
   }, {deep: true})
-//  vm.$watch('touzhuNum', () => {
-//      if(vm.da!=-1){
-//        vm.da = vm.touzhuNum
-//      }
-//   if(vm.xiao!=-1){
-//     vm.xiao= vm.touzhuNum
-//   }
-//    if(vm.dan!=-1){
-//      vm.dan= vm.touzhuNum
-//    }
-//    if(vm.shuang!=-1){
-//      vm.shuang= vm.touzhuNum
-//    }
-//    if(vm.dadan!=-1){
-//      vm.dadan= vm.touzhuNum
-//    }
-//    if(vm.dashuang!=-1){
-//      vm.dashuang= vm.touzhuNum
-//    }
-//    if(vm.xiaodan!=-1){
-//      vm.xiaodan= vm.touzhuNum
-//    }
-//    if(vm.xiaoshuang!=-1){
-//      vm.xiaoshuang= vm.touzhuNum
-//    }
-//    if(vm.jida!=-1){
-//      vm.jida= vm.touzhuNum
-//    }
-//    if(vm.jixiao!=-1){
-//      vm.jixiao= vm.touzhuNum
-//    }
-//    if(vm.hongbo!=-1){
-//      vm.hongbo= vm.touzhuNum
-//    }
-//    if(vm.lanbo!=-1){
-//      vm.lanbo= vm.touzhuNum
-//    }
-//    if(vm.lvbo!=-1){
-//      vm.lvbo= vm.touzhuNum
-//    }
-//    if(vm.baozi!=-1){
-//      vm.baozi= vm.touzhuNum
-//    }
-//    if(vm.shunzi!=-1){
-//      vm.shunzi= vm.touzhuNum
-//    }
-//    if(vm.duizi!=-1){
-//      vm.duizi= vm.touzhuNum
-//    }
-//  }, {deep: true})
+
 },
     created(){
       const vm = this
@@ -215,6 +166,7 @@ mounted(){
           vm.$router.push('/login')
           return
         }
+        vm.userData = JSON.parse(localStorage.getItem('userInfo'))
         var obj = new Object();
         var arr =vm.selectBall;
         for (var x of arr){
@@ -223,7 +175,7 @@ mounted(){
         var objtwo ={
           roomId : vm.$route.params.id,
           gameId:vm.gameid,
-          gameUserId:vm.uuid,
+          gameUserId: vm.userData.uuid,
           point:vm.totalAmount,
         }
         let params = Object.assign(obj, objtwo);

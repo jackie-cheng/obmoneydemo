@@ -329,5 +329,25 @@ margin-right: 0.5rem;
   .yd-cell-left{
     min-width: 90px;
   }
+  .van-field__control{
+    text-align: right;
+  }
+  .yd-input{
+    input{
+      text-align: right!important;
+    }
+
+  }
+
+
+}
+.xuanzhong_bank{
+  color: red;font-weight: bold
+}
+.van-actionsheet{
+  .van-actionsheet__content{
+    max-height: 8rem!important;
+    overflow: scroll;
+  }
 }
 

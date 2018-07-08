@@ -135,6 +135,15 @@
   margin-right: 8px;
 
 }
+.sd_home_room_set {
+  @extend %float;
+  width: 1rem;
+  @include height(true, 1rem, 1rem);
+  background-color: $jige_color;
+  border-radius: 8px;
+  margin-right: 8px;
+
+}
 .sd_home_room_picteo{
 
   img{
@@ -705,11 +714,14 @@ font-weight: bold;
     .van-cell{
       padding: 20px 15px;
       //padding: 0.5rem;
+      //width: 1.45rem;
       .van-cell__text{
         font-size: 0.5rem;
       }
       .van-cell__label{
         font-size: 0.4rem;
+        position: absolute;
+        left: 2rem;
       }
     }
     .canbe_outNum{

@@ -1,7 +1,7 @@
 <template>
   <div class="mr-root">
     <!--<Header></Header>-->
-    <van-nav-bar title="7-6晚更新" class="home_head">
+    <van-nav-bar title="7-8晚更新" class="home_head">
       <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
         {{roadSelect}}
         <van-icon name="arrow"/>
@@ -15,7 +15,7 @@
         <template v-if="!nullLogin&&userData&&!$_.isEmpty(userData)">
 
           <span style="position: absolute;right: 0.5rem;top:-0.2rem;">{{userData.username}}</span>
-          <span style="position: absolute;right: 0.5rem;top:0.2rem">￥{{userData.balance}}</span>
+          <span style="position: absolute;right: 0.5rem;top:0.2rem" v-if="moneyData&&!$_.isEmpty(moneyData)">￥{{moneyData.balance}}</span>
         </template>
 
         <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox">
@@ -132,6 +132,7 @@
     name: 'home',
     data() {
       return {
+        moneyData:null,
         homeData: null,
         nullLogin: false,
         roadSelect: '线路一',
@@ -155,7 +156,7 @@
         vm.nullLogin = true
       } else {
         vm.userData = JSON.parse(localStorage.getItem('userInfo'))
-
+vm.obMoney()
       }
 
       const toast1 = vm.$toast.loading({
@@ -193,6 +194,41 @@
       document.querySelector('body').removeEventListener('click', this.handleBodyClick);
     },
     methods: {
+      //获取余额
+      obMoney(){
+        const vm = this
+        let params={
+          token: vm.userData.token,
+          uuid:vm.userData.uuid,
+          terminalType :vm.userData.terminalType,
+        }
+        let url = '/user/geamUserAccountDown/getUserAccount'
+        vm.$axios.get(url,{params})
+          .then(response => {
+
+            if (response.status == 200&&response.data) {
+              if(response.data.statusCode==-100){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else{
+                vm.moneyData = response.data.a
+              }
+
+
+            } else {
+              vm.$toast('获取余额信息失败');
+            }
+          }).catch(response => {
+          vm.$toast('获取余额信息失败');
+        })
+      },
       routerNotice(){
          const vm = this
         vm.$router.push('/notice')
