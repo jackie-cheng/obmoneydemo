@@ -113,7 +113,7 @@
             let params={
               token: vm.userData.token,
               bankid:vm.curBank.id,
-              Account :vm.outNumber,
+              account :vm.outNumber,
             }
             vm.$axios.get('/user/geamUserAccountDown/getDown',{params})
               .then(response => {
@@ -130,7 +130,10 @@
                       vm.$router.push('/')
                     });
                   }else{
-                    vm.$toast('提现成功');
+                    vm.$toast.success('提现成功');
+                    setTimeout(function () {
+                      vm.$router.push('/my_wallet')
+                    }, 1000);
                     vm.obMoney()
                   }
 
@@ -179,6 +182,18 @@
           },
         },
         computed: {},
+      mounted(){
+        const vm = this
+
+        vm.$watch('outNumber', function () {
+         if(Number(vm.outNumber)>Number(vm.moneyData.balance)){
+           vm.outNumber=vm.moneyData.balance
+         }
+        }, {deep: true})
+
+
+
+      },
         created() {
           const vm = this
           if(!localStorage.getItem('userInfo')){

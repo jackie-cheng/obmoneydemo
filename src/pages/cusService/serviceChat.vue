@@ -10,32 +10,39 @@
     <!--聊天信息-->
     <!--<main class="room_wechat">-->
 
+    <yd-pullrefresh :callback="loadList" ref="pullrefreshDemo" class='room_wechatul kefu_chart'>
 
-      <ul class ='room_wechatul kefu_chart'>
-        <!--<p style="width: 100%;text-align: center">下拉可查看聊天记录</p>-->
+      <ul style="margin-bottom: 90px;min-height: 400px">
+        <p style="width: 100%;text-align: center;color: #00A3CF;margin-bottom: 0.3rem" @click="loadList">
+          下拉或点击可查看聊天记录</p>
 
-        <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"  v-for="mess in mySendMessage">
-          <template v-if="mess.sendernickname!=userName">
-            <!--{{JSON.parse(mess.msgContent)}}-->
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%"  v-text="mess.mySendTime">2018-05-29 09:21</p>
+        <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"
+            v-for="mess in mySendMessage">
+          <template v-if="mess.sendernickname&&mess.sendernickname!=userName">
+
+            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" v-text="mess.mySendTime">
+              2018-05-29 09:21</p>
             <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="">
+              <img :src="mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
-              <img src="../../assets/qq.png" alt="">
+              <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
             <span>{{mess.message}}</span>
 
           </template>
-          <template v-else>
-            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" >2018-05-29 09:21</p>
+
+          <!--用户自己发的消息-->
+          <template v-if="mess.sendernickname&&mess.sendernickname==userName">
+            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
+              2018-05-29 09:21</p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="">
+              <img :src="mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
-              <img src="../../assets/qq.png" alt="">
+              <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
             <span>{{mess.message}}</span>
           </template>
@@ -44,6 +51,10 @@
 
       </ul>
 
+    </yd-pullrefresh>
+
+
+
 
     <div class="footSet">
       <van-cell-group style="width: 80%">
@@ -51,8 +62,11 @@
         <!--<van-field v-model="messageValue" placeholder="房间禁言中" disabled  v-if="roomData.guessFlag!='1'"/>-->
       </van-cell-group>
 
-      <van-button  class="send_button" @click="sendMess">
+      <van-button  class="send_button" @click="sendMess" v-if="messageValue">
        发送
+      </van-button>
+      <van-button class="nosend_button"  v-if="!messageValue">
+        发送
       </van-button>
     </div>
 

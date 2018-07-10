@@ -108,7 +108,7 @@
       </van-cell>
     </van-actionsheet>
 
-    <van-actionsheet v-model="showBanksType" title="选择银行">
+    <van-actionsheet v-model="showBanksType" title="选择银行" class="addbank">
       <van-cell :title="sBank" @click="selectBank= sBank" v-for="(sBank,index) in allBackList" :key="index">
         <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="selectBank== sBank"/>
       </van-cell>

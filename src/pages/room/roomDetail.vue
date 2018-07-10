@@ -11,9 +11,9 @@
     <div class="room_topData">
       <!--头部期数信息-->
       <div class="room_topData_up" v-if="gameIssue&&!$_.isEmpty(gameIssue)">
-        <div class="room_topData_lift"><span>第<em>{{gameIssue.issue}}</em>期</span>
+        <div class="room_topData_lift"><span>第<em>{{gameIssue.issueApi}}</em>期</span>
           <p>
-            <yd-countdown :time="gameIssue.duration" :callback="curGameOver" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
+            <yd-countdown :time="gameIssue.duration" :callback="curGameOver" done-text="封盘中" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
           </p>
         </div>
         <div class="room_topData_lift"><span style="display: block">总余额</span>
@@ -23,7 +23,7 @@
       <!--下拉查看历史开奖-->
       <van-collapse v-model="activeNames" class="room_topData_down" v-if="gameRecordList&&!$_.isEmpty(gameRecordList)">
         <van-collapse-item name="1">
-          <div slot="title" v-if="gameRecordList[0].status=='2'"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
+          <div slot="title" v-if="gameRecordList[0].status=='2'"><span>第 <em>{{gameRecordList[0].issueApi}}</em> 期
             <i class="numblue_color">{{(gameRecordList[0].note).split("|")[0]}}</i>
             +<i class="numblue_color">{{(gameRecordList[0].note).split("|")[1]}}</i>
             +<i class="num_color">{{(gameRecordList[0].note).split("|")[2]}}</i>
@@ -36,10 +36,10 @@
             <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('dan')!=-1">单</i>
             <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i>）</span>
           </div>
-          <div slot="title" v-if="gameRecordList[0].status=='-1'"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
+          <div slot="title" v-if="gameRecordList[0].status=='-1'"><span>第 <em>{{gameRecordList[0].issueApi}}</em> 期
             <i style="color: red;margin-left: 0.5rem">开奖异常</i></span>
           </div>
-          <div slot="title" v-if="gameRecordList[0].status=='1'"><span>第 <em>{{gameRecordList[0].issue}}</em> 期
+          <div slot="title" v-if="gameRecordList[0].status=='1'"><span>第 <em>{{gameRecordList[0].issueApi}}</em> 期
             <i style="color: red;margin-left: 0.5rem">正在开奖</i></span>
           </div>
           <p class="kai_jieguo">开奖结果</p>
@@ -47,7 +47,7 @@
             <li v-for="openRecord in gameRecordList.slice(1,10)">
               <template v-if="openRecord.status=='2'">
                 <span>
-                  第 <em>{{openRecord.issue}}</em> 期
+                  第 <em>{{openRecord.issueApi}}</em> 期
                   <i class="numblue_color">{{(openRecord.note).split("|")[0]}}</i>
               +<i class="numblue_color">{{(openRecord.note).split("|")[1]}}</i>
                 +<i class="num_color">{{(openRecord.note).split("|")[2]}}</i>
@@ -60,7 +60,7 @@
             <i class="xiaoShuang_color" v-if="(openRecord.resultStr).split('|').indexOf('shuang')!=-1">双</i>）
                 </span>
               </template>
-              <template v-if="openRecord.status=='-1'"> <span>第 <em>{{openRecord.issue}}</em> 期</span><i style="color: red;margin-left: 0.5rem">开奖异常</i></template>
+              <template v-if="openRecord.status=='-1'"> <span>第 <em>{{openRecord.issueApi}}</em> 期</span><i style="color: red;margin-left: 0.5rem">开奖异常</i></template>
 
             </li>
           </ul>
@@ -93,11 +93,26 @@
             <span>{{mess.message}}</span>
 
           </template>
+          <!--系统消息  1 封盘  2开奖结果 3封盘中 4 开始下注-->
+
           <template v-if="!mess.sendernickname">
 
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" v-text="mess">
-              2018-05-29 09:21</p>
-
+            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='1'">
+              <p style="color:  #ff4444;font-size: 0.35rem">封盘消息</p>
+              <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>本地投注结束，稍后将开启下期投注</p>
+             </div>
+            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='2'">
+              <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
+              <p> <em style="color:  #ff4444">【{{mess.expect}}】期</em> 开奖号码：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}</p>
+            </div>
+            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='3'">
+              <p>系统消息</p>
+              <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>距离封盘还有{{mess.time}}秒</p>
+            </div>
+            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='4'">
+              <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
+              <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>开始下注，感谢您的支持，祝您好运</p>
+            </div>
           </template>
 
           <template v-if="mess.fristSend">
@@ -113,7 +128,7 @@
           </template>
           <!--用户自己发的消息-->
           <template v-if="mess.sendernickname&&mess.sendernickname==userName&&!mess.fristSend">
-            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
+            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
               2018-05-29 09:21</p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
@@ -220,6 +235,16 @@
 
       }
     },
+    computed:{
+//        setTimeOver(){
+//            const vm = this
+//          if(vm.gameIssue&&!vm.$_.isEmpty(vm.gameIssue)){
+//
+//            return vm.secondsTime
+//          }
+//
+//        }
+    },
     methods: {
       //        数字求的颜色
       styleBull(num){
@@ -235,13 +260,13 @@
         //当期游戏倒计时走完，封盘
       curGameOver(){
         const vm = this
-        console.log('当期游戏倒计时走完，封盘')
-                setTimeout(function () {
-                  //     封盘后 刷新当前游戏期次
-                  vm.obGameIssue()
-                  //     封盘后 刷新开奖记录
-                  vm.obGameRecord()
-        }, 100);
+
+//        vm.redata = {
+//          content: "封盘中",
+//          expect: vm.gameIssue.issueApi,
+//          status: "3"
+//        }
+//        vm.mySendMessage.push(vm.redata)
         return
       },
       loadList() {
@@ -381,8 +406,14 @@
           vm.mySendMessage.push(vm.redata)
         } else {
 
-          vm.redata = pullData.msgContent
-
+          vm.redata = JSON.parse(pullData.msgContent)
+          //收到开奖消息后刷新当前游戏其次和历史
+if( vm.redata.status=='2'){
+  //     刷新当前游戏期次
+  vm.obGameIssue()
+  //     刷新开奖记录
+  vm.obGameRecord()
+}
           console.log('系统消息', vm.redata)
 
           vm.mySendMessage.push(vm.redata)
@@ -441,7 +472,42 @@
           .then(response => {
             if (response.status == 200 && response.data) {
               vm.gameIssue = response.data.resultInfo
+              if(vm.gameIssue.duration>0){
+                vm.redata = {
+                  content: "开始下注",
+                  expect: vm.gameIssue.issueApi,
+                  status: "4"
+                }
+                vm.mySendMessage.push(vm.redata)
+              }
+              vm.secondsTime = vm.gameIssue.duration
+              vm._timer = setInterval(function () {
+                vm.secondsTime = vm.secondsTime  - 1
+//                console.log( vm.secondsTime)
+                if( vm.secondsTime ==30){
+                  vm.redata = {
+                    content: "系统消息",
+                    expect: vm.gameIssue.issueApi,
+                    time:30,
+                    status: "3"
+                  }
+                  vm.mySendMessage.push(vm.redata)
+                }
+                else if( vm.secondsTime ==10){
+                  vm.redata = {
+                    content: "系统消息",
+                    expect: vm.gameIssue.issueApi,
+                    time:10,
+                    status: "3"
+                  }
+                  vm.mySendMessage.push(vm.redata)
+                }
+                else if (vm.secondsTime == 1) {                  //当num变为1的时候，通过 clearInterval()结束倒计时
+                  clearInterval(vm._timer);
+                }
+              }, 1000)
 //console.log('1',response.data.resultInfo)
+
             } else {
               vm.$toast('获取开奖历史失败');
             }
@@ -608,7 +674,10 @@ console.log('1',response)
 
       }, {deep: true})
 
-
+          setTimeout(function () {
+            let content = document.getElementsByClassName('room_wechatul')[0];
+            content.scrollTop = content.scrollHeight
+          }, 900);
     },
     created () {
       const vm = this
