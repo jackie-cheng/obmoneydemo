@@ -10,10 +10,16 @@
 
     <div class="room_topData">
       <!--头部期数信息-->
-      <div class="room_topData_up" v-if="gameIssue&&!$_.isEmpty(gameIssue)">
-        <div class="room_topData_lift"><span>第<em>{{gameIssue.issueApi}}</em>期</span>
-          <p>
+      <div class="room_topData_up">
+        <div class="room_topData_lift"  v-if="gameIssue&&!$_.isEmpty(gameIssue)">
+          <span>第<em v-if="gameIssue.issueApi">{{gameIssue.issueApi}}</em>期
+                <em v-if="!gameIssue.issueApi&&gameRecordList&&!$_.isEmpty(gameRecordList)">{{gameRecordList[0].issueApi}}</em>
+          </span>
+          <p v-if="gameIssue.issueApi">
             <yd-countdown :time="gameIssue.duration" :callback="curGameOver" done-text="封盘中" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
+          </p>
+          <p v-else>
+           封盘中
           </p>
         </div>
         <div class="room_topData_lift"><span style="display: block">总余额</span>
@@ -79,9 +85,9 @@
 
         <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"
             v-for="mess in mySendMessage">
-          <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&!mess.fristSend">
+          <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&!mess.fristSend&&!mess.betsSend">
 
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" v-text="mess.mySendTime">
+            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" v-text="mess.mySendTime">
               2018-05-29 09:21</p>
             <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
             <a v-if="mess.photourl">
@@ -93,7 +99,32 @@
             <span>{{mess.message}}</span>
 
           </template>
-          <!--系统消息  1 封盘  2开奖结果 3封盘中 4 开始下注-->
+
+          <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&mess.betsSend">
+            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
+              2018-05-29 09:21</p>
+            <p v-text="mess.sendernickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
+            <a v-if="mess.photourl">
+              <img :src="mess.photourl" alt="" class="touxiangImg">
+            </a>
+            <a v-else>
+              <img src="../../assets/qq.png" alt="" class="touxiangImg">
+            </a>
+
+            <div class="betChat_class">
+              <div style="background-color:#ff7f00 ">
+                {{JSON.parse(mess.message).gameQi}}期  <em>总计￥{{JSON.parse(mess.message).totleAmt}}</em>
+              </div>
+              <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
+                <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(ball.length-1,1)}}</b>
+                <b v-if="ball.indexOf('tema')==-1">{{ballType[ball]}}</b>
+                <em> <i>￥{{JSON.parse(mess.message).point}}</i> </em>
+              </p>
+
+            </div>
+
+          </template>
+          <!--系统消息-1 开奖失败  1 封盘  2开奖结果 3封盘中 4 开始下注-->
 
           <template v-if="!mess.sendernickname">
 
@@ -104,6 +135,10 @@
             <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='2'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
               <p> <em style="color:  #ff4444">【{{mess.expect}}】期</em> 开奖号码：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}</p>
+            </div>
+            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='-1'">
+              <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
+              <p> <em style="color:  #ff4444">【{{mess.expect}}】期</em> 开奖失败</p>
             </div>
             <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='3'">
               <p>系统消息</p>
@@ -127,7 +162,7 @@
               <em style="color: blue">{{mess.sendernickname}}</em> 进入房间</p>
           </template>
           <!--用户自己发的消息-->
-          <template v-if="mess.sendernickname&&mess.sendernickname==userName&&!mess.fristSend">
+          <template v-if="mess.sendernickname&&mess.sendernickname==userName&&!mess.fristSend&&!mess.betsSend">
             <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
               2018-05-29 09:21</p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
@@ -139,6 +174,30 @@
             </a>
             <span>{{mess.message}}</span>
           </template>
+          <template v-if="mess.sendernickname&&mess.sendernickname==userName&&mess.betsSend">
+            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
+              2018-05-29 09:21</p>
+            <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
+            <a v-if="mess.photourl">
+              <img :src="mess.photourl" alt="" class="touxiangImg">
+            </a>
+            <a v-else>
+              <img src="../../assets/qq.png" alt="" class="touxiangImg">
+            </a>
+
+              <div class="betChat_class">
+<div style="background-color:#ff7f00 ">
+{{JSON.parse(mess.message).gameQi}}期  <em>总计￥{{JSON.parse(mess.message).totleAmt}}</em>
+</div>
+                <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
+                  <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(ball.length-1,1)}}</b>
+                  <b v-if="ball.indexOf('tema')==-1">{{ballType[ball]}}</b>
+                  <em> <i>￥{{JSON.parse(mess.message).point}}</i> </em>
+                </p>
+
+            </div>
+
+          </template>
           <div style="clear:both"></div>
         </li>
 
@@ -148,8 +207,8 @@
 
 <!--底部信息-->
     <div class="footSet">
-      <van-button @click="$store.state.show = true" v-if="roomData.guessFlag=='1'">投注</van-button>
-      <van-button @click="startGuess" v-if="roomData.guessFlag!='1'" class="disButton">投注</van-button>
+      <van-button @click="$store.state.show = true" v-if="roomData.guessFlag=='1'&&isCanBet">投注</van-button>
+      <van-button @click="startGuess" v-else class="disButton">投注</van-button>
       <van-button @click="recallMenu=true">
         撤单
       </van-button>
@@ -166,7 +225,7 @@
       </van-button>
     </div>
    <!--下注组件-->
-    <userBetsCom :gameid =gameIssue.id v-if="gameIssue&&!$_.isEmpty(gameIssue)"> </userBetsCom>
+    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" v-if="gameIssue&&!$_.isEmpty(gameIssue)" @emitMoney="emitMoneyUp" @betsBall="betsBall"> </userBetsCom>
     <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac">
       <div class="recallMenu_action">
         <table class="ob_pay_record_table">
@@ -200,6 +259,7 @@
     name: 'roomDetail',
     data () {
       return {
+          isCanBet:false,
         sumRandomNum:Math.floor(Math.random()*28),
         gameOdd:null,//获取房间赔率
         moneyData:null,//获取用户余额
@@ -218,12 +278,26 @@
           '4': '../../assets/userRank4.png',
           '5': '../../assets/userRank5.png',
         },
+        ballType:{
+          'da':'大',
+          'dadan':'大单',
+          'dan':'大',
+          'xiaodan':'小单',
+          'jida':'极大',
+          'xiao':'小',
+          'shuang':'双',
+          'dashuang':'大双',
+          'xiaoshuang':'小双',
+          'jixiao':'极小',
+          'hongbo':'红波',
+          'lanbo':'蓝波',
+          'lvbo':'绿波',
+          'baozi':'豹子',
+          'shunzi':'顺子',
+          'duizi':'对子',
+        },
         mySendMessage: [],
         othersSendMessage: [],
-        curChosBallOne: 1,//当前选中球1
-        curChosBallTwo: 1,//当前选中球2
-        touzhuType: 1,
-        touzhuNum: null,
         recallMenu: false,
         showCustomAction: false,
         activeNames: ['2'],
@@ -246,6 +320,30 @@
 //        }
     },
     methods: {
+      betsBall(bet){
+        const vm = this
+        console.log(bet)
+        let curTime = vm.getNowFormatDate()
+        let sendData = {
+          "roomNumber": vm.$route.params.id,
+          "uuid": vm.userData.uuid,
+          "senderPhone": vm.userData.phone,
+          "message": bet,
+          'mySendTime': curTime,
+          'sendernickname': vm.userData.username,
+          "betsSend": true
+        }
+//    console.log(JSON.stringify(sendData))
+        vm.websock.send(JSON.stringify(sendData));
+        console.log('发的消息', JSON.stringify(sendData))
+        vm.mySendMessage.push(sendData)
+      },
+      emitMoneyUp(up){
+          const vm = this
+if(up){
+    vm.obMoney()
+}
+      },
       //        数字求的颜色
       styleBull(num){
         const vm = this
@@ -260,7 +358,7 @@
         //当期游戏倒计时走完，封盘
       curGameOver(){
         const vm = this
-
+vm.isCanBet=false
 //        vm.redata = {
 //          content: "封盘中",
 //          expect: vm.gameIssue.issueApi,
@@ -479,6 +577,7 @@ if( vm.redata.status=='2'){
                   status: "4"
                 }
                 vm.mySendMessage.push(vm.redata)
+                vm.isCanBet=true
               }
               vm.secondsTime = vm.gameIssue.duration
               vm._timer = setInterval(function () {

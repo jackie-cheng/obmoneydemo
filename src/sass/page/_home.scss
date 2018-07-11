@@ -327,6 +327,30 @@ top:46px;
       height: 1rem;
      vertical-align:top
     }
+    .betChat_class{
+      display: inline-block;
+      width: 50%;
+      word-wrap:break-word;
+      //padding: 0.3rem 0.3rem;
+      //background-color: #9eea6a;
+      border-radius: 0.2rem;
+      div{
+        padding: 0.1rem 0.1rem;
+        color: white;
+        em{
+          float: right;
+        }
+      }
+      p{
+        padding: 0.1rem 0.1rem;
+        em{
+          float: right;
+          i{
+            color: #30549a;
+          }
+        }
+      }
+    }
     span{
       display: inline-block;
       max-width: 50%;
@@ -372,9 +396,34 @@ top:46px;
       float: right;
       vertical-align:top
     }
+    .betChat_class{
+      float: right;
+      display: block;
+     width: 50%;
+      word-wrap:break-word;
+      //padding: 0.3rem 0.3rem;
+      //background-color: #9eea6a;
+      border-radius: 0.2rem;
+      div{
+        padding: 0.1rem 0.1rem;
+        color: white;
+        em{
+          float: right;
+        }
+      }
+      p{
+        padding: 0.1rem 0.1rem;
+        em{
+          float: right;
+          i{
+            color: #30549a;
+          }
+        }
+      }
+    }
     span{
       float: right;
-      display: inline-block;
+      display: block;
       max-width: 50%;
       word-wrap:break-word;
       //position: relative;

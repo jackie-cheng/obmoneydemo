@@ -88,7 +88,7 @@
           <span class="touzhu_total">总计：￥{{totalAmount}}</span>
           <van-button size="small" class="touzhu_null" @click="selectBall=[],touzhuNum=''">清空</van-button>
           <van-button size="small" class="touzhu_ok" @click="sureBet" v-if="!$_.isEmpty(touzhuNum)">确认</van-button>
-          <van-button size="small" class="touzhu_ok" @click="$toast('请正确输入金额')" v-else style="opacity: 0.5">确认</van-button>
+          <van-button size="small" class="touzhu_ok" @click="$toast('请输入投注倍数')" v-else style="opacity: 0.5">确认</van-button>
         </div>
 
 
@@ -133,7 +133,7 @@
 
       }
     },
-props:['gameid'],
+props:['gameid','gameQi'],
 computed:{
   totalAmount(){
       const vm = this
@@ -148,9 +148,12 @@ mounted(){
   const vm = this
 
   vm.$watch('touzhuNum', function () {
-    vm.touzhuNum=vm.touzhuNum.slice(0,10)
-    vm.touzhuNum=vm.touzhuNum.replace(/\./g,'')
-    vm.touzhuNum=vm.touzhuNum.replace(/-/g,'')
+      if(vm.touzhuNum!=null){
+        vm.touzhuNum=vm.touzhuNum.slice(0,10)
+        vm.touzhuNum=vm.touzhuNum.replace(/\./g,'')
+        vm.touzhuNum=vm.touzhuNum.replace(/-/g,'')
+      }
+
   }, {deep: true})
 
 },
@@ -167,18 +170,32 @@ mounted(){
           return
         }
         vm.userData = JSON.parse(localStorage.getItem('userInfo'))
-        var obj = new Object();
-        var arr =vm.selectBall;
-        for (var x of arr){
-          obj[x] =  vm.touzhuNum;
+//        var obj = new Object();
+        var arr =JSON.parse(JSON.stringify(vm.selectBall));
+//        for (var x of arr){
+//          obj[x] =  vm.touzhuNum;
+//        }
+        arr.forEach((ball,index)=>{
+            if(!isNaN(ball)){
+              arr[index]='tema'+ball
+            }
+        })
+       let params ={
+         token: vm.userData.token,
+
+            roomId : vm.$route.params.id,
+            gameId:vm.gameid,
+            gameUserId: vm.userData.uuid,
+         gameQi:vm.gameQi,
+            point:Number(vm.touzhuNum),
+            totleAmt :Number(vm.totalAmount),
+            betStr:arr.toString()
+
+
         }
-        var objtwo ={
-          roomId : vm.$route.params.id,
-          gameId:vm.gameid,
-          gameUserId: vm.userData.uuid,
-          point:vm.totalAmount,
-        }
-        let params = Object.assign(obj, objtwo);
+
+        console.log(params)
+//        let params = Object.assign(obj, objtwo);
         vm.$axios.get(`/user/bet/userBet`, {params})
           .then(response => {
             if (response.status == 200 && response.data) {
@@ -196,6 +213,10 @@ mounted(){
                 vm.$toast('下注失败，当前期数已停止下注');
               }else{
                 vm.$toast('下注成功');
+                vm.selectBall=[]
+                vm.touzhuNum=null
+                vm.$emit('emitMoney', true)
+                vm.$emit('betsBall',JSON.stringify(params))
               }
 
             } else {
