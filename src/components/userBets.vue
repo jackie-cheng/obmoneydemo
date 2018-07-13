@@ -32,7 +32,7 @@
             <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('duizi')!=-1}" @click="starBet('duizi')"><p class="foz_bol"> 对子</p> <p v-text="getPercent(gameOdd['duizi'])"> 2</p></li></van-col>
           </van-row>
             <!--合最后一个数字-->
-         <ul >
+         <ul class="willy_userBets_ui">
            <li class="betBallThree" :class="{curChosBall_class:selectBall.indexOf(0)!=-1}" @click="starBet(0)"><p class="foz_bol greenBo_color">00 </p> <p v-text="getPercent(gameOdd['tema'+0])"> 2</p></li>
            <li class="betBallThree" :class="{curChosBall_class:selectBall.indexOf(num)!=-1}" v-for="num in 27"  @click="starBet(num)"><p class="foz_bol" :class="styleBull(num)"  v-text="ZeroNum(num)"> </p> <p v-text="getPercent(gameOdd['tema'+num])"> 2</p></li>
             <!--<li class="betBallThree"><p class="foz_bol greenBo_color"> 01</p> <p> 2</p></li>-->
@@ -46,13 +46,13 @@
         </div>
         <div class="touzhu_right" v-if="touzhuType==2">
           <img src="../assets/firstball.png" alt="">
-          <ul>
+          <ul class="willy_touzhu_right_ui">
             <li v-for="n in 20" :class="{curChosBall_class:curChosBallOne== n}" @click='curChosBallOne= n'><p
               class="foz_bol"> {{n}}</p>
               <p> {{n}}</p></li>
           </ul>
           <img src="../assets/secball.png" alt="">
-          <ul>
+          <ul class="willy_touzhu_right_ui">
             <li v-for="n in 20" :class="{curChosBall_class:curChosBallTwo== n}" @click='curChosBallTwo= n'><p
               class="foz_bol"> {{n}}</p>
               <p> {{n}}</p></li>
@@ -84,11 +84,13 @@
           <!--:max="100000"-->
           <!--:step="1000"-->
           <!--/>-->
-          <input type="number" v-model="touzhuNum" placeholder="单注金额" pattern="[0-9]*">
-          <span class="touzhu_total">总计：￥{{totalAmount}}</span>
-          <van-button size="small" class="touzhu_null" @click="selectBall=[],touzhuNum=''">清空</van-button>
-          <van-button size="small" class="touzhu_ok" @click="sureBet" v-if="!$_.isEmpty(touzhuNum)">确认</van-button>
-          <van-button size="small" class="touzhu_ok" @click="$toast('请输入投注倍数')" v-else style="opacity: 0.5">确认</van-button>
+          <div class="willy_botBox">
+            <input class="willy_botInput" type="number" v-model="touzhuNum" placeholder="单注金额" pattern="[0-9]*">
+            <span class="touzhu_total">总计：￥{{totalAmount}}</span>
+            <van-button size="small" class="touzhu_null" @click="selectBall=[],touzhuNum=''">清空</van-button>
+            <van-button size="small" class="touzhu_ok" @click="sureBet" v-if="!$_.isEmpty(touzhuNum)">确认</van-button>
+            <van-button size="small" class="touzhu_ok" @click="$toast('请输入投注倍数')" v-else style="opacity: 0.5">确认</van-button>
+          </div>
         </div>
 
 

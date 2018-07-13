@@ -195,10 +195,14 @@ top:46px;
   .room_topData_up{
     background-color: white;
     padding: 0.2rem 0.4rem;
+    display: flex;
 .room_topData_lift{
   @extend %display;
  width: 49%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   em{
     color: #ff4444;
     font-weight:bold
@@ -210,6 +214,8 @@ top:46px;
     width: 80%;
     padding:0.1rem;
     background-color: #e2e3e3;
+    border-radius: .1rem;
+    font-weight: bold;
   }
 }
   }
@@ -325,7 +331,7 @@ top:46px;
     //height: 1.5rem;
 
     width: 100%;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
     //line-height: 1.5rem;
     //background-color: white;
     a{
@@ -396,7 +402,7 @@ top:46px;
     //height: 1.5rem;
     width: 100%;
 
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
     //line-height: 1.5rem;
     //background-color: white;
     .touxiangImg{
@@ -476,23 +482,31 @@ top:46px;
   line-height: 1.3rem;
   border-top: 1px solid #cccccc;
   width: 100%;
-  padding: 0 0.6rem;
+  padding: .1rem .2rem;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   .disButton{
     color: #999;
     background-color: #e5e5e5;
     border: 1px solid #ccc;
   }
   .van-cell-group{
-    width: 50%;
-   .van-cell{
+    padding: .1rem 0;
+    .van-cell{
      width: 100%;
+     padding: .1rem !important;
    }
   }
 .van-button{
-  padding: 0 0.2rem;
-  margin-right: 0.2rem;
-line-height: 0.9rem;
-  height: 0.9rem;
+  height: .9rem;
+  padding: 0;
+  margin:0 0.1rem;
+  line-height: .9rem;
+  flex: 1;
   .van-button--normal{
 
   }
@@ -500,26 +514,34 @@ line-height: 0.9rem;
   .send_button{
     border-color: #ff4444;
     color: #ff4444;
-    position: absolute;
-    right: 0.2rem;
-    bottom: 0.2rem;
+    // position: absolute;
+    // right: 0.2rem;
+    // bottom: 0.2rem;
     //margin-left: 0.1rem;
     //width: 0.8rem;
   }
   .nosend_button{
     border-color: #e5e5e5;
     color: #cccccc;
-    position: absolute;
-    right: 0.2rem;
-    bottom: 0.2rem;
+    // position: absolute;
+    // right: 0.2rem;
+    // bottom: 0.2rem;
     //margin-left: 0.1rem;
     //width: 0.8rem;
   }
 .van-cell-group{
   @extend %display;
+  border: 1px solid #e5e5e5;
+  border-radius:4px;
+  flex: 5;
+  height: .9rem;
+  margin:0 0.1rem;
+  display: flex;
+  align-items: center;
+  &::after{
+    border-width: 0 !important;
+  }
   .van-cell{
-    border: 1px solid #e5e5e5;
-    border-radius:4px;
     //padding: 0;
     //line-height: 0.9rem;
     //height: 0.9rem;
@@ -545,6 +567,7 @@ margin-right: 0.3rem;
   &.van-actionsheet{
     max-width: 800px;
     margin: 0 auto;
+    height: auto;
     .van-actionsheet__content{
       //position: fixed;
       //overflow-y: scroll;
@@ -554,7 +577,7 @@ margin-right: 0.3rem;
       background-color: #efeff4;
     }
     .van-actionsheet__header{
-      position: fixed;
+      // position: fixed;
       max-width: 800px;
       margin: 0 auto;
       height: 1.1rem;
@@ -575,12 +598,15 @@ margin-right: 0.3rem;
   background-color: #6a6b6e;
   max-width: 800px;
   margin: 0 auto;
-  position: fixed;
-  bottom: 0;
+  position: relative;
+  z-index: 200;
+  // position: fixed;
+  // bottom: 0;
   ul{
-position: absolute;
-    bottom: 1.8rem;
+// position: absolute;
+    // bottom: 1.8rem;
     li{
+      margin: -.3rem .3rem 0 0;
       display: inline-block;
       width: 1.39rem;
       height: 1.39rem;
@@ -591,13 +617,14 @@ position: absolute;
       color: white;
       font-weight: bold;
       font-size: 0.5rem;
-      margin-left: 0.3rem;
+      // margin-left: 0.3rem;
+      box-shadow: 0 1px 2px #4a4a4a;
       &.active_monbut{
         width: 1.9rem;
         height: 1.9rem;
         line-height: 1.9rem;
         margin-left: 0.3rem;
-
+        box-shadow: 0px -3px 3px #4a4a4a inset;
       }
       &.active_monbut+li{
         margin-left: 0.1rem;
@@ -616,37 +643,54 @@ position: absolute;
       background-color: #e5282b;
     }
   }
+  .willy_botBox{
+    padding: .2rem 0 0 0;
+    display: flex;
+    justify-content: space-between;
+    .willy_botInput {
+      width: 0;
+      flex: 2 !important;
+    }
+  }
   input{
     @extend %display;
-    width: 2rem;
+    // width: 2rem;
     height: 1rem;
     border-radius: 0.1rem;
     border:none;
-    text-indent:0.5rem
+    text-indent:0.5rem;
   }
   .foot_but{
-    margin-top: 1.8rem;
+    // margin-top: 1.8rem;
     padding: 0 0.3rem;
+    font-size: .2rem;
     input{
       background-color: white;
     }
   }
   .touzhu_total{
-    @extend %display;
-    width: 2.6rem;
+    // @extend %display;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    // width: 2.6rem;
     margin:0 0.2rem;
+    flex: 2;
   color:white ;
+  font-size: .3rem !important;
 }
   .touzhu_null{
     margin:0 0.2rem;
-    width: 1.4rem;
+    flex: 1;
+    // width: 1.4rem;
     height: 1rem;
     background-color: #e5282b;
     color: white;
     border-color:#e5282b;
   }
   .touzhu_ok{
-    width: 1.4rem;
+    flex: 1;
+    // width: 1.4rem;
     height: 1rem;
     background-color: #f5832f;
     color: white;
@@ -656,32 +700,30 @@ position: absolute;
 }
 
 .touzhu_action{
-  position: relative;
+  // position: relative;
+  height: 10rem;
   width: 100%;
+  display: flex;
   .touzhu_lift{
-    margin-top: 1.1rem;
-    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 10%;
+    @extend %display;
     .active_touzhu{
       background-color: #587cbe;
       color: white;
     }
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    position: fixed;
-    height: 11.85rem;
-    width: 1rem;
-    @extend %display;
-
     span{
       background-color: white;
       @extend %display;
-position: relative;
+      position: relative;
      //margin: 0 auto;
       //padding: 0.2rem;
       height: 50%;
       width: 100%;
       //font-size: 24px
+      border-radius: 7px 0 0 7px;
       em{
         width: 100%;
         display: inline-block;
@@ -693,43 +735,110 @@ position: relative;
     }
   }
   .touzhu_right{
-    margin-top: 1.2rem;
-margin-left: 1.1rem;
-    margin-bottom: 3.6rem;
-    width: 87%;
-    @extend %display;
-
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    width: 90%;
+    // @extend %display;
+.van-row{
+  display: flex;
+  justify-content: space-around;
+  padding: .2rem .2rem 0 0;
+  box-sizing: border-box;
+  .van-col{
+    width: auto;
+    // background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    margin: 0 0 0 .2rem;
+  }
+}
+.willy_userBets_ui{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: .2rem;
+  box-sizing: border-box;
+  & > li{
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: .1rem;
+  background: #fff;
+  border-radius: 50%;
+  }
+}
     img{
 width: 3.2rem;
       height: 0.89rem;
     }
-li{
-  background-color: white;
-  &.curChosBall_class{
-    background-color: #f2dd41;
-  }
-}
+    .willy_touzhu_right_ui{
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding:0.09rem .1rem;
+      box-sizing: border-box;
+      .curChosBall_class{
+        background-color: #f2dd41 !important;
+      }
+      li{
+        background-color: white;
+        width: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: .1rem;
+        border-radius: 4px;
+        padding: .4rem 0;
+        p{
+          font-size: .3rem;
+          color: #666;
+        }
+        .foz_bol{
+          color: #000;
+          font-weight: bold;
+          font-size: .4rem;
+        }
+      }
+    }
+    .curChosBall_class{
+      background-color: #f2dd41 !important;
+      box-shadow: 0 2px 3px #999;
+    }
       .betBallOne{
         @extend %display;
-        width: 1.42rem;
-        height: 1.8rem;
-        line-height: 1rem;
-        //background-color: white;
-        margin: 0.1rem 0;
+        // width: 1.42rem;
+        // height: 1.8rem;
+        // line-height: 1rem;
+        background-color: white;
+        width: 100%;
+        // margin: 0.1rem 0;
+    border-radius: 4px;
+    padding: .3rem 0;
         text-align: center;
         .foz_bol{
-font-weight: bold;
+  font-weight: bold;
           font-size: 14px;
         }
       }
     //红绿蓝波
     .betBallTwo{
       @extend %display;
-      width: 1.22rem;
-      height: 1.8rem;
-      line-height: 1rem;
-      //background-color: white;
-      margin: 0.1rem 0;
+      // width: 1.42rem;
+      // height: 1.8rem;
+      // line-height: 1rem;
+      background-color: white;
+      width: 100%;
+      // margin: 0.1rem 0;
+  border-radius: 4px;
+  padding: .3rem 0;
       text-align: center;
       .foz_bol{
         font-weight: bold;
@@ -739,17 +848,18 @@ font-weight: bold;
     //合计球样式
     .betBallThree{
       @extend %display;
-      width: 1.1rem;
-      height: 1.1rem;
+      // width: 1.1rem;
+      // height: 1.1rem;
       border-radius: 50%;
       //line-height: 0.6rem;
       //background-color: white;
-      margin: 0.1rem;
+      // margin: 0.1rem;
       //margin-right: 0.2rem;
-      text-align: center;
+      // text-align: center;
       .foz_bol{
-        font-weight: bold;
-        font-size: 14px;
+          font-weight: bold;
+          font-size: .4rem !important;
+          line-height: .9;
       }
     }
   }
@@ -826,4 +936,90 @@ display: inherit;
   line-height: 1rem;
   height: 1rem;
 }
+}
+// willy
+.willy_yuan{
+  display: flex;
+  align-items: center;
+  & > em {
+    padding: 0 .1rem;
+  }
+  & > i {
+    margin: 0 .1rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:last-child{
+      margin: 0 2px !important;
+    }
+    &:nth-last-child(2){
+      margin: 0 2px !important;
+    }
+  }
+}
+.willy_time {
+  border-radius: 3px !important;
+  width: 98% !important;
+  background: none !important;
+  & > span {
+    width: auto;
+    max-width: 98%;
+    padding: .1rem .2rem !important;
+    box-sizing: border-box;
+    background: #dfdfdf !important;
+    color: #fff !important;
+  }
+}
+.willy_betChat{
+  width: 70% !important;
+  .willy_betChat_div{
+    background: linear-gradient(to right, rgb(255, 206, 35), rgb(255, 146, 0))!important; 
+    padding: .2rem !important;
+  }
+  & > p {
+    padding: .2rem !important;
+    box-shadow: 0 1px 1px #dedede;
+    border-radius: 0px 0px 7px 7px !important;
+    & > em {
+      & > i {
+        color: red !important;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.willy_Home_name{
+  padding: 0 0 0 8px;
+}
+.willy_on{
+  width: 96% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  .willy_on_span{
+    width: auto;
+    padding:.15rem .5rem !important;
+    background-color: #dfdfdf !important;
+    max-width: 100% !important;
+    border-radius: 1.3rem !important;
+  }
+}
+.willy_xiaoxi{
+  text-align: center;
+  margin: 0 auto;
+  background-color: #dfdfdf;
+  width: 96%;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  & > p{
+    &:nth-child(1) {
+      padding: 0 0 3px 0;
+      font-size: 0.4rem !important;
+    }
+    &:nth-child(2) {
+      text-align: left;
+      padding: .2rem 0;
+    }
+  }
 }

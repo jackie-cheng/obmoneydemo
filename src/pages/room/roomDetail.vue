@@ -29,7 +29,7 @@
       <!--下拉查看历史开奖-->
       <van-collapse v-model="activeNames" class="room_topData_down" v-if="gameRecordList&&!$_.isEmpty(gameRecordList)">
         <van-collapse-item name="1">
-          <div slot="title" v-if="gameRecordList[0].status=='2'"><span>第 <em>{{gameRecordList[0].issueApi}}</em> 期
+          <div slot="title" v-if="gameRecordList[0].status=='2'"><span class="willy_yuan">第 <em>{{gameRecordList[0].issueApi}}</em> 期
             <i :class="styleBullThree((gameRecordList[0].note).split('|')[0])">{{(gameRecordList[0].note).split("|")[0]}}</i>
             +<i :class="styleBullThree((gameRecordList[0].note).split('|')[1])">{{(gameRecordList[0].note).split("|")[1]}}</i>
             +<i :class="styleBullThree((gameRecordList[0].note).split('|')[2])">{{(gameRecordList[0].note).split("|")[2]}}</i>
@@ -52,7 +52,7 @@
           <ul>
             <li v-for="openRecord in gameRecordList.slice(1,10)">
               <template v-if="openRecord.status=='2'">
-                <span>
+                <span class="willy_yuan">
                   第 <em>{{openRecord.issueApi}}</em> 期
                   <i :class="styleBullThree((openRecord.note).split('|')[0])">{{(openRecord.note).split("|")[0]}}</i>
               +<i :class="styleBullThree((openRecord.note).split('|')[1])">{{(openRecord.note).split("|")[1]}}</i>
@@ -87,8 +87,8 @@
             v-for="mess in mySendMessage">
           <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&!mess.fristSend&&!mess.betsSend">
 
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" v-text="mess.mySendTime">
-              2018-05-29 09:21</p>
+            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem">
+              <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
             <a v-if="mess.photourl">
               <img :src="mess.photourl" alt="" class="touxiangImg">
@@ -101,9 +101,9 @@
           </template>
 
           <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&mess.betsSend">
-            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
-              2018-05-29 09:21</p>
-            <p v-text="mess.sendernickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
+            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
+              <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
+            <p class="willy_Home_name" v-text="mess.sendernickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
               <img :src="mess.photourl" alt="" class="touxiangImg">
             </a>
@@ -111,8 +111,8 @@
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
 
-            <div class="betChat_class">
-              <div style="background-color:#ff7f00 ">
+            <div class="betChat_class willy_betChat">
+              <div class="willy_betChat_div" style="background-color:#ff7f00 ">
                 {{JSON.parse(mess.message).gameQi}}期  <em>总计￥{{JSON.parse(mess.message).totleAmt}}</em>
               </div>
               <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
@@ -128,43 +128,46 @@
 
           <template v-if="!mess.sendernickname">
 
-            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='1'">
+            <div class="willy_xiaoxi" v-if="mess.status=='1'">
               <p style="color:  #ff4444;font-size: 0.35rem">封盘消息</p>
               <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>本地投注结束，稍后将开启下期投注</p>
              </div>
-            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='2'">
+            <div class="willy_xiaoxi" v-if="mess.status=='2'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
               <p> <em style="color:  #ff4444">【{{mess.expect}}】期</em> 开奖号码：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}</p>
             </div>
-            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='-1'">
+            <div class="willy_xiaoxi" v-if="mess.status=='-1'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
               <p> <em style="color:  #ff4444">【{{mess.expect}}】期</em> 开奖失败</p>
             </div>
-            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='3'">
+            <div class="willy_xiaoxi" v-if="mess.status=='3'">
               <p>系统消息</p>
               <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>距离封盘还有{{mess.time}}秒</p>
             </div>
-            <div style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 65%;padding: 0.1rem 0.3rem" v-if="mess.status=='4'">
+            <div class="willy_xiaoxi" v-if="mess.status=='4'">
               <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
               <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>开始下注，感谢您的支持，祝您好运</p>
             </div>
           </template>
 
           <template v-if="mess.fristSend">
-            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
-              2018-05-29 09:21</p>
-            <p style="text-align: center;margin: 0.2rem auto;background-color: #dfdfdf;width: 50%">尊贵的
-              <img src="../../assets/userRank1.png" alt="" style="width:1rem;height: 0.5rem" v-if="mess.message=='1'">
-              <img src="../../assets/userRank2.png" alt="" style="width:1rem;height: 0.5rem" v-if="mess.message=='2'">
-              <img src="../../assets/userRank3.png" alt="" style="width:1rem;height: 0.5rem" v-if="mess.message=='3'">
-              <img src="../../assets/userRank4.png" alt="" style="width:1rem;height: 0.5rem" v-if="mess.message=='4'">
-              <img src="../../assets/userRank5.png" alt="" style="width:1rem;height: 0.5rem" v-if="mess.message=='5'">
-              <em style="color: blue">{{mess.sendernickname}}</em> 进入房间</p>
+            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
+              <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
+            <p class="willy_on" style="text-align: center;margin: 0.2rem auto;width: 50%">
+              <span class="willy_on_span">
+              尊贵的
+              <img src="../../assets/userRank1.png" alt="" style="width:1.5rem;" v-if="mess.message=='1'">
+              <img src="../../assets/userRank2.png" alt="" style="width:1.5rem;" v-if="mess.message=='2'">
+              <img src="../../assets/userRank3.png" alt="" style="width:1.5rem;" v-if="mess.message=='3'">
+              <img src="../../assets/userRank4.png" alt="" style="width:1.5rem;" v-if="mess.message=='4'">
+              <img src="../../assets/userRank5.png" alt="" style="width:1.5rem;" v-if="mess.message=='5'">
+              <em style="color: blue">{{mess.sendernickname}}</em> 进入房间</span>
+            </p>
           </template>
           <!--用户自己发的消息-->
           <template v-if="mess.sendernickname&&mess.sendernickname==userName&&!mess.fristSend&&!mess.betsSend">
-            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
-              2018-05-29 09:21</p>
+            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
+              <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
               <img :src="mess.photourl" alt="" class="touxiangImg">
@@ -175,8 +178,8 @@
             <span>{{mess.message}}</span>
           </template>
           <template v-if="mess.sendernickname&&mess.sendernickname==userName&&mess.betsSend">
-            <p v-text="mess.mySendTime" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
-              2018-05-29 09:21</p>
+            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
+              <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
               <img :src="mess.photourl" alt="" class="touxiangImg">
