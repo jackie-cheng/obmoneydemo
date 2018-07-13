@@ -103,11 +103,11 @@
           return
         }
         let params={
-          roomNumber: vm.$route.params.id,
-          pageNumber:this.page,
+          token: vm.userData.token,
+          pageNo:this.page,
           pageSize:10,
         }
-        const url = 'user/chatRecord/queryChatRecordByRoomnumber';
+        const url = 'api/chatRecord/queryCustomerServiceChatRecord';
 
         vm.$axios.get(url, {params}).then((response) => {
           if(response.data.statusCode==-100){
@@ -121,7 +121,8 @@
               vm.$router.push('/')
             });
           }else{
-            const _list = (response.data||[]).map(a=>JSON.parse(a.msgContent));
+              console.log(response.data)
+            const _list = (response.data.resultInfo||[]).map(a=>JSON.parse(a.msgContent));
             _list.reverse()
             vm.mySendMessage= [..._list, ...vm.mySendMessage];
             vm.$toast(_list.length > 0 ? '为您更新了' + _list.length + '条内容' : '已是最新内容');
@@ -146,16 +147,13 @@
           vm.threadPoxi()
         }
 
-//        console.log(vm.messageValue)
       },
       threadPoxi(){  // 实际调用的方法
         //参数
         const vm = this
         const agentData = vm.messageValue;
         vm.messageValue=null
-//       vm.mySendMessage.push(agentData)
-//        console.log(vm.mySendMessage)
-//        vm.websocketsend(agentData)
+
         //若是ws开启状态
         if (vm.websock.readyState == 1) {
           vm.websocketsend(agentData)
@@ -185,7 +183,7 @@
         vm.newUuid ='youke'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
 
         if(localStorage.getItem('userInfo')){
-          vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&userId="+vm.userData.uuid+"&chartId="+vm.userData.uuid);
+          vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&token="+vm.userData.token);
         }else {
           vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&chartId="+vm.newUuid+"&userId="+vm.newUuid);
           vm.userName=vm.newUuid
@@ -207,19 +205,13 @@
       websocketonmessage(e){ //数据接收
         const vm = this
         vm.redata = JSON.parse(e.data.msgContent);
-//        let content = document.getElementsByClassName('room_wechatul')[0];
-//        content.scrollTop=content.scrollHeight
-//        console.log(e.data)
+
         console.log('收到的',vm.redata)
         vm.mySendMessage.push(vm.redata)
 
-//        content.scrollTop=content.scrollHeight-100
         console.log('收消息列表',vm.mySendMessage)
 
-//        let divUl = document.getElementsByClassName('room_wechatul')[0]
-//        divUl.scrollTop = divUl.scrollHeight;
-//{"phone":"","message":""}
-//        console.log('jieshou',vm.redata);
+
       },
       websocketsend(agentData){//数据发送
         const vm = this
@@ -294,7 +286,7 @@
       vm.$watch('mySendMessage',()=>{
         let content = document.getElementsByClassName('room_wechatul')[0];
         console.log(content.scrollHeight)
-        content.scrollTop=content.scrollHeight+90
+        content.scrollTop=content.scrollHeight
       }, {deep: true})
 //      vm.$watch('',()=>{
 //          if(vm.websock.readyState === 1){

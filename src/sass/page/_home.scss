@@ -529,6 +529,10 @@ margin-right: 0.3rem;
 }
 //房间底部弹窗
 .touzhu_actionbac{
+  &.chedan_actionbac{
+    max-height: 8rem!important;
+    overflow: scroll;
+  }
   &.van-actionsheet{
     max-width: 800px;
     margin: 0 auto;

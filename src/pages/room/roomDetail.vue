@@ -15,11 +15,11 @@
           <span>第<em v-if="gameIssue.issueApi">{{gameIssue.issueApi}}</em>期
                 <em v-if="!gameIssue.issueApi&&gameRecordList&&!$_.isEmpty(gameRecordList)">{{gameRecordList[0].issueApi}}</em>
           </span>
-          <p v-if="gameIssue.issueApi">
-            <yd-countdown :time="gameIssue.duration" :callback="curGameOver" done-text="封盘中" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
+          <p v-if="isCanBet">
+            <yd-countdown :time="overGameTime" :callback="curGameOver" done-text="封盘中" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
           </p>
-          <p v-else>
-           封盘中
+          <p v-if="!isCanBet">
+          {{fengPanIngText}}
           </p>
         </div>
         <div class="room_topData_lift"><span style="display: block">总余额</span>
@@ -116,7 +116,7 @@
                 {{JSON.parse(mess.message).gameQi}}期  <em>总计￥{{JSON.parse(mess.message).totleAmt}}</em>
               </div>
               <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
-                <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(ball.length-1,1)}}</b>
+                <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(4,ball.length)}}</b>
                 <b v-if="ball.indexOf('tema')==-1">{{ballType[ball]}}</b>
                 <em> <i>￥{{JSON.parse(mess.message).point}}</i> </em>
               </p>
@@ -124,7 +124,7 @@
             </div>
 
           </template>
-          <!--系统消息-1 开奖失败  1 封盘  2开奖结果 3封盘中 4 开始下注-->
+          <!--系统消息 -1 开奖失败  1 封盘  2开奖结果 3封盘中倒计时 4 开始下注 -2是维护  生成期号了会给你发消息的status 是0 -->
 
           <template v-if="!mess.sendernickname">
 
@@ -190,7 +190,7 @@
 {{JSON.parse(mess.message).gameQi}}期  <em>总计￥{{JSON.parse(mess.message).totleAmt}}</em>
 </div>
                 <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
-                  <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(ball.length-1,1)}}</b>
+                  <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(4,ball.length)}}</b>
                   <b v-if="ball.indexOf('tema')==-1">{{ballType[ball]}}</b>
                   <em> <i>￥{{JSON.parse(mess.message).point}}</i> </em>
                 </p>
@@ -225,8 +225,8 @@
       </van-button>
     </div>
    <!--下注组件-->
-    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" v-if="gameIssue&&!$_.isEmpty(gameIssue)" @emitMoney="emitMoneyUp" @betsBall="betsBall"> </userBetsCom>
-    <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac">
+    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" :gameOdd="gameOdd" v-if="gameOdd&&gameIssue&&!$_.isEmpty(gameIssue)" @betsBall="betsBall"> </userBetsCom>
+    <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac chedan_actionbac">
       <div class="recallMenu_action">
         <table class="ob_pay_record_table">
           <tr>
@@ -235,12 +235,13 @@
             <th width="30%">金额</th>
             <th width="20%">操作</th>
           </tr>
-          <tr v-for="n in 4">
-            <td width="30%">888</td>
-            <td width="20%">大</td>
+          <tr v-for="bet in userBetList" v-if="userBetList&&!$_.isEmpty(userBetList)">
+            <td width="30%">{{bet.issueApi}}</td>
+            <td width="20%" v-if="(bet.betStr).indexOf('tema')==-1">{{ballType[bet.betStr]}}</td>
+            <td width="20%" v-if="(bet.betStr).indexOf('tema')!=-1">特码 - {{bet.betStr.substr(4,bet.betStr.length)}}</td>
             <!--如果为充值，则颜色添加红色，添加样式pay_money-->
-            <td width="30%" class="pay_money">1000.00</td>
-            <td width="20%" class="recallMenu_but" @click="toRecall(n)"><span>撤单</span></td>
+            <td width="30%" class="pay_money">{{bet.totleAmt}}</td>
+            <td width="20%" class="recallMenu_but" @click="cancleBet(bet.gameId,bet.id)" v-if="bet.gameId==gameIssue.id"><span>撤单</span></td>
           </tr>
         </table>
 
@@ -259,8 +260,10 @@
     name: 'roomDetail',
     data () {
       return {
+        fengPanIngText:'封盘中',
+        userBetList:null,//用户下注历史
+        overGameTime:5,
           isCanBet:false,
-        sumRandomNum:Math.floor(Math.random()*28),
         gameOdd:null,//获取房间赔率
         moneyData:null,//获取用户余额
         gameIssue: null,//房间游戏期次
@@ -297,7 +300,7 @@
           'duizi':'对子',
         },
         mySendMessage: [],
-        othersSendMessage: [],
+
         recallMenu: false,
         showCustomAction: false,
         activeNames: ['2'],
@@ -310,19 +313,17 @@
       }
     },
     computed:{
-//        setTimeOver(){
-//            const vm = this
-//          if(vm.gameIssue&&!vm.$_.isEmpty(vm.gameIssue)){
-//
-//            return vm.secondsTime
-//          }
-//
-//        }
+
     },
     methods: {
+        //子组件用户下注成功要发送消息
       betsBall(bet){
         const vm = this
         console.log(bet)
+
+        //下注成功要刷新余额  和下注历史
+        vm.obMoney()
+        vm.obUserBetList()
         let curTime = vm.getNowFormatDate()
         let sendData = {
           "roomNumber": vm.$route.params.id,
@@ -337,12 +338,6 @@
         vm.websock.send(JSON.stringify(sendData));
         console.log('发的消息', JSON.stringify(sendData))
         vm.mySendMessage.push(sendData)
-      },
-      emitMoneyUp(up){
-          const vm = this
-if(up){
-    vm.obMoney()
-}
       },
       //        数字求的颜色
       styleBull(num){
@@ -359,13 +354,7 @@ if(up){
       curGameOver(){
         const vm = this
 vm.isCanBet=false
-//        vm.redata = {
-//          content: "封盘中",
-//          expect: vm.gameIssue.issueApi,
-//          status: "3"
-//        }
-//        vm.mySendMessage.push(vm.redata)
-        return
+
       },
       loadList() {
         const vm = this
@@ -406,7 +395,11 @@ vm.isCanBet=false
       },
       startGuess(){
         const vm = this
-        vm.$toast('当前竞猜已关闭');
+//        vm.$toast('当前竞猜已关闭');
+        vm.$dialog.alert({
+          title: '友情提示',
+          message: '已封盘，禁止提示'
+        });
       },
       toRecall(){
         const vm = this
@@ -507,11 +500,22 @@ vm.isCanBet=false
           vm.redata = JSON.parse(pullData.msgContent)
           //收到开奖消息后刷新当前游戏其次和历史
 if( vm.redata.status=='2'){
-  //     刷新当前游戏期次
-  vm.obGameIssue()
-  //     刷新开奖记录
-  vm.obGameRecord()
+  setTimeout(function () {
+      vm.obMoney()
+    //     刷新当前游戏期次
+    vm.obGameIssue()
+    //     刷新开奖记录
+    vm.obGameRecord()
+  }, 1000);
+
 }
+          if( vm.redata.status=='-2'){
+            setTimeout(function () {
+            vm.fengPanIngText='维护中'
+            }, 100);
+
+          }
+
           console.log('系统消息', vm.redata)
 
           vm.mySendMessage.push(vm.redata)
@@ -551,7 +555,12 @@ if( vm.redata.status=='2'){
           .then(response => {
             if (response.status == 200 && response.data) {
               vm.gameRecordList = response.data.resultInfo
-
+              vm.$nextTick(function () {
+                //              如果用户登录需要获取投注历史
+                if(vm.userData&&!vm.$_.isEmpty(vm.userData)){
+                  vm.obUserBetList()
+                }
+              })
             } else {
               vm.$toast('获取开奖历史失败');
             }
@@ -570,16 +579,19 @@ if( vm.redata.status=='2'){
           .then(response => {
             if (response.status == 200 && response.data) {
               vm.gameIssue = response.data.resultInfo
-              if(vm.gameIssue.duration>0){
+
+              if(vm.gameIssue.duration&&vm.gameIssue.duration>0){
                 vm.redata = {
                   content: "开始下注",
                   expect: vm.gameIssue.issueApi,
                   status: "4"
                 }
+                vm.fengPanIngText='封盘中'
                 vm.mySendMessage.push(vm.redata)
+                vm.overGameTime=vm.gameIssue.duration
                 vm.isCanBet=true
               }
-              vm.secondsTime = vm.gameIssue.duration
+              vm.secondsTime = JSON.parse(JSON.stringify(vm.gameIssue)).duration
               vm._timer = setInterval(function () {
                 vm.secondsTime = vm.secondsTime  - 1
 //                console.log( vm.secondsTime)
@@ -605,7 +617,7 @@ if( vm.redata.status=='2'){
                   clearInterval(vm._timer);
                 }
               }, 1000)
-//console.log('1',response.data.resultInfo)
+console.log('1',response.data.resultInfo)
 
             } else {
               vm.$toast('获取开奖历史失败');
@@ -619,7 +631,7 @@ if( vm.redata.status=='2'){
       obGameOdd(){
         const vm = this
         let params = {
-          roomId : vm.$route.params.id,
+          roomNumber: vm.$route.params.id,
         }
         vm.$axios.get(`/api/bet/getGameOdd`, {params})
           .then(response => {
@@ -634,45 +646,7 @@ console.log('1',response)
         })
       },
 
-      //      用户下注
-//      userBets(){
-//        const vm = this
-//        if(!localStorage.getItem('userInfo')){
-//          vm.$router.push('/login')
-//          return
-//        }
-//        let params = {
-//         roomId : vm.$route.params.id,
-//       gameId:'fb760bc3e97b4ffea3ba1f6205b90566',
-//        gameUserId:'22ee28f074994530a62cbf919cf05252',
-//       point:25.5,
-//        da:1
-//        }
-//        vm.$axios.get(`/user/bet/userBet`, {params})
-//          .then(response => {
-//            if (response.status == 200 && response.data) {
-//              if(response.data.statusCode){
-//                vm.$dialog.confirm({
-//                  message: response.data.resultInfo
-//                }).then(() => {
-//                  localStorage.removeItem('userInfo')
-//                  vm.$router.push('/login')
-//                }).catch(() => {
-//                  localStorage.removeItem('userInfo')
-//                  vm.$router.push('/')
-//                });
-//              }else{
-//                vm.gameOdd= response.data.resultInfo
-//                console.log('1',response)
-//              }
-//
-//            } else {
-//              vm.$toast('获取赔率失败');
-//            }
-//          }).catch(response => {
-//
-//        })
-//      },
+
 
       //      获取用户账户余额
       obMoney(){
@@ -730,8 +704,91 @@ console.log('1',response)
 //          ws.close()
 //        })
 //      }
+//取消下注
+cancleBet(e,id){
+  const vm = this
+  let params ={
+    token: vm.userData.token,
+      roomId : vm.$route.params.id,
+      gameId:e,
+    gameBetId:id,
+  }
+
+  console.log(params)
+  vm.$axios.get(`/user/bet/userBetCancel`, {params})
+    .then(response => {
+      if (response.status == 200 && response.data) {
+        if(response.data.statusCode==-100){
+          vm.$dialog.confirm({
+            message: response.data.resultInfo
+          }).then(() => {
+            localStorage.removeItem('userInfo')
+            vm.$router.push('/login')
+          }).catch(() => {
+            localStorage.removeItem('userInfo')
+            vm.$router.push('/')
+          });
+        }else if(response.data.statusCode==-200){
+          vm.$toast(response.data.resultInfo);
+        }else{
+            //撤单成功刷新余额 和投注历史
+            vm.obUserBetList()
+          vm.obMoney()
+          vm.$toast('撤单成功');
+        }
+
+      } else {
+        vm.$toast('撤单失败');
+      }
+    }).catch(response => {
+
+  })
+
+},
+
+      //用户下注历史
+      obUserBetList(){
+        const vm = this
+        let params ={
+    token: vm.userData.token,
+          pageSize:10,
+          pageNo:1,
+//          gameId:vm.gameIssue.id ||vm.gameRecordList[0].id,
+        }
 
 
+        vm.$axios.get(`/user/bet/userBetList`, {params})
+          .then(response => {
+            if (response.status == 200 && response.data) {
+              console.log('lishi',response)
+              if(response.data.statusCode==-100){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else if(response.data.statusCode==-200){
+                console.log("获取下注历史")
+              }else{
+                  if(response.data.statusCode==1){
+                    vm.userBetList=response.data.resultInfo
+                    console.log(vm.userBetList)
+                  }
+
+              }
+
+            } else {
+              console.log("获取下注历史失败")
+            }
+          }).catch(response => {
+
+        })
+
+      },
       getNowFormatDate() {
         var date = new Date();
         var seperator1 = "-";
@@ -772,26 +829,37 @@ console.log('1',response)
         content.scrollTop = content.scrollHeight + 90
 
       }, {deep: true})
-
+//      vm.$watch('gameIssue', () => {
+//          if(vm.gameIssue.duration&&vm.gameIssue.duration>0){
+//            vm.overGameTime=vm.gameIssue.duration
+//          }else{
+//            vm.overGameTime=false
+//          }
+//
+//      }, {deep: true})
           setTimeout(function () {
             let content = document.getElementsByClassName('room_wechatul')[0];
             content.scrollTop = content.scrollHeight
           }, 900);
+
     },
     created () {
       const vm = this
 //      vm.obChatRecord()
+      // 获取房间游戏期次
+      vm.obGameIssue()
+//      获取开奖记录
+      vm.obGameRecord()
       if (localStorage.getItem('userInfo')) {
         vm.userData = JSON.parse(localStorage.getItem('userInfo'))
         vm.userToken = vm.userData.token
         vm.userName = vm.userData.username
         //登陆用户获取用户余额
         vm.obMoney()
+
+
       }
-      // 获取房间游戏期次
-      vm.obGameIssue()
-//      获取开奖记录
-      vm.obGameRecord()
+
 
 
       vm.roomId = vm.$route.params.id

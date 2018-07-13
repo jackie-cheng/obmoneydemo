@@ -56,8 +56,9 @@
 
           vm.$axios.get('/user/GeamUserRank/findList')
             .then(response => {
-
+console.log(response.headers)
               if (response.status == 200&&response.data) {
+                  console.log(response)
                 if(response.data.statusCode==-100){
                   vm.$dialog.confirm({
                     message: response.data.resultInfo

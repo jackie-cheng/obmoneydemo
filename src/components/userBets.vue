@@ -8,33 +8,33 @@
         </div>
         <div class="touzhu_right" v-if="touzhuType==1">
           <van-row gutter="0">
-            <van-col span="5"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('da')!=-1}" @click="starBet('da')"><p class="foz_bol"> 大</p> <p> 2</p></li>
+            <van-col span="5"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('da')!=-1}" @click="starBet('da')"><p class="foz_bol"> 大</p> <p v-text="getPercent(gameOdd['da'])"> 2</p></li>
             </van-col>
-            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('dan')!=-1}" @click="starBet('dan')"><p class="foz_bol"> 单</p> <p> 2</p></li></van-col>
-            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('dadan')!=-1}" @click="starBet('dadan')"><p class="foz_bol"> 大单</p> <p> 2</p></li></van-col>
-            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('xiaodan')!=-1}" @click="starBet('xiaodan')"><p class="foz_bol"> 小单</p> <p> 2</p></li></van-col>
-            <van-col span="4"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('jida')!=-1}" @click="starBet('jida')"><p class="foz_bol"> 极大</p> <p> 2</p></li></van-col>
+            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('dan')!=-1}" @click="starBet('dan')"><p class="foz_bol"> 单</p> <p v-text="getPercent(gameOdd['dan'])"> 2</p></li></van-col>
+            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('dadan')!=-1}" @click="starBet('dadan')"><p class="foz_bol"> 大单</p> <p v-text="getPercent(gameOdd['dadan'])"> 2</p></li></van-col>
+            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('xiaodan')!=-1}" @click="starBet('xiaodan')"><p class="foz_bol"> 小单</p> <p v-text="getPercent(gameOdd['xiaodan'])"> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('jida')!=-1}" @click="starBet('jida')"><p class="foz_bol"> 极大</p> <p v-text="getPercent(gameOdd['jida'])"> 2</p></li></van-col>
           </van-row>
           <van-row gutter="0">
-            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('xiao')!=-1}" @click="starBet('xiao')"><p class="foz_bol"> 小</p> <p> 2</p></li>
+            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('xiao')!=-1}" @click="starBet('xiao')"><p class="foz_bol"> 小</p> <p v-text="getPercent(gameOdd['xiao'])"> 2</p></li>
             </van-col>
-            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('shuang')!=-1}" @click="starBet('shuang')"><p class="foz_bol"> 双</p> <p> 2</p></li></van-col>
-            <van-col span="5"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('dashuang')!=-1}" @click="starBet('dashuang')"><p class="foz_bol"> 大双</p> <p> 2</p></li></van-col>
-            <van-col span="5"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('xiaoshuang')!=-1}" @click="starBet('xiaoshuang')"><p class="foz_bol"> 小双</p> <p> 2</p></li></van-col>
-            <van-col span="4"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('jixiao')!=-1}" @click="starBet('jixiao')"><p class="foz_bol"> 极小</p> <p> 2</p></li></van-col>
+            <van-col span="5"><li class="betBallOne"  :class="{curChosBall_class:selectBall.indexOf('shuang')!=-1}" @click="starBet('shuang')"><p class="foz_bol"> 双</p> <p v-text="getPercent(gameOdd['shuang'])"> 2</p></li></van-col>
+            <van-col span="5"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('dashuang')!=-1}" @click="starBet('dashuang')"><p class="foz_bol"> 大双</p> <p v-text="getPercent(gameOdd['dashuang'])"> 2</p></li></van-col>
+            <van-col span="5"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('xiaoshuang')!=-1}" @click="starBet('xiaoshuang')"><p class="foz_bol"> 小双</p> <p v-text="getPercent(gameOdd['xiaoshuang'])"> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallOne" :class="{curChosBall_class:selectBall.indexOf('jixiao')!=-1}" @click="starBet('jixiao')"><p class="foz_bol"> 极小</p> <p v-text="getPercent(gameOdd['jixiao'])"> 2</p></li></van-col>
           </van-row>
           <van-row gutter="0">
-            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('hongbo')!=-1}" @click="starBet('hongbo')"><p class="foz_bol daDan_color"> 红波</p> <p> 2</p></li></van-col>
-            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('lanbo')!=-1}" @click="starBet('lanbo')"><p class="foz_bol xiaoShuang_color"> 蓝波</p> <p> 2</p></li></van-col>
-            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('lvbo')!=-1}" @click="starBet('lvbo')"><p class="foz_bol greenBo_color"> 绿波</p> <p> 2</p></li></van-col>
-            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('baozi')!=-1}" @click="starBet('baozi')"><p class="foz_bol"> 豹子</p> <p> 2</p></li></van-col>
-            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('shunzi')!=-1}" @click="starBet('shunzi')"><p class="foz_bol"> 顺子</p> <p> 2</p></li></van-col>
-            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('duizi')!=-1}" @click="starBet('duizi')"><p class="foz_bol"> 对子</p> <p> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('hongbo')!=-1}" @click="starBet('hongbo')"><p class="foz_bol daDan_color"> 红波</p> <p v-text="getPercent(gameOdd['hongbo'])"> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('lanbo')!=-1}" @click="starBet('lanbo')"><p class="foz_bol xiaoShuang_color"> 蓝波</p> <p v-text="getPercent(gameOdd['lanbo'])"> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('lvbo')!=-1}" @click="starBet('lvbo')"><p class="foz_bol greenBo_color"> 绿波</p> <p v-text="getPercent(gameOdd['lvbo'])"> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('baozi')!=-1}" @click="starBet('baozi')"><p class="foz_bol"> 豹子</p> <p v-text="getPercent(gameOdd['baozi'])"> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('shunzi')!=-1}" @click="starBet('shunzi')"><p class="foz_bol"> 顺子</p> <p v-text="getPercent(gameOdd['shunzi'])"> 2</p></li></van-col>
+            <van-col span="4"><li class="betBallTwo" :class="{curChosBall_class:selectBall.indexOf('duizi')!=-1}" @click="starBet('duizi')"><p class="foz_bol"> 对子</p> <p v-text="getPercent(gameOdd['duizi'])"> 2</p></li></van-col>
           </van-row>
             <!--合最后一个数字-->
          <ul >
-           <li class="betBallThree" :class="{curChosBall_class:selectBall.indexOf(0)!=-1}" @click="starBet(0)"><p class="foz_bol greenBo_color">00 </p> <p> 2</p></li>
-           <li class="betBallThree" :class="{curChosBall_class:selectBall.indexOf(num)!=-1}" v-for="num in 27"  @click="starBet(num)"><p class="foz_bol" :class="styleBull(num)"  v-text="ZeroNum(num)"> </p> <p> 2</p></li>
+           <li class="betBallThree" :class="{curChosBall_class:selectBall.indexOf(0)!=-1}" @click="starBet(0)"><p class="foz_bol greenBo_color">00 </p> <p v-text="getPercent(gameOdd['tema'+0])"> 2</p></li>
+           <li class="betBallThree" :class="{curChosBall_class:selectBall.indexOf(num)!=-1}" v-for="num in 27"  @click="starBet(num)"><p class="foz_bol" :class="styleBull(num)"  v-text="ZeroNum(num)"> </p> <p v-text="getPercent(gameOdd['tema'+num])"> 2</p></li>
             <!--<li class="betBallThree"><p class="foz_bol greenBo_color"> 01</p> <p> 2</p></li>-->
           <!--<li class="betBallThree"><p class="foz_bol daDan_color"> 02</p> <p> 2</p></li>-->
          </ul>
@@ -98,6 +98,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   export default {
     name: 'userBets',
     data(){
@@ -133,7 +134,7 @@
 
       }
     },
-props:['gameid','gameQi'],
+props:['gameid','gameQi','gameOdd'],
 computed:{
   totalAmount(){
       const vm = this
@@ -162,6 +163,15 @@ mounted(){
 
     },
     methods:{
+//赔率去零
+      getPercent(num){
+        const vm = this
+        if(parseInt(Number(num))==Number(num)){
+return parseInt(Number(num))
+        }else{
+            return num
+        }
+      },
         //确认下注/user/bet/userBet
       sureBet(){
           const vm = this
@@ -215,7 +225,6 @@ mounted(){
                 vm.$toast('下注成功');
                 vm.selectBall=[]
                 vm.touzhuNum=null
-                vm.$emit('emitMoney', true)
                 vm.$emit('betsBall',JSON.stringify(params))
               }
 
@@ -243,13 +252,19 @@ mounted(){
 //      选取球
       starBet(num){
         const vm = this
+//        if( vm.selectBall.indexOf(num)!=-1){
+//          const index = vm.selectBall.indexOf(num);
+//          vm.selectBall.splice(index,1)
+//        }else{
+//          vm.selectBall.push(num)
+//        }
+        //更改后
         if( vm.selectBall.indexOf(num)!=-1){
           const index = vm.selectBall.indexOf(num);
           vm.selectBall.splice(index,1)
         }else{
-          vm.selectBall.push(num)
+          Vue.set( vm.selectBall, 0, num)
         }
-
 
       },
 //      加零
