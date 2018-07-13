@@ -513,7 +513,10 @@ vm.isCanBet=false
           //收到开奖消息后刷新当前游戏其次和历史
 if( vm.redata.status=='2'){
   setTimeout(function () {
+    if (localStorage.getItem('userInfo')) {
       vm.obMoney()
+    }
+
     //     刷新当前游戏期次
     vm.obGameIssue()
     //     刷新开奖记录
