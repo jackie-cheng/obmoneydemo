@@ -250,6 +250,15 @@ top:46px;
       @extend %textAlign;
       border-radius: 100%;
     }
+    .numGre_color{
+      color: #02ad3f;
+      border: 1px solid #02ad3f;
+      @extend %display;
+      width:0.48rem;
+      @include height(true, 0.48rem,0.48rem);
+      @extend %textAlign;
+      border-radius: 100%;
+    }
     .num_color{
       color: #ff4444;
       @extend %display;

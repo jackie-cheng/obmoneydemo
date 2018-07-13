@@ -30,9 +30,9 @@
       <van-collapse v-model="activeNames" class="room_topData_down" v-if="gameRecordList&&!$_.isEmpty(gameRecordList)">
         <van-collapse-item name="1">
           <div slot="title" v-if="gameRecordList[0].status=='2'"><span>第 <em>{{gameRecordList[0].issueApi}}</em> 期
-            <i class="numblue_color">{{(gameRecordList[0].note).split("|")[0]}}</i>
-            +<i class="numblue_color">{{(gameRecordList[0].note).split("|")[1]}}</i>
-            +<i class="num_color">{{(gameRecordList[0].note).split("|")[2]}}</i>
+            <i :class="styleBullThree((gameRecordList[0].note).split('|')[0])">{{(gameRecordList[0].note).split("|")[0]}}</i>
+            +<i :class="styleBullThree((gameRecordList[0].note).split('|')[1])">{{(gameRecordList[0].note).split("|")[1]}}</i>
+            +<i :class="styleBullThree((gameRecordList[0].note).split('|')[2])">{{(gameRecordList[0].note).split("|")[2]}}</i>
             =<i :class="styleBull(Number((gameRecordList[0].note).split('|')[3]))">
               {{Number((gameRecordList[0].note).split("|")[3])}}
             </i>
@@ -54,9 +54,9 @@
               <template v-if="openRecord.status=='2'">
                 <span>
                   第 <em>{{openRecord.issueApi}}</em> 期
-                  <i class="numblue_color">{{(openRecord.note).split("|")[0]}}</i>
-              +<i class="numblue_color">{{(openRecord.note).split("|")[1]}}</i>
-                +<i class="num_color">{{(openRecord.note).split("|")[2]}}</i>
+                  <i :class="styleBullThree((openRecord.note).split('|')[0])">{{(openRecord.note).split("|")[0]}}</i>
+              +<i :class="styleBullThree((openRecord.note).split('|')[1])">{{(openRecord.note).split("|")[1]}}</i>
+                +<i :class="styleBullThree((openRecord.note).split('|')[2])">{{(openRecord.note).split("|")[2]}}</i>
                   =<i :class="styleBull(Number((openRecord.note).split('|')[3]))">
                   {{Number((openRecord.note).split("|")[3])}}</i>
                   （<i class="daDan_color" v-if="(openRecord.resultStr).split('|').indexOf('da')!=-1">大</i>
@@ -273,7 +273,7 @@
         userName: null,
         redBall: [1, 2, 7, 8, 12, 13, 18, 19, 23, 24],
         blueBall: [3, 4, 9, 10, 14, 15, 20, 25, 26],
-        greenBall: [5, 6, 11, 16, 17, 21, 22, 27],
+        greenBall: [0,5, 6, 11, 16, 17, 21, 22, 27],
         userRankImg: {
           '1': '../../assets/userRank1.png',
           '2': '../../assets/userRank2.png',
@@ -345,9 +345,21 @@
         if( vm.redBall.indexOf(num)!=-1){
           return  'lastNumRed_color'
         }else if(vm.greenBall.indexOf(num)!=-1){
-          return  'lastNumBlue_color'
-        }else if(vm.blueBall.indexOf(num)!=-1) {
           return  'lastNumGre_color'
+        }else if(vm.blueBall.indexOf(num)!=-1) {
+          return   'lastNumBlue_color'
+        }
+      },
+      //        前面三个数字求的颜色
+      styleBullThree(num){
+        const vm = this
+        console.log(num)
+        if( vm.redBall.indexOf(Number(num))!=-1){
+          return  'num_color'
+        }else if(vm.greenBall.indexOf(Number(num))!=-1){
+          return  'numGre_color'
+        }else if(vm.blueBall.indexOf(Number(num))!=-1) {
+          return   'numblue_color'
         }
       },
         //当期游戏倒计时走完，封盘
