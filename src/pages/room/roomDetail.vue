@@ -319,8 +319,6 @@
         //子组件用户下注成功要发送消息
       betsBall(bet){
         const vm = this
-        console.log(bet)
-
         //下注成功要刷新余额  和下注历史
         vm.obMoney()
         vm.obUserBetList()
@@ -334,7 +332,7 @@
           'sendernickname': vm.userData.username,
           "betsSend": true
         }
-//    console.log(JSON.stringify(sendData))
+
         vm.websock.send(JSON.stringify(sendData));
         console.log('发的消息', JSON.stringify(sendData))
         vm.mySendMessage.push(sendData)
@@ -353,7 +351,6 @@
       //        前面三个数字求的颜色
       styleBullThree(num){
         const vm = this
-        console.log(num)
         if( vm.redBall.indexOf(Number(num))!=-1){
           return  'num_color'
         }else if(vm.greenBall.indexOf(Number(num))!=-1){
@@ -432,7 +429,7 @@ vm.isCanBet=false
           vm.threadPoxi()
         }
 
-//        console.log(vm.messageValue)
+
       },
       onCancel(){
         const vm = this
@@ -446,9 +443,7 @@ vm.isCanBet=false
         const vm = this
         const agentData = vm.messageValue;
         vm.messageValue = null
-//       vm.mySendMessage.push(agentData)
-//        console.log(vm.mySendMessage)
-//        vm.websocketsend(agentData)
+
         //若是ws开启状态
         if (vm.websock.readyState == 1) {
           vm.websocketsend(agentData)
@@ -476,7 +471,7 @@ vm.isCanBet=false
               'sendernickname': vm.userData.username,
               "fristSend": true
             }
-//    console.log(JSON.stringify(sendData))
+
             vm.websock.send(JSON.stringify(sendData));
             console.log('发的消息', JSON.stringify(sendData))
             vm.mySendMessage.push(sendData)
@@ -504,7 +499,7 @@ vm.isCanBet=false
         if (pullData.chatType != '9') {
           vm.redata = JSON.parse(pullData.msgContent);
 
-//          console.log(vm.redata)
+
 
           vm.mySendMessage.push(vm.redata)
         } else {
@@ -550,9 +545,9 @@ if( vm.redata.status=='2'){
           'mySendTime': curTime,
           'sendernickname': vm.userData.username
         }
-//        console.log(JSON.stringify(sendData))
+
         vm.websock.send(JSON.stringify(sendData));
-//          console.log('发的消息',JSON.stringify(sendData))
+
         vm.mySendMessage.push(sendData)
       },
       websocketclose(e){  //关闭
@@ -609,7 +604,7 @@ if( vm.redata.status=='2'){
               vm.secondsTime = JSON.parse(JSON.stringify(vm.gameIssue)).duration
               vm._timer = setInterval(function () {
                 vm.secondsTime = vm.secondsTime  - 1
-//                console.log( vm.secondsTime)
+
                 if( vm.secondsTime ==30){
                   vm.redata = {
                     content: "系统消息",
@@ -632,7 +627,7 @@ if( vm.redata.status=='2'){
                   clearInterval(vm._timer);
                 }
               }, 1000)
-console.log('1',response.data.resultInfo)
+
 
             } else {
               vm.$toast('获取开奖历史失败');
@@ -652,7 +647,7 @@ console.log('1',response.data.resultInfo)
           .then(response => {
             if (response.status == 200 && response.data) {
               vm.gameOdd= response.data.resultInfo
-console.log('1',response)
+
             } else {
               vm.$toast('获取赔率失败');
             }
@@ -729,7 +724,6 @@ cancleBet(e,id){
     gameBetId:id,
   }
 
-  console.log(params)
   vm.$axios.get(`/user/bet/userBetCancel`, {params})
     .then(response => {
       if (response.status == 200 && response.data) {
@@ -775,7 +769,6 @@ cancleBet(e,id){
         vm.$axios.get(`/user/bet/userBetList`, {params})
           .then(response => {
             if (response.status == 200 && response.data) {
-              console.log('lishi',response)
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
                   message: response.data.resultInfo
@@ -791,7 +784,6 @@ cancleBet(e,id){
               }else{
                   if(response.data.statusCode==1){
                     vm.userBetList=response.data.resultInfo
-                    console.log(vm.userBetList)
                   }
 
               }

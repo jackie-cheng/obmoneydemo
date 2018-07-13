@@ -204,8 +204,7 @@ return parseInt(Number(num))
 
         }
 
-        console.log(params)
-//        let params = Object.assign(obj, objtwo);
+
         vm.$axios.get(`/user/bet/userBet`, {params})
           .then(response => {
             if (response.status == 200 && response.data) {
