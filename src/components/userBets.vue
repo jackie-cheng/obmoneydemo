@@ -4,7 +4,7 @@
       <div class="touzhu_action">
         <div class="touzhu_lift">
           <span :class="{active_touzhu:touzhuType==1}" @click="touzhuType=1"> <em>特<br/>码</em> </span>
-          <span :class="{active_touzhu:touzhuType==2}" @click="touzhuType=2"> <em>定 <br/> 位 <br/>球</em> </span>
+          <span :class="{active_touzhu:touzhuType==2}" @click="touzhuType=2"> <em>定<br/>位<br/>球</em> </span>
         </div>
         <div class="touzhu_right" v-if="touzhuType==1">
           <van-row gutter="0">
@@ -47,15 +47,21 @@
         <div class="touzhu_right" v-if="touzhuType==2">
           <img src="../assets/firstball.png" alt="">
           <ul class="willy_touzhu_right_ui">
-            <li v-for="n in 20" :class="{curChosBall_class:curChosBallOne== n}" @click='curChosBallOne= n'><p
-              class="foz_bol"> {{n}}</p>
-              <p> {{n}}</p></li>
+            <li v-for="n in LocationOneBall" :class="{curChosBall_class:curChosBallOne== n}" @click='curChosBallOne= n'><p
+              class="foz_bol"> {{n.num}}</p>
+              <p> {{n.point}}</p></li>
           </ul>
           <img src="../assets/secball.png" alt="">
           <ul class="willy_touzhu_right_ui">
-            <li v-for="n in 20" :class="{curChosBall_class:curChosBallTwo== n}" @click='curChosBallTwo= n'><p
-              class="foz_bol"> {{n}}</p>
-              <p> {{n}}</p></li>
+            <li v-for="n in LocationTwoBall" :class="{curChosBall_class:curChosBallTwo== n}" @click='curChosBallTwo= n'><p
+              class="foz_bol"> {{n.num}}</p>
+              <p> {{n.point}}</p></li>
+          </ul>
+          <img src="../assets/threeball.png" alt="">
+          <ul class="willy_touzhu_right_ui">
+            <li v-for="n in LocationThreeBall" :class="{curChosBall_class:curChosBallTwo== n}" @click='curChosBallTwo= n'><p
+              class="foz_bol"> {{n.num}}</p>
+              <p> {{n.point}}</p></li>
           </ul>
         </div>
       </div>
@@ -108,14 +114,198 @@
         redBall: [1, 2, 7, 8, 12, 13, 18, 19, 23, 24],
         blueBall: [3, 4, 9, 10, 14, 15, 20, 25, 26],
         greenBall: [5, 6, 11, 16, 17, 21, 22, 27],
+        LocationOneBall: [
+          {
+            num: '0',
+            point: '9.65'
+          },
+          {
+            num: '1',
+            point: '9.65'
+          },
+          {
+            num: '2',
+            point: '9.65'
+          },
+          {
+            num: '3',
+            point: '9.65'
+          },
+          {
+            num: '4',
+            point: '9.65'
+          },
+          {
+            num: '5',
+            point: '9.65'
+          },
+          {
+            num: '6',
+            point: '9.65'
+          },
+          {
+            num: '7',
+            point: '9.65'
+          },
+          {
+            num: '8',
+            point: '9.65'
+          },
+          {
+            num: '9',
+            point: '9.65'
+          },
+          {
+            num: '大',
+            point: '1.97'
+          },
+          {
+            num: '小',
+            point: '1.97'
+          },
+          {
+            num: '单',
+            point: '1.97'
+          },
+          {
+            num: '双',
+            point: '1.97'
+          },
+          {
+            num: '龙',
+            point: '1.97'
+          }
+        ],
+        LocationTwoBall: [
+          {
+            num: '0',
+            point: '9.65'
+          },
+          {
+            num: '1',
+            point: '9.65'
+          },
+          {
+            num: '2',
+            point: '9.65'
+          },
+          {
+            num: '3',
+            point: '9.65'
+          },
+          {
+            num: '4',
+            point: '9.65'
+          },
+          {
+            num: '5',
+            point: '9.65'
+          },
+          {
+            num: '6',
+            point: '9.65'
+          },
+          {
+            num: '7',
+            point: '9.65'
+          },
+          {
+            num: '8',
+            point: '9.65'
+          },
+          {
+            num: '9',
+            point: '9.65'
+          },
+          {
+            num: '大',
+            point: '1.97'
+          },
+          {
+            num: '小',
+            point: '1.97'
+          },
+          {
+            num: '单',
+            point: '1.97'
+          },
+          {
+            num: '双',
+            point: '1.97'
+          },
+          {
+            num: '和',
+            point: '9.5'
+          }
+        ],
+        LocationThreeBall: [
+          {
+            num: '0',
+            point: '9.65'
+          },
+          {
+            num: '1',
+            point: '9.65'
+          },
+          {
+            num: '2',
+            point: '9.65'
+          },
+          {
+            num: '3',
+            point: '9.65'
+          },
+          {
+            num: '4',
+            point: '9.65'
+          },
+          {
+            num: '5',
+            point: '9.65'
+          },
+          {
+            num: '6',
+            point: '9.65'
+          },
+          {
+            num: '7',
+            point: '9.65'
+          },
+          {
+            num: '8',
+            point: '9.65'
+          },
+          {
+            num: '9',
+            point: '9.65'
+          },
+          {
+            num: '大',
+            point: '1.97'
+          },
+          {
+            num: '小',
+            point: '1.97'
+          },
+          {
+            num: '单',
+            point: '1.97'
+          },
+          {
+            num: '双',
+            point: '1.97'
+          },
+          {
+            num: '虎',
+            point: '2.05'
+          }
+        ],
         selectBall: [],
         curChosBallOne: 1,//当前选中球1
         curChosBallTwo: 1,//当前选中球2
         touzhuType: 1,
         touzhuNum: null,
-        point: '', //下注倍数
-
-
+        point: '' //下注倍数
       }
     },
 props:['gameid','gameQi','gameOdd'],

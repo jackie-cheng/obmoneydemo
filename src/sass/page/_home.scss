@@ -582,8 +582,9 @@ margin-right: 0.3rem;
       z-index: 100000;
       line-height: 1.1rem;
       width: 100%;
-      background-color: #ff4444;
+      background: linear-gradient(to right, #ff665f ,#ff4444)!important;
       color: white;
+      font-weight: bold;
       -webkit-overflow-scrolling: touch;   /*这句是为了滑动更顺畅*/
       i{
         color: white;
@@ -709,7 +710,7 @@ margin-right: 0.3rem;
     width: 10%;
     @extend %display;
     .active_touzhu{
-      background-color: #587cbe;
+      background-color: #ff4444;
       color: white;
     }
     span{
@@ -729,6 +730,8 @@ margin-right: 0.3rem;
         position: absolute;
         top:50%;
         transform: translateY(-50%);
+        font-weight: bold;
+        font-size: .4rem;
       }
     }
   }
@@ -738,6 +741,8 @@ margin-right: 0.3rem;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     width: 90%;
+    padding: .1rem 0 0 0;
+    box-sizing: border-box;
     // @extend %display;
 .van-row{
   display: flex;
@@ -769,12 +774,13 @@ margin-right: 0.3rem;
     flex-direction: column;
     margin:0 .3rem .3rem 0;
   background: #fff;
-  border-radius: 50%;
+  border-radius: 44px;
   }
 }
     img{
 width: 3.2rem;
       height: 0.89rem;
+      margin: 0 0 0 .2rem;
     }
     .willy_touzhu_right_ui{
       display: flex;
@@ -802,7 +808,7 @@ width: 3.2rem;
         }
         .foz_bol{
           color: #000;
-          font-weight: bold;
+          // font-weight: bold;
           font-size: .4rem;
         }
       }
@@ -828,7 +834,7 @@ width: 3.2rem;
           color: #999;
         }
         .foz_bol{
-  font-weight: bold;
+  // font-weight: bold;
           font-size: 14px;
           color: #000;
         }
@@ -848,19 +854,19 @@ width: 3.2rem;
       border: 1px solid #bedaff;
       box-shadow: 0 2px 2px #bcd9ff;
       .daDan_color{
-        color: #ff4444;
+        color: #ff4444 !important;
       }
       .xiaoShuang_color{
-        color: #30549a;
+        color: #30549a !important;
       }
       .greenBo_color{
-        color: #02ad3f;
+        color: #02ad3f !important;
       }
       p{
         color: #999;
       }
       .foz_bol{
-        font-weight: bold;
+        // font-weight: bold;
         color: #000;
         font-size: 14px;
       }
@@ -891,7 +897,7 @@ width: 3.2rem;
         color: #999;
       }
       .foz_bol{
-          font-weight: bold;
+          // font-weight: bold;
           font-size: .4rem !important;
           line-height: .9;
       }
