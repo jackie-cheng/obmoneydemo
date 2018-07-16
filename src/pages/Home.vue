@@ -150,7 +150,7 @@
     },
     created() {
       const vm = this
-
+vm.obAllData()
       vm.obHomeData()
       if (!localStorage.getItem('userInfo')) {
         vm.nullLogin = true
@@ -194,6 +194,23 @@ vm.obMoney()
       document.querySelector('body').removeEventListener('click', this.handleBodyClick);
     },
     methods: {
+        //获取首页数据
+      obAllData(){
+          const vm = this
+        vm.$axios.get(`/api/OperationalSetController/queryOperationalSetInfo`)
+          .then(response => {
+//            toast1.clear();
+            console.log(response)
+            if (response.status == 200 && response.data) {
+//              vm.roomList = response.data.resultInfo
+
+            } else {
+              vm.$toast('获取房间信息失败');
+            }
+          }).catch(response => {
+        })
+      },
+
       //获取余额
       obMoney(){
         const vm = this

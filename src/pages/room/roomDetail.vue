@@ -431,6 +431,9 @@ vm.isCanBet=false
         } else if (vm.roomData.guessFlag != '1') {
           vm.$toast('当前房间聊天已关闭');
           return
+        }else if(!vm.$_.isEmpty(vm.userData)&&vm.userData.chatstatus=='1'){
+          vm.$toast('该账号已被禁言');
+          return
         }
         else {
           vm.threadPoxi()
@@ -544,11 +547,16 @@ if( vm.redata.status=='2'){
         const vm = this
         let curTime = vm.getNowFormatDate()
 
+        const s = "fuck";
+        let reg = new RegExp("(" + s + ")", "g");
+        let str = agentData;
+        let newstr = str.replace(reg, "**");
+
         let sendData = {
           "roomNumber": vm.$route.params.id,
           "uuid": vm.userData.uuid,
           "senderPhone": vm.userData.phone,
-          "message": agentData,
+          "message": newstr,
           'mySendTime': curTime,
           'sendernickname': vm.userData.username
         }
