@@ -88,8 +88,8 @@
             <input class="willy_botInput" type="number" v-model="touzhuNum" placeholder="单注金额" pattern="[0-9]*">
             <span class="touzhu_total">总计：￥{{totalAmount}}</span>
             <van-button size="small" class="touzhu_null" @click="selectBall=[],touzhuNum=''">清空</van-button>
-            <van-button size="small" class="touzhu_ok" @click="sureBet" v-if="!$_.isEmpty(touzhuNum)">确认</van-button>
-            <van-button size="small" class="touzhu_ok" @click="$toast('请输入投注倍数')" v-else style="opacity: 0.5">确认</van-button>
+            <van-button size="small" class="touzhu_ok" @click="sureBet" v-if="!$_.isEmpty(touzhuNum)&&selectBall.length>0">确认</van-button>
+            <van-button size="small" class="touzhu_ok" @click="$toast('倍数和球型必选')" v-else style="opacity: 0.5">确认</van-button>
           </div>
         </div>
 
@@ -114,25 +114,7 @@
         touzhuType: 1,
         touzhuNum: null,
         point: '', //下注倍数
-//        totalAmount:0,//下注总额
-//        specialBall:[],
 
-//        da: -1,
-//        xiao: -1,
-//        dan: -1,
-//        shuang: -1,
-//        dadan: -1,
-//        dashuang: -1,
-//        xiaodan: -1,
-//        xiaoshuang: -1,
-//        jida: -1,
-//        jixiao: -1,
-//        hongbo: -1,
-//        lanbo: -1,
-//        lvbo: -1,
-//        baozi: -1,
-//        shunzi: -1,
-//        duizi: -1,
 
       }
     },

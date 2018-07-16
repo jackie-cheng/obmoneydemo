@@ -85,6 +85,7 @@
 
         <li :class="{right_wechat:mess.sendernickname==userName,lift_wechat:mess.sendernickname!=userName}"
             v-for="mess in mySendMessage">
+          <!--别人发的消息--lift-->
           <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&!mess.fristSend&&!mess.betsSend">
 
             <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem">
@@ -99,7 +100,7 @@
             <span>{{mess.message}}</span>
 
           </template>
-
+<!--用户收到的别人的投注信息-->
           <template v-if="mess.sendernickname&&mess.sendernickname!=userName&&mess.betsSend">
             <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
@@ -149,7 +150,7 @@
               <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>开始下注，感谢您的支持，祝您好运</p>
             </div>
           </template>
-
+<!--用户进入房间个人等级消息-->
           <template v-if="mess.fristSend">
             <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
@@ -177,6 +178,8 @@
             </a>
             <span>{{mess.message}}</span>
           </template>
+
+          <!--用户投注信息-->
           <template v-if="mess.sendernickname&&mess.sendernickname==userName&&mess.betsSend">
             <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 55%;padding: 0.1rem 0.3rem" >
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
@@ -244,7 +247,8 @@
             <td width="20%" v-if="(bet.betStr).indexOf('tema')!=-1">特码 - {{bet.betStr.substr(4,bet.betStr.length)}}</td>
             <!--如果为充值，则颜色添加红色，添加样式pay_money-->
             <td width="30%" class="pay_money">{{bet.totleAmt}}</td>
-            <td width="20%" class="recallMenu_but" @click="cancleBet(bet.gameId,bet.id)" v-if="bet.gameId==gameIssue.id"><span>撤单</span></td>
+            <td width="20%" class="recallMenu_but" @click="cancleBet(bet.gameId,bet.id)" v-if="bet.gameId==gameIssue.id&&isCanBet&&bet.delFlag==0"><span>撤单</span></td>
+            <td width="20%" class="recallMenu_but"  v-if="bet.delFlag==1"><span>已撤单</span></td>
           </tr>
         </table>
 
@@ -287,7 +291,7 @@
         ballType:{
           'da':'大',
           'dadan':'大单',
-          'dan':'大',
+          'dan':'单',
           'xiaodan':'小单',
           'jida':'极大',
           'xiao':'小',
