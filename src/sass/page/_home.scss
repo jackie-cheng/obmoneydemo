@@ -399,12 +399,8 @@ top:46px;
     }
   }
   .right_wechat{
-    //height: 1.5rem;
     width: 100%;
-
     margin-bottom: 0.4rem;
-    //line-height: 1.5rem;
-    //background-color: white;
     .touxiangImg{
       width: 1rem;
       height: 1rem;
@@ -649,6 +645,7 @@ margin-right: 0.3rem;
     .willy_botInput {
       width: 0;
       flex: 2 !important;
+      font-size: .4rem;
     }
   }
   input{
@@ -676,7 +673,7 @@ margin-right: 0.3rem;
     margin:0 0.2rem;
     flex: 2;
   color:white ;
-  font-size: .3rem !important;
+  font-size: .4rem !important;
 }
   .touzhu_null{
     margin:0 0.2rem;
@@ -742,9 +739,9 @@ margin-right: 0.3rem;
     // @extend %display;
 .van-row{
   display: flex;
-  justify-content: space-around;
   padding: .2rem .2rem 0 0;
   box-sizing: border-box;
+  width: 100%;
   .van-col{
     width: auto;
     // background: #fff;
@@ -757,18 +754,18 @@ margin-right: 0.3rem;
 }
 .willy_userBets_ui{
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  padding: .2rem;
+  padding: .2rem 0 .2rem .2rem;
   box-sizing: border-box;
+  width: 102%;
   & > li{
-    width: 1rem;
-    height: 1rem;
+    width: 13.2%;
+    height: 1.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: .1rem;
+    margin:0 .3rem .3rem 0;
   background: #fff;
   border-radius: 50%;
   }
@@ -779,9 +776,8 @@ width: 3.2rem;
     }
     .willy_touzhu_right_ui{
       display: flex;
-      justify-content: space-between;
       flex-wrap: wrap;
-      padding:0.09rem .1rem;
+      padding:0.09rem 0 .09rem .25rem;
       box-sizing: border-box;
       .curChosBall_class{
         background-color: #f2dd41 !important;
@@ -795,7 +791,7 @@ width: 3.2rem;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        margin: .1rem;
+        margin:0 .25rem .2rem 0;
         border-radius: 4px;
         padding: .1rem 0;
         p{
@@ -872,7 +868,7 @@ width: 3.2rem;
       @extend %display;
       // width: 1.1rem;
       // height: 1.1rem;
-      border-radius: 50%;
+      // border-radius: 50%;
       //line-height: 0.6rem;
       //background-color: white;
       // margin: 0.1rem;
@@ -997,6 +993,8 @@ display: inherit;
   border-radius: 3px !important;
   width: 98% !important;
   background: none !important;
+  display: flex;
+  justify-content: center;
   & > span {
     width: auto;
     max-width: 98%;

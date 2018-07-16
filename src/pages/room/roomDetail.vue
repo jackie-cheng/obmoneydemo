@@ -131,28 +131,34 @@
 
             <div class="willy_xiaoxi" v-if="mess.status=='1'">
               <p style="color:  #ff4444;font-size: 0.35rem">封盘消息</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>本地投注结束，稍后将开启下期投注</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>本期结束投注,稍后将开启下期投注!</p>
              </div>
             <div class="willy_xiaoxi" v-if="mess.status=='2'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em> 开奖号码：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em> ]开奖结果：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}
+              <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
+            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
+
+            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('dan')!=-1">单</i>
+            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i></span>
+              </p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='-1'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em> 开奖失败</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em> 开奖失败</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='3'">
               <p>系统消息</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>距离封盘还有{{mess.time}}秒</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>距离封盘还有{{mess.time}}秒！</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='4'">
               <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>开始下注，感谢您的支持，祝您好运</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>开始下注!感谢您的支持捧场,祝君好运</p>
             </div>
           </template>
 <!--用户进入房间个人等级消息-->
           <template v-if="mess.fristSend">
-            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
+            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%;padding: 0.1rem 0.3rem;">
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p class="willy_on" style="text-align: center;margin: 0.2rem auto;width: 50%">
               <span class="willy_on_span">
