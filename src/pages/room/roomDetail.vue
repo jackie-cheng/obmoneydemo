@@ -260,6 +260,8 @@
 
       </div>
     </van-actionsheet>
+    <!-- 下注 -->
+    <!-- <div class="orderButton"><img src="../../assets/orderButton.png" alt=""></div> -->
   </div>
 </template>
 <script>
