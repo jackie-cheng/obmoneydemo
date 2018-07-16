@@ -69,19 +69,10 @@
 
         <div class="foot_but">
           <ul>
-            <li :class="{active_monbut:touzhuNum=='10'}" @click="touzhuNum='10'">
-              10
-            </li>
-            <li :class="{active_monbut:touzhuNum=='50'}" @click="touzhuNum='50'">
-              50
-            </li>
-            <li :class="{active_monbut:touzhuNum=='100'}" @click="touzhuNum='100'">
-              100
-            </li>
-            <li :class="{active_monbut:touzhuNum=='1000'}" @click="touzhuNum='1000'">
-              1000
-            </li>
 
+            <li :class="{active_monbut:index==active}" @click="touzhuNum+=num,active=index" v-for="(num,index) in touzhuButList.slice(0,4)">
+              <span v-if="num==50000">5W</span> <span v-if="num==10000">1W</span> <span v-if="num!=10000&&num!=50000">{{num}}</span>
+            </li>
           </ul>
           <!--<van-stepper-->
           <!--v-model="touzhuNum"-->
@@ -91,10 +82,10 @@
           <!--:step="1000"-->
           <!--/>-->
           <div class="willy_botBox">
-            <input class="willy_botInput" type="number" v-model="touzhuNum" placeholder="单注金额" pattern="[0-9]*">
+            <input class="willy_botInput" type="number" v-model="touzhuNum" placeholder="单注倍数" pattern="[0-9]*">
             <span class="touzhu_total">总计：￥{{totalAmount}}</span>
-            <van-button size="small" class="touzhu_null" @click="selectBall=[],touzhuNum=''">清空</van-button>
-            <van-button size="small" class="touzhu_ok" @click="sureBet" v-if="!$_.isEmpty(touzhuNum)&&selectBall.length>0">确认</van-button>
+            <van-button size="small" class="touzhu_null" @click="selectBall=[],touzhuNum=null,active=-1">清空</van-button>
+            <van-button size="small" class="touzhu_ok" @click="sureBet" v-if="touzhuNum>0&&selectBall.length>0&&touzhuNum!=null">确认</van-button>
             <van-button size="small" class="touzhu_ok" @click="$toast('倍数和球型必选')" v-else style="opacity: 0.5">确认</van-button>
           </div>
         </div>
@@ -111,6 +102,8 @@
     name: 'userBets',
     data(){
       return {
+          active:0,
+        touzhuButList:[1,5,10,50,100,500,1000,5000,10000,50000],
         redBall: [1, 2, 7, 8, 12, 13, 18, 19, 23, 24],
         blueBall: [3, 4, 9, 10, 14, 15, 20, 25, 26],
         greenBall: [5, 6, 11, 16, 17, 21, 22, 27],
@@ -305,6 +298,7 @@
         curChosBallTwo: 1,//当前选中球2
         touzhuType: 1,
         touzhuNum: null,
+        touzhuBut:null,//当前选择按钮
         point: '' //下注倍数
       }
     },
@@ -312,7 +306,7 @@ props:['gameid','gameQi','gameOdd'],
 computed:{
   totalAmount(){
       const vm = this
-if(!vm.$_.isEmpty(vm.touzhuNum)){
+if(vm.touzhuNum>0){
     return (vm.selectBall.length)*Number(vm.touzhuNum)
 }else{
     return 0
@@ -323,10 +317,13 @@ mounted(){
   const vm = this
 
   vm.$watch('touzhuNum', function () {
+
       if(vm.touzhuNum!=null){
-        vm.touzhuNum=vm.touzhuNum.slice(0,10)
-        vm.touzhuNum=vm.touzhuNum.replace(/\./g,'')
-        vm.touzhuNum=vm.touzhuNum.replace(/-/g,'')
+        vm.touzhuNum=Number(vm.touzhuNum)
+        if(vm.touzhuNum>1000000){
+          vm.touzhuNum=1000000
+          vm.$toast('最大输入一百万');
+        }
       }
 
   }, {deep: true})
@@ -371,6 +368,7 @@ return parseInt(Number(num))
             gameId:vm.gameid,
             gameUserId: vm.userData.uuid,
          gameQi:vm.gameQi,
+            ballOdd:vm.getPercent(vm.gameOdd[arr.toString()]),
             point:Number(vm.touzhuNum),
             totleAmt :Number(vm.totalAmount),
             betStr:arr.toString()
@@ -394,6 +392,8 @@ return parseInt(Number(num))
                 });
               }else if(response.data.statusCode==-200){
                 vm.$toast('下注失败，当前期数已停止下注');
+              }else if(response.data.statusCode==-1){
+                vm.$toast(response.data.resultInfo);
               }else{
                 vm.$toast('下注成功');
                 vm.selectBall=[]
