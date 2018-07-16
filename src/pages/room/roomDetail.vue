@@ -79,7 +79,7 @@
 
     <yd-pullrefresh :callback="loadList" ref="pullrefreshDemo" class='room_wechatul'>
 
-      <ul style="margin-bottom: 90px;min-height: 400px">
+      <ul style="min-height: 400px">
         <p style="width: 100%;text-align: center;color: #00A3CF;margin-bottom: 0.3rem" @click="loadList">
           下拉或点击可查看聊天记录</p>
 
@@ -131,28 +131,34 @@
 
             <div class="willy_xiaoxi" v-if="mess.status=='1'">
               <p style="color:  #ff4444;font-size: 0.35rem">封盘消息</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>本地投注结束，稍后将开启下期投注</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>本期结束投注,稍后将开启下期投注!</p>
              </div>
             <div class="willy_xiaoxi" v-if="mess.status=='2'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em> 开奖号码：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em> ]开奖结果：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}
+              <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
+            <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
+
+            <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('dan')!=-1">单</i>
+            <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i></span>
+              </p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='-1'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em> 开奖失败</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em> 开奖失败</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='3'">
               <p>系统消息</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>距离封盘还有{{mess.time}}秒</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>距离封盘还有{{mess.time}}秒！</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='4'">
               <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
-              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>开始下注，感谢您的支持，祝您好运</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>开始下注!感谢您的支持捧场,祝君好运</p>
             </div>
           </template>
 <!--用户进入房间个人等级消息-->
           <template v-if="mess.fristSend">
-            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%">
+            <p class="willy_time" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%;padding: 0.1rem 0.3rem;">
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p class="willy_on" style="text-align: center;margin: 0.2rem auto;width: 50%">
               <span class="willy_on_span">
@@ -191,8 +197,8 @@
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
 
-              <div class="betChat_class">
-<div style="background-color:#ff7f00 ">
+              <div class="betChat_class willy_betChat">
+<div class="willy_betChat_div" style="background-color:#ff7f00 ">
 {{JSON.parse(mess.message).gameQi}}期  <em>总计￥{{JSON.parse(mess.message).totleAmt}}</em>
 </div>
                 <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
@@ -247,13 +253,15 @@
             <td width="20%" v-if="(bet.betStr).indexOf('tema')!=-1">特码 - {{bet.betStr.substr(4,bet.betStr.length)}}</td>
             <!--如果为充值，则颜色添加红色，添加样式pay_money-->
             <td width="30%" class="pay_money">{{bet.totleAmt}}</td>
-            <td width="20%" class="recallMenu_but" @click="cancleBet(bet.gameId,bet.id)" v-if="bet.gameId==gameIssue.id&&isCanBet&&bet.delFlag==0"><span>撤单</span></td>
+            <td width="20%" class="recallMenu_but" @click="cancleBet(bet.gameId,bet.id)" ><span v-if="bet.gameId==gameIssue.id&&isCanBet&&bet.delFlag==0">撤单</span></td>
             <td width="20%" class="recallMenu_but"  v-if="bet.delFlag==1"><span>已撤单</span></td>
           </tr>
         </table>
 
       </div>
     </van-actionsheet>
+    <!-- 下注 -->
+    <!-- <div class="orderButton"><img src="../../assets/orderButton.png" alt=""></div> -->
   </div>
 </template>
 <script>
@@ -845,10 +853,14 @@ cancleBet(e,id){
       const vm = this
 
       vm.$watch('mySendMessage', () => {
-        let content = document.getElementsByClassName('room_wechatul')[0];
-//        console.log('scrollHeight',content.scrollHeight)
-//        console.log('scrollTop',content.scrollTop)
-        content.scrollTop = content.scrollHeight + 90
+          setTimeout(function () {
+            let content = document.getElementsByClassName('room_wechatul')[0];
+            content.scrollTop = content.scrollHeight + 90
+          }, 100);
+//         let content = document.getElementsByClassName('room_wechatul')[0];
+// //        console.log('scrollHeight',content.scrollHeight)
+// //        console.log('scrollTop',content.scrollTop)
+//         content.scrollTop = content.scrollHeight + 90
 
       }, {deep: true})
 //      vm.$watch('gameIssue', () => {
