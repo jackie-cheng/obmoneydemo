@@ -2,7 +2,7 @@
 .ob_header_select {
   @extend %relative;
   border: none;
-  background-color: #ff4444;
+  background-color: #e1171b;
   .van-icon {
     transform: rotate(90deg);
   }
@@ -155,7 +155,7 @@
   }
 }
 .daDan_color{
-  color: #ff4444;
+  color: #e1171b;
 }
 .xiaoShuang_color{
   color: #30549a;
@@ -196,6 +196,7 @@ top:46px;
     background-color: white;
     padding: 0.2rem 0.4rem;
     display: flex;
+    justify-content: space-between;
 .room_topData_lift{
   @extend %display;
  width: 49%;
@@ -204,14 +205,14 @@ top:46px;
   flex-direction: column;
   align-items: center;
   em{
-    color: #ff4444;
+    color: #e1171b;
     font-weight:bold
   }
   p{
     @extend %display;
     margin-top: 0.15rem;
     margin-bottom: 0.15rem;
-    width: 80%;
+    width: 98%;
     padding:0.1rem;
     background-color: #e2e3e3;
     border-radius: .1rem;
@@ -232,7 +233,7 @@ top:46px;
       display: inline-block;
       height: 1rem;
       line-height: 1rem;
-      background-color:#ff4444;
+      background-color:#e1171b;
       color: white;
       width: 100%;
       text-align: center;
@@ -240,12 +241,12 @@ top:46px;
       font-size: .35rem;
           }
     ul li{
-      //padding-left: 0.3rem;
       font-size: 0.34rem;
-      margin-top: 0.36rem;
+      height: .9rem;
+      line-height: .9rem;
     }
     em{
-      color: #ff4444;
+      color: #e1171b;
       font-weight:bold
     }
 
@@ -268,11 +269,11 @@ top:46px;
       border-radius: 100%;
     }
     .num_color{
-      color: #ff4444;
+      color: #e1171b;
       @extend %display;
       width:0.48rem;
       @include height(true, 0.48rem,0.48rem);
-      border: 1px solid #ff4444;
+      border: 1px solid #e1171b;
       @extend %textAlign;
       border-radius: 100%;
     }
@@ -281,7 +282,7 @@ top:46px;
       @extend %display;
       width:0.48rem;
       @include height(true, 0.48rem,0.48rem);
-      background-color:#ff4444 ;
+      background-color:#e1171b ;
       @extend %textAlign;
       border-radius: 100%;
     }
@@ -443,7 +444,8 @@ top:46px;
       //height: 1rem;
       //line-height: 1rem;
       padding: 0.3rem 0.3rem;
-      background-color: #9eea6a;
+      background-color: #e1171b;
+      // background-color: #9eea6a;
       border-radius: 0.2rem;
       //&:before{
       //  position: absolute;
@@ -505,13 +507,16 @@ top:46px;
   margin:0 0.1rem;
   line-height: .9rem;
   flex: 1;
+  & > span {
+    font-weight: bold;
+  }
   .van-button--normal{
 
   }
 }
   .send_button{
-    border-color: #ff4444;
-    color: #ff4444;
+    border-color: #e1171b;
+    color: #e1171b;
     // position: absolute;
     // right: 0.2rem;
     // bottom: 0.2rem;
@@ -582,7 +587,8 @@ margin-right: 0.3rem;
       z-index: 100000;
       line-height: 1.1rem;
       width: 100%;
-      background: linear-gradient(to right, #ff665f ,#ff4444)!important;
+      background: #e1171b !important;
+      // background: linear-gradient(to right, #ff665f ,#e1171b)!important;
       color: white;
       font-weight: bold;
       -webkit-overflow-scrolling: touch;   /*这句是为了滑动更顺畅*/
@@ -710,7 +716,7 @@ margin-right: 0.3rem;
     width: 10%;
     @extend %display;
     .active_touzhu{
-      background-color: #ff4444;
+      background-color: #5b70a2;
       color: white;
     }
     span{
@@ -854,7 +860,7 @@ width: 3.2rem;
       border: 1px solid #bedaff;
       box-shadow: 0 2px 2px #bcd9ff;
       .daDan_color{
-        color: #ff4444 !important;
+        color: #e1171b !important;
       }
       .xiaoShuang_color{
         color: #30549a !important;
@@ -885,7 +891,7 @@ width: 3.2rem;
         border: 1px solid #bedaff;
         box-shadow: 0 2px 2px #bcd9ff;
       .daDan_color{
-        color: #ff4444;
+        color: #e1171b;
       }
       .xiaoShuang_color{
         color: #30549a;
@@ -1015,8 +1021,10 @@ display: inherit;
 .willy_betChat{
   width: 70% !important;
   .willy_betChat_div{
-    background: linear-gradient(to right, rgb(255, 206, 35), rgb(255, 146, 0))!important;
+    // background: linear-gradient(to right, rgb(255, 206, 35), rgb(255, 146, 0))!important;
+    background: #e1171b !important;
     padding: .2rem !important;
+    border-radius: 7px 7px 0 0;
   }
   & > p {
     padding: .2rem !important;
@@ -1045,6 +1053,7 @@ display: inherit;
     background-color: #dfdfdf !important;
     max-width: 100% !important;
     border-radius: 1.3rem !important;
+    font-size: .3rem;
   }
 }
 .willy_xiaoxi{
@@ -1055,13 +1064,19 @@ display: inherit;
   padding: 0.1rem 0.3rem;
   border-radius: 3px;
   & > p{
+    font-weight: bold;
+    font-size: .3rem;
+    & > em {
+      font-weight: bold;
+    }
     &:nth-child(1) {
       padding: 0 0 3px 0;
       font-size: 0.4rem !important;
     }
     &:nth-child(2) {
-      text-align: left;
+      text-align: center;
       padding:0 0 .2rem 0;
+      color: #000;
     }
   }
 }
@@ -1078,5 +1093,31 @@ display: inherit;
     box-sizing: border-box;
     vertical-align: middle;
     border: 0
+  }
+}
+.willy_ltulli{
+  li{
+    padding: 0 .2rem;
+    & > span {
+      color: #fff;
+    }
+    & > p{
+      &:nth-child(2) {
+        color: #000 !important;
+        font-size: .4rem;
+      }
+    }
+  }
+}
+.willy_kaijiang{
+  padding: .2rem 0;
+  & > li {
+    height: 35px !important; 
+    display: flex;
+    align-items: center;
+    padding: 0 .2rem;
+    &:nth-child(2n) {
+      background:#f5f5f5;
+    }
   }
 }

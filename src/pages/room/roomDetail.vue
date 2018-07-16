@@ -49,7 +49,7 @@
             <i style="color: red;margin-left: 0.5rem">正在开奖</i></span>
           </div>
           <p class="kai_jieguo">开奖结果</p>
-          <ul>
+          <ul class="willy_kaijiang">
             <li v-for="openRecord in gameRecordList.slice(1,10)">
               <template v-if="openRecord.status=='2'">
                 <span class="willy_yuan">
@@ -79,7 +79,7 @@
 
     <yd-pullrefresh :callback="loadList" ref="pullrefreshDemo" class='room_wechatul'>
 
-      <ul style="min-height: 400px">
+      <ul style="min-height: 400px" class="willy_ltulli">
         <p style="width: 100%;text-align: center;color: #00A3CF;margin-bottom: 0.3rem" @click="loadList">
           下拉或点击可查看聊天记录</p>
 
@@ -130,12 +130,12 @@
           <template v-if="!mess.sendernickname">
 
             <div class="willy_xiaoxi" v-if="mess.status=='1'">
-              <p style="color:  #ff4444;font-size: 0.35rem">封盘消息</p>
-              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>本期结束投注,稍后将开启下期投注!</p>
+              <p style="color:  #e1171b;font-size: 0.35rem">封盘消息</p>
+              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em>本期结束投注,稍后将开启下期投注!</p>
              </div>
             <div class="willy_xiaoxi" v-if="mess.status=='2'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em> ]开奖结果：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}
+              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em> ]开奖结果：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}
               <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
             <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
 
@@ -145,15 +145,15 @@
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='-1'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em> 开奖失败</p>
+              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em> 开奖失败</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='3'">
               <p>系统消息</p>
-              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>距离封盘还有{{mess.time}}秒！</p>
+              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em>距离封盘还有{{mess.time}}秒！</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='4'">
               <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
-              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>开始下注！感谢您的支持捧场,祝君好运。</p>
+              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em>开始下注！感谢您的支持捧场，祝君好运。</p>
             </div>
           </template>
 <!--用户进入房间个人等级消息-->
