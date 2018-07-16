@@ -97,7 +97,7 @@
             <a v-else>
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
-            <span>{{mess.message}}</span>
+            <span style="color: black">{{mess.message}}</span>
 
           </template>
 <!--用户收到的别人的投注信息-->
@@ -237,7 +237,7 @@
       </van-button>
     </div>
    <!--下注组件-->
-    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" :gameOdd="gameOdd" v-if="moneyData&&gameOdd&&gameIssue&&!$_.isEmpty(gameIssue)" @betsBall="betsBall"> </userBetsCom>
+    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" :gameOdd="gameOdd" v-if="gameOdd&&gameIssue&&!$_.isEmpty(gameIssue)" @betsBall="betsBall"> </userBetsCom>
     <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac chedan_actionbac">
       <div class="recallMenu_action">
         <table class="ob_pay_record_table">
@@ -280,6 +280,7 @@
     name: 'roomDetail',
     data () {
       return {
+        AllhomeData:null,//关键词
         fengPanIngText:'封盘中',
         userBetList:null,//用户下注历史
         overGameTime:5,
@@ -560,16 +561,30 @@ if( vm.redata.status=='2'){
         const vm = this
         let curTime = vm.getNowFormatDate()
 
-        const s = "fuck";
-        let reg = new RegExp("(" + s + ")", "g");
-        let str = agentData;
-        let newstr = str.replace(reg, "**");
+
+          let roomKeyWords=vm.AllhomeData.roomKeyWordsShielding
+          const roomKeyWordsArr = roomKeyWords.split('|');
+          console.log(roomKeyWordsArr)
+          roomKeyWordsArr.forEach(key=>{
+                        let reg = new RegExp("(" + key + ")", "g");
+            let str = agentData;
+            vm.newstr = str.replace(reg, "**");
+          })
+//          for (x in roomKeyWordsArr)
+//          {
+//            let reg = new RegExp("(" + kew + ")", "g");
+//            let str = agentData;
+//            let newstr = str.replace(reg, "**");
+//          }
+
+
+
 
         let sendData = {
           "roomNumber": vm.$route.params.id,
           "uuid": vm.userData.uuid,
           "senderPhone": vm.userData.phone,
-          "message": newstr,
+          "message": vm.newstr,
           'mySendTime': curTime,
           'sendernickname': vm.userData.username
         }
@@ -617,7 +632,10 @@ if( vm.redata.status=='2'){
           .then(response => {
             if (response.status == 200 && response.data) {
               vm.gameIssue = response.data.resultInfo
-
+if(response.data.statusCode=='-2'){
+  vm.fengPanIngText='维护中'
+  return
+}
               if(vm.gameIssue.duration&&vm.gameIssue.duration>0){
                 vm.redata = {
                   content: "开始下注",
@@ -824,6 +842,22 @@ cancleBet(e,id){
         })
 
       },
+      //获取首页数据
+      obAllData(){
+        const vm = this
+        vm.$axios.get(`/api/OperationalSetController/queryOperationalSetInfo`)
+          .then(response => {
+//            toast1.clear();
+//            console.log(response.data)
+            if (response.status == 200 && response.data) {
+              vm.AllhomeData = response.data
+
+            } else {
+              vm.$toast('获取房间信息失败');
+            }
+          }).catch(response => {
+        })
+      },
       getNowFormatDate() {
         var date = new Date();
         var seperator1 = "-";
@@ -884,6 +918,7 @@ cancleBet(e,id){
     },
     created () {
       const vm = this
+      vm.obAllData()
 //      vm.obChatRecord()
       // 获取房间游戏期次
       vm.obGameIssue()

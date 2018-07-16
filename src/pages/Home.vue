@@ -132,6 +132,7 @@
     name: 'home',
     data() {
       return {
+        AllhomeData:null,
         moneyData:null,
         homeData: null,
         nullLogin: false,
@@ -200,9 +201,9 @@ vm.obMoney()
         vm.$axios.get(`/api/OperationalSetController/queryOperationalSetInfo`)
           .then(response => {
 //            toast1.clear();
-            console.log(response)
+            console.log(response.data)
             if (response.status == 200 && response.data) {
-//              vm.roomList = response.data.resultInfo
+              vm.AllhomeData = response.data
 
             } else {
               vm.$toast('获取房间信息失败');

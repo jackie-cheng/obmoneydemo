@@ -142,18 +142,19 @@
         param.append('phone', vm.phoneNum);//通过append向form对象添加数据
         param.append('photoCode', vm.photoCode);//添加form表单中其他数据
         param.append('key', vm.photoCodeKey);//添加form表单中其他数据
+        param.append('useType', '1');//添加form表单中其他数据
         vm.$axios.post(`/api/Registercontroller/sendMsg`, param)
           .then(response => {
-
+//console.log(response)
             if (response.status == 200) {
-              if (response.data.status.indexOf("success") != -1) {
-                vm.$toast(response.data.message);
+              if (response.data.statusCode == 1) {
+                vm.$toast.success(response.data.resultInfo);
 
 //                console.log('成功')
               } else {
                 vm.disableBut = false
                 clearInterval(vm._timer);
-                vm.$toast(response.data.message);
+                vm.$toast(response.data.resultInfo);
               }
 
             } else {

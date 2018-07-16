@@ -254,6 +254,7 @@
         param.append('phone', vm.ruleForm2.phone);//通过append向form对象添加数据
         param.append('photoCode', vm.ruleForm2.photoCode);//添加form表单中其他数据
         param.append('key', vm.photoCodeKey);//添加form表单中其他数据
+        param.append('useType', '0');//添加form表单中其他数据
         vm.seconds = 60
         vm.disableBut = true
         vm.getTimesec()
@@ -268,14 +269,14 @@
           .then(response => {
 
             if (response.status == 200) {
-              if (response.data.status != 'fail') {
+              if (response.data.statusCode == 1) {
 
-
-                console.log('成功')
+                vm.$toast.success(response.data.resultInfo);
+//                console.log('成功')
               } else {
                 vm.disableBut = false
                 clearInterval(vm._timer);
-                vm.$toast(response.data.message);
+                vm.$toast(response.data.resultInfo);
               }
 
             } else {
