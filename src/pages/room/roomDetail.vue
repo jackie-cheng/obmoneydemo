@@ -140,7 +140,7 @@
             <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
 
             <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('dan')!=-1">单</i>
-            <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i></span>
+            <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i>
               </p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='-1'">
@@ -204,7 +204,7 @@
                 <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
                   <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(4,ball.length)}}</b>
                   <b v-if="ball.indexOf('tema')==-1">{{ballType[ball]}}</b>
-                  <em> <i>￥{{JSON.parse(mess.message).point}}</i> </em>
+                  <em><i>{{JSON.parse(mess.message).ballOdd}}</i>x<i>￥{{JSON.parse(mess.message).point}}</i> </em>
                 </p>
 
             </div>
@@ -237,7 +237,7 @@
       </van-button>
     </div>
    <!--下注组件-->
-    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" :gameOdd="gameOdd" v-if="gameOdd&&gameIssue&&!$_.isEmpty(gameIssue)" @betsBall="betsBall"> </userBetsCom>
+    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" :gameOdd="gameOdd" v-if="moneyData&&gameOdd&&gameIssue&&!$_.isEmpty(gameIssue)" @betsBall="betsBall"> </userBetsCom>
     <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac chedan_actionbac">
       <div class="recallMenu_action">
         <table class="ob_pay_record_table">
