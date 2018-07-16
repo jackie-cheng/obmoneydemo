@@ -36,11 +36,11 @@
             =<i :class="styleBull(Number((gameRecordList[0].note).split('|')[3]))">
               {{Number((gameRecordList[0].note).split("|")[3])}}
             </i>
-            （ <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
+            ( <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
             <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
 
             <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('dan')!=-1">单</i>
-            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i>）</span>
+            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i>)</span>
           </div>
           <div slot="title" v-if="gameRecordList[0].status=='-1'"><span>第 <em>{{gameRecordList[0].issueApi}}</em> 期
             <i style="color: red;margin-left: 0.5rem">开奖异常</i></span>
@@ -59,11 +59,11 @@
                 +<i :class="styleBullThree((openRecord.note).split('|')[2])">{{(openRecord.note).split("|")[2]}}</i>
                   =<i :class="styleBull(Number((openRecord.note).split('|')[3]))">
                   {{Number((openRecord.note).split("|")[3])}}</i>
-                  （<i class="daDan_color" v-if="(openRecord.resultStr).split('|').indexOf('da')!=-1">大</i>
+                  (<i class="daDan_color" v-if="(openRecord.resultStr).split('|').indexOf('da')!=-1">大</i>
             <i class="xiaoShuang_color" v-if="(openRecord.resultStr).split('|').indexOf('xiao')!=-1">小</i>
 
             <i class="daDan_color" v-if="(openRecord.resultStr).split('|').indexOf('dan')!=-1">单</i>
-            <i class="xiaoShuang_color" v-if="(openRecord.resultStr).split('|').indexOf('shuang')!=-1">双</i>）
+            <i class="xiaoShuang_color" v-if="(openRecord.resultStr).split('|').indexOf('shuang')!=-1">双</i>)
                 </span>
               </template>
               <template v-if="openRecord.status=='-1'"> <span>第 <em>{{openRecord.issueApi}}</em> 期</span><i style="color: red;margin-left: 0.5rem">开奖异常</i></template>
@@ -131,23 +131,23 @@
 
             <div class="willy_xiaoxi" v-if="mess.status=='1'">
               <p style="color:  #ff4444;font-size: 0.35rem">封盘消息</p>
-              <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>本地投注结束，稍后将开启下期投注</p>
+              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>本地投注结束，稍后将开启下期投注</p>
              </div>
             <div class="willy_xiaoxi" v-if="mess.status=='2'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">【{{mess.expect}}】期</em> 开奖号码：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}</p>
+              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em> 开奖号码：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='-1'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #ff4444">【{{mess.expect}}】期</em> 开奖失败</p>
+              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em> 开奖失败</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='3'">
               <p>系统消息</p>
-              <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>距离封盘还有{{mess.time}}秒</p>
+              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>距离封盘还有{{mess.time}}秒</p>
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='4'">
               <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
-              <p> <em style="color:  #ff4444">【{{mess.expect}}】期 </em>开始下注，感谢您的支持，祝您好运</p>
+              <p> <em style="color:  #ff4444">[{{mess.expect}}期]</em>开始下注，感谢您的支持，祝您好运</p>
             </div>
           </template>
 <!--用户进入房间个人等级消息-->
