@@ -247,15 +247,20 @@
             <th width="30%">金额</th>
             <th width="20%">操作</th>
           </tr>
-          <tr v-for="bet in userBetList" v-if="userBetList&&!$_.isEmpty(userBetList)">
-            <td width="30%">{{bet.issueApi}}</td>
-            <td width="20%" v-if="(bet.betStr).indexOf('tema')==-1">{{ballType[bet.betStr]}}</td>
-            <td width="20%" v-if="(bet.betStr).indexOf('tema')!=-1">特码 - {{bet.betStr.substr(4,bet.betStr.length)}}</td>
-            <!--如果为充值，则颜色添加红色，添加样式pay_money-->
-            <td width="30%" class="pay_money">{{bet.totleAmt}}</td>
-            <td width="20%" class="recallMenu_but" @click="cancleBet(bet.gameId,bet.id)" ><span v-if="bet.gameId==gameIssue.id&&isCanBet&&bet.delFlag==0">撤单</span></td>
-            <td width="20%" class="recallMenu_but"  v-if="bet.delFlag==1"><span>已撤单</span></td>
+          <template v-for="bet in userBetList" v-if="userBetList&&!$_.isEmpty(userBetList)">
+          <tr  v-if="bet.gameId==gameIssue.id&&isCanBet&&bet.delFlag==0">
+
+              <td width="30%">{{bet.issueApi}}</td>
+              <td width="20%" v-if="(bet.betStr).indexOf('tema')==-1">{{ballType[bet.betStr]}}</td>
+              <td width="20%" v-if="(bet.betStr).indexOf('tema')!=-1">特码 - {{bet.betStr.substr(4,bet.betStr.length)}}</td>
+              <!--如果为充值，则颜色添加红色，添加样式pay_money-->
+              <td width="30%" class="pay_money">{{bet.totleAmt}}</td>
+              <td width="20%" class="recallMenu_but" @click="cancleBet(bet.gameId,bet.id)"><span>撤单</span></td>
+
+            <!--<td width="20%" class="recallMenu_but"  v-if="bet.delFlag==1"><span>已撤单</span></td>-->
           </tr>
+          </template>
+
         </table>
 
       </div>

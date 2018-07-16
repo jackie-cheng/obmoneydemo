@@ -35,7 +35,7 @@
       </section>
       <van-actionsheet v-model="showBank" title="选择提现账户">
 
-        <van-cell :title="bank.accountType=='银行卡'?bank.bankname:bank.accountType" v-for="(bank,index) in bankData" :key="index"  @click="curBank= bank">
+        <van-cell :title="bank.accountType=='银行卡'?bank.bankname:bank.accountType" v-for="(bank,index) in bankData" :key="index" :label="bank.accountDetail"   @click="curBank= bank">
           <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curBank.id== bank.id"/>
         </van-cell>
         <van-cell title="添加新的账户" icon="add-o" to="/addBank" />

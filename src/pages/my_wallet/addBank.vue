@@ -94,22 +94,42 @@
         <van-button type="danger" v-if="$_.isEmpty(bankNum)||$_.isEmpty(bankUserName)" style="opacity: 0.6">确认</van-button>
         <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
       </template>
+      <template v-if="curAccountType== '财付通'">
+        <van-cell-group class="frist_accountDel">
 
+          <yd-cell-item>
+            <span slot="left">账户姓名</span>
+            <yd-input slot="right" v-model="bankUserName" type="text"    placeholder="请输入姓名"
+            ></yd-input>
+          </yd-cell-item>
+          <yd-cell-item>
+            <span slot="left">账号</span>
+            <yd-input slot="right" v-model="bankNum" type="text"    placeholder="请输入账号"
+            ></yd-input>
+          </yd-cell-item>
+        </van-cell-group>
+
+        <van-button type="danger" v-if="$_.isEmpty(bankNum)||$_.isEmpty(bankUserName)" style="opacity: 0.6">确认</van-button>
+        <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
+      </template>
     </div>
     <van-actionsheet v-model="showAccType" title="选择账户类型">
-      <van-cell title="银行卡" @click="curAccountType= '银行卡'">
+      <van-cell title="银行卡" @click="curAccountType= '银行卡',showAccType=false">
         <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curAccountType== '银行卡'"/>
       </van-cell>
-      <van-cell title="微信" @click="curAccountType= '微信'" >
+      <van-cell title="微信" @click="curAccountType= '微信',showAccType=false" >
         <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curAccountType== '微信'"/>
       </van-cell>
-      <van-cell title="支付宝" @click="curAccountType= '支付宝'">
+      <van-cell title="支付宝" @click="curAccountType= '支付宝',showAccType=false">
         <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curAccountType== '支付宝'"/>
+      </van-cell>
+      <van-cell title="财付通" @click="curAccountType= '财付通',showAccType=false">
+        <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="curAccountType== '财付通'"/>
       </van-cell>
     </van-actionsheet>
 
     <van-actionsheet v-model="showBanksType" title="选择银行" class="addbank">
-      <van-cell :title="sBank" @click="selectBank= sBank" v-for="(sBank,index) in allBackList" :key="index">
+      <van-cell :title="sBank" @click="selectBank= sBank,showBanksType=false" v-for="(sBank,index) in allBackList" :key="index">
         <van-icon slot="right-icon" name="success" class="van-cell__right-icon xuanzhong_bank" v-if="selectBank== sBank"/>
       </van-cell>
     </van-actionsheet>
@@ -128,6 +148,7 @@
     name: 'accountSetDe',
     data(){
       return {
+        bankData:[],
         userData:null,
         showBanksType: false,
         bankUserName: null,//银行用户
@@ -165,6 +186,14 @@
       vm.$watch('curAccountType', function () {
         vm.bankUserName=null
         vm.bankNum=null
+       let curUserBank= vm.bankData.filter(bank=>bank.accountType==vm.curAccountType)
+        if(curUserBank.length>0){
+          vm.$dialog.alert({
+            title: '友情提示',
+            message: '您已有'+vm.curAccountType+'账户，继续添加将覆盖原账户'
+          });
+        }
+
       }, {deep: true})
 
       vm.$watch('bankUserName', function () {
@@ -188,13 +217,49 @@
         vm.$router.push('/login')
       }else{
         vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
+        vm.obOutData()
       }
     },
     methods:{
       onClickLeft() {
         this.$router.go(-1)
       },
+      //获取用户银行列表
+      obOutData(){
+        const vm = this
+        let params={
 
+          token: vm.userData.token,
+
+        }
+        let url = '/user/geamUserAccountDown/getUserBank'
+        vm.$axios.get(url,{params})
+          .then(response => {
+
+            if (response.status == 200&&response.data) {
+              if(response.data.statusCode==-100){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else{
+                vm.bankData = response.data.a
+
+
+              }
+
+            } else {
+              vm.$toast('获取银行列表失败');
+            }
+          }).catch(response => {
+          vm.$toast('获取银行列表失败');
+        })
+      },
       addAccount(){
         const vm = this
         if (vm.curAccountType=='银行卡') {
