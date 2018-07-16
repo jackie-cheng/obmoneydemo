@@ -220,6 +220,7 @@
 <!--底部信息-->
     <div class="footSet">
       <van-button @click="$store.state.show = true" v-if="roomData.guessFlag=='1'&&isCanBet">投注</van-button>
+      <!-- <van-button @click="$store.state.show = true" v-if="true">投注</van-button> -->
       <van-button @click="startGuess" v-else class="disButton">投注</van-button>
       <van-button @click="recallMenu=true">
         撤单
@@ -330,7 +331,10 @@
         roomData: null,
         websock: null,
         messageValue: null,//websock要发送的值
-
+        // willy
+        clickLoadMore: false,
+        oldRoom_wechatulHeight:'',
+        loadRoom_wechatulHeight:'',
       }
     },
     computed:{
@@ -388,6 +392,9 @@ vm.isCanBet=false
       },
       loadList() {
         const vm = this
+        vm.clickLoadMore = true
+        vm.oldRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
+        console.log(vm.oldRoom_wechatulHeight)
         let params = {
           roomNumber: vm.$route.params.id,
           pageNo: this.page,
@@ -437,6 +444,7 @@ vm.isCanBet=false
       },
       sendMess(){
         const vm = this
+        vm.clickLoadMore = false
         if (!localStorage.getItem('userInfo')) {
           vm.$router.push('/login')
         } else if (vm.$_.isEmpty(vm.messageValue)) {
@@ -892,10 +900,24 @@ cancleBet(e,id){
       const vm = this
 
       vm.$watch('mySendMessage', () => {
+        // 为false设置滚动条（点击下拉或点击可查看聊天记录,不设置滚动条到底部）
+        if (!vm.clickLoadMore) {
           setTimeout(function () {
             let content = document.getElementsByClassName('room_wechatul')[0];
             content.scrollTop = content.scrollHeight + 90
           }, 100);
+        } else {
+          // 设置下拉加载历史记录滚动位置
+          setTimeout(() => {
+            vm.loadRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
+            let content = document.getElementsByClassName('room_wechatul')[0];
+            content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
+          }, 100);
+          // setTimeout(function () {
+          //   let content = document.getElementsByClassName('room_wechatul')[0];
+          //   content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
+          // }, 100);
+        }
 //         let content = document.getElementsByClassName('room_wechatul')[0];
 // //        console.log('scrollHeight',content.scrollHeight)
 // //        console.log('scrollTop',content.scrollTop)

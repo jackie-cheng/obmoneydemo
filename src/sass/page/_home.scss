@@ -217,6 +217,7 @@ top:46px;
     background-color: #e2e3e3;
     border-radius: .1rem;
     font-weight: bold;
+    font-size: .26rem;
   }
 }
   }
@@ -377,8 +378,9 @@ top:46px;
       //height: 1rem;
       //line-height: 1rem;
       padding: 0.2rem 0.2rem;
-      background-color: white;
+      background-color: #e1171b;
       border-radius: 0.2rem;
+      color: #fff !important;
       //&:before{
       //  position: absolute;
       //  content: "";
@@ -613,7 +615,7 @@ margin-right: 0.3rem;
 // position: absolute;
     // bottom: 1.8rem;
     li{
-      margin: -.3rem .3rem 0 0;
+      margin: 0 .3rem 0 0;
       display: inline-block;
       width: 1.2rem;
       height: 1.2rem;
@@ -644,7 +646,25 @@ margin-right: 0.3rem;
       background-color: #de5a28;
     }
     li:nth-child(4){
-      background-color: #e5282b;
+      background-color: #c3481a;
+    }
+    li:nth-child(5){
+      background-color: #c72525;
+    }
+    li:nth-child(6){
+      background-color: #aa1f1f;
+    }
+    li:nth-child(7){
+      background-color: #aa1a1a;
+    }
+    li:nth-child(8){
+      background-color: #8d1313;
+    }
+    li:nth-child(9){
+      background-color: #8b0f0f;
+    }
+    li:nth-child(10){
+      background-color: #6d0909;
     }
   }
   .willy_botBox{
@@ -1118,6 +1138,50 @@ display: inherit;
     padding: 0 .2rem;
     &:nth-child(2n) {
       background:#f5f5f5;
+    }
+  }
+}
+.willy_dj{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  padding: .1rem 0;
+  & > p {
+    margin: 0 !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    padding: 0 .1rem 0 0;
+  }
+}
+.willy_dj_br{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding: .1rem 0;
+  & > p {
+    margin: 0 !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    padding: 0 .1rem 0 0;
+  }
+}
+.willy_foot_butBox{
+  position: relative;
+  top: -.3rem;
+  overflow: hidden;
+    height: 1.4rem;
+  .willy_foot_but{
+    width: 63%;
+    height: auto;
+    overflow: hidden;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    padding: 5px 0;
+    & > li {
+      display: inline-block;
     }
   }
 }

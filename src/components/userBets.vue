@@ -68,12 +68,14 @@
       <div class="touzhu_foot">
 
         <div class="foot_but">
-          <ul>
-
-            <li :class="{active_monbut:index==active}" @click="touzhuNum+=num,active=index" v-for="(num,index) in touzhuButList.slice(0,4)">
-              <span v-if="num==50000">5W</span> <span v-if="num==10000">1W</span> <span v-if="num!=10000&&num!=50000">{{num}}</span>
-            </li>
-          </ul>
+          <div class="willy_foot_butBox">
+            <ul class="willy_foot_but">
+              <!-- <li :class="{active_monbut:index==active}" @click="touzhuNum+=num,active=index" v-for="(num,index) in touzhuButList.slice(0,4)"> -->
+              <li :class="{active_monbut:index==active}" @click="touzhuNum+=num,active=index" v-for="(num,index) in touzhuButList">
+                <span v-if="num==50000">5W</span> <span v-if="num==10000">1W</span> <span v-if="num!=10000&&num!=50000">{{num}}</span>
+              </li>
+            </ul>
+          </div>
           <!--<van-stepper-->
           <!--v-model="touzhuNum"-->
           <!--integer-->
