@@ -10,7 +10,7 @@
       <van-cell-group>
         <van-cell title="账户类型" :value="curAccountType" is-link arrow-direction="down" @click="showAccType=true"/>
       </van-cell-group>
-      <template v-if="curAccountType== '银行卡'">
+      <template v-if="curAccountType== '银行卡'&& !hadBank">
         <div class="tishi_bank">
           请绑定持卡人本人的银行卡
         </div>
@@ -59,7 +59,7 @@
         <van-button type="danger" v-if="$_.isEmpty(bankUserName)||$_.isEmpty(bankNum)" style="opacity: 0.6">确认</van-button>
         <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
       </template>
-      <template v-if="curAccountType== '支付宝'">
+      <template v-if="curAccountType== '支付宝'&& !hadBank">
         <van-cell-group class="frist_accountDel">
           <yd-cell-item>
             <span slot="left">账户姓名</span>
@@ -76,7 +76,7 @@
         <van-button type="danger" v-if="$_.isEmpty(bankUserName)||$_.isEmpty(bankNum)" style="opacity: 0.6">确认</van-button>
         <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
       </template>
-      <template v-if="curAccountType== '微信'">
+      <template v-if="curAccountType== '微信'&& !hadBank">
         <van-cell-group class="frist_accountDel">
 
           <yd-cell-item>
@@ -94,7 +94,7 @@
         <van-button type="danger" v-if="$_.isEmpty(bankNum)||$_.isEmpty(bankUserName)" style="opacity: 0.6">确认</van-button>
         <van-button type="danger" @click="addAccount()" v-else>确认</van-button>
       </template>
-      <template v-if="curAccountType== '财付通'">
+      <template v-if="curAccountType== '财付通'&& !hadBank">
         <van-cell-group class="frist_accountDel">
 
           <yd-cell-item>
@@ -148,6 +148,7 @@
     name: 'accountSetDe',
     data(){
       return {
+        hadBank:false,
         bankData:[],
         userData:null,
         showBanksType: false,
@@ -184,14 +185,17 @@
       const vm = this
 
       vm.$watch('curAccountType', function () {
-        vm.bankUserName=null
-        vm.bankNum=null
        let curUserBank= vm.bankData.filter(bank=>bank.accountType==vm.curAccountType)
         if(curUserBank.length>0){
+            vm.hadBank= true
           vm.$dialog.alert({
             title: '友情提示',
-            message: '您已有'+vm.curAccountType+'账户，继续添加将覆盖原账户'
+            message: '您已有'+vm.curAccountType+'账户，修改'+vm.curAccountType+'账户请联系管理员'
           });
+        }else{
+          vm.hadBank= false
+//          vm.bankUserName=null
+//          vm.bankNum=null
         }
 
       }, {deep: true})

@@ -31,13 +31,21 @@
           placeholder="请输入汇款金额"
           v-model="shouAccount" type="number" pattern="[0-9]*"
         >
+
         </van-field>
+        <van-field
+          center
+
+          label="汇款姓名"
+          placeholder="请输入汇款姓名"
+          v-model="userName"
+        > </van-field>
       </van-cell-group>
 
       <!--<van-cell-group class="shuru_money">-->
         <!--<van-field v-model="shouAccount" type="number" pattern="[0-9]*" placeholder="输入金额"  />-->
       <!--</van-cell-group>-->
-      <van-button type="danger"  @click="moneySubmit" v-if="!$_.isEmpty(shouAccount)&&!isNaN(shouAccount)">提交</van-button>
+      <van-button type="danger"  @click="moneySubmit" v-if="!$_.isEmpty(shouAccount)&&!isNaN(shouAccount)&&!$_.isEmpty(userName)">提交</van-button>
       <van-button type="danger"  style="opacity: 0.6" v-else>提交</van-button>
       <div class="inWord">
         <p>温馨提示：</p>
@@ -57,7 +65,7 @@
             return {
               curRecharge:null,
                 shouAccount:null,
-
+              userName:null,
               userData:null,
             }
         },
@@ -110,6 +118,9 @@
           if(vm.$_.isEmpty(vm.shouAccount)){
             vm.$toast('请输入充值金额');
             return
+          }else if(vm.$_.isEmpty(vm.userName)){
+            vm.$toast('请输入汇款姓名');
+            return
           }
           const toast1 = vm.$toast.loading({
             mask: true,
@@ -125,6 +136,10 @@
             payType:vm.curRecharge.accountType,
             applyMoneyAmount:vm.shouAccount,
           }
+          let userRechargeVar = {
+            shouAccount: vm.shouAccount,
+            userName: vm.userName,
+          }
           let param = new URLSearchParams(); //创建form对象
           param.append('token', vm.userData.token);//通过append向form对象添加数据
           param.append('uuid', vm.userData.uuid);//添加form表单中其他数据
@@ -132,6 +147,7 @@
           param.append('Geamid', vm.userData.uuid);//通过append向form对象添加数据
           param.append('payType', vm.curRecharge.accountType);//添加form表单中其他数据
           param.append('applyMoneyAmount',vm.shouAccount);
+          param.append('userName',vm.userName);
           vm.$axios.post('/user/GeamUserRank/upSave',param)
             .then(response => {
 
@@ -147,7 +163,14 @@
                     vm.$router.push('/')
                   });
                 }else{
-                  vm.$toast(response.data.a);
+
+                  localStorage.setItem('userRecharge',JSON.stringify(userRechargeVar))
+                    if(response.data.state==1){
+                      vm.$toast('提交成功');
+                    }else{
+                      vm.$toast(response.data.a);
+                    }
+
                 }
 
 //                vm.cardList = response.data
@@ -169,7 +192,10 @@
             vm.userData =  JSON.parse(localStorage.getItem('userInfo'))
             vm.obRecharge()
           }
-
+          if(localStorage.getItem('userRecharge')){
+            vm.userName =  JSON.parse(localStorage.getItem('userRecharge')).userName
+            vm.shouAccount =  JSON.parse(localStorage.getItem('userRecharge')).shouAccount
+          }
         },
         components: {},
     }
