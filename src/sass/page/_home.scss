@@ -594,7 +594,9 @@ margin-right: 0.3rem;
   }
 .touzhu_foot{
   width: 100%;
-  height: 3.04rem;
+  // height: 3.04rem;
+  height: auto;
+  padding: 0 0 .3rem 0;
   background-color: #6a6b6e;
   max-width: 800px;
   margin: 0 auto;
@@ -608,26 +610,23 @@ margin-right: 0.3rem;
     li{
       margin: -.3rem .3rem 0 0;
       display: inline-block;
-      width: 1.39rem;
-      height: 1.39rem;
+      width: 1.2rem;
+      height: 1.2rem;
 
       border-radius: 50%;
-      line-height: 1.39rem;
+      line-height: 1.2rem;
       text-align: center;
       color: white;
-      font-weight: bold;
-      font-size: 0.5rem;
-      // margin-left: 0.3rem;
+      font-size: 0.45rem;
       box-shadow: 0 1px 2px #4a4a4a;
       &.active_monbut{
-        width: 1.9rem;
-        height: 1.9rem;
-        line-height: 1.9rem;
-        margin-left: 0.3rem;
+        // margin-left: 0.3rem;
         box-shadow: 0px -3px 3px #4a4a4a inset;
+        position: relative;
+        top: -5px;
       }
       &.active_monbut+li{
-        margin-left: 0.1rem;
+        // margin-left: 0.1rem;
       }
     }
     li:nth-child(1){
@@ -788,6 +787,8 @@ width: 3.2rem;
         background-color: #f2dd41 !important;
       }
       li{
+        border: 1px solid #bedaff;
+        box-shadow: 0 2px 2px #bcd9ff;
         background-color: white;
         width: 1.5rem;
         display: flex;
@@ -796,10 +797,10 @@ width: 3.2rem;
         flex-direction: column;
         margin: .1rem;
         border-radius: 4px;
-        padding: .4rem 0;
+        padding: .1rem 0;
         p{
           font-size: .3rem;
-          color: #666;
+          color: #999;
         }
         .foz_bol{
           color: #000;
@@ -823,9 +824,15 @@ width: 3.2rem;
     border-radius: 4px;
     padding: .3rem 0;
         text-align: center;
+        border: 1px solid #bedaff;
+        box-shadow: 0 2px 2px #bcd9ff;
+        p{
+          color: #999;
+        }
         .foz_bol{
   font-weight: bold;
           font-size: 14px;
+          color: #000;
         }
       }
     //红绿蓝波
@@ -837,11 +844,26 @@ width: 3.2rem;
       background-color: white;
       width: 100%;
       // margin: 0.1rem 0;
-  border-radius: 4px;
-  padding: .3rem 0;
+      border-radius: 4px;
+      padding: .3rem 0;
       text-align: center;
+      border: 1px solid #bedaff;
+      box-shadow: 0 2px 2px #bcd9ff;
+      .daDan_color{
+        color: #ff4444;
+      }
+      .xiaoShuang_color{
+        color: #30549a;
+      }
+      .greenBo_color{
+        color: #02ad3f;
+      }
+      p{
+        color: #999;
+      }
       .foz_bol{
         font-weight: bold;
+        color: #000;
         font-size: 14px;
       }
     }
@@ -856,6 +878,20 @@ width: 3.2rem;
       // margin: 0.1rem;
       //margin-right: 0.2rem;
       // text-align: center;
+        border: 1px solid #bedaff;
+        box-shadow: 0 2px 2px #bcd9ff;
+      .daDan_color{
+        color: #ff4444;
+      }
+      .xiaoShuang_color{
+        color: #30549a;
+      }
+      .greenBo_color{
+        color: #02ad3f;
+      }
+      p{
+        color: #999;
+      }
       .foz_bol{
           font-weight: bold;
           font-size: .4rem !important;
