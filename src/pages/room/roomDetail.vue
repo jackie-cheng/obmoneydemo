@@ -153,7 +153,7 @@
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='4'">
               <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
-              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>开始下注!感谢您的支持捧场,祝君好运</p>
+              <p> <em style="color:  #ff4444">[ {{mess.expect}}期 ] </em>开始下注！感谢您的支持捧场,祝君好运。</p>
             </div>
           </template>
 <!--用户进入房间个人等级消息-->
