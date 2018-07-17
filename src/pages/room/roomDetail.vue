@@ -220,7 +220,7 @@
 <!--底部信息-->
     <div class="footSet">
       <van-button @click="$store.state.show = true" v-if="roomData.guessFlag=='1'&&isCanBet">投注</van-button>
-      <!-- <van-button @click="$store.state.show = true" v-if="true">投注</van-button> -->
+       <!--<van-button @click="$store.state.show = true" v-if="true">投注</van-button>-->
       <van-button @click="startGuess" v-else class="disButton">投注</van-button>
       <van-button @click="recallMenu=true">
         撤单
