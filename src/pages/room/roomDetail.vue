@@ -12,8 +12,8 @@
       <!--头部期数信息-->
       <div class="room_topData_up">
         <div class="room_topData_lift"  v-if="gameIssue&&!$_.isEmpty(gameIssue)">
-          <span>第<em v-if="gameIssue.issueApi">{{gameIssue.issueApi}}</em>期
-                <em v-if="!gameIssue.issueApi&&gameRecordList&&!$_.isEmpty(gameRecordList)">{{gameRecordList[0].issueApi}}</em>
+          <span>第<em v-if="gameIssue.issueApi">{{gameIssue.issueApi}}</em>
+                <em v-if="!gameIssue.issueApi&&gameRecordList&&!$_.isEmpty(gameRecordList)">{{gameRecordList[0].issueApi}}</em>期
           </span>
           <p v-if="isCanBet">
             <yd-countdown :time="overGameTime" :callback="curGameOver" done-text="封盘中" timetype="second" format="{%m}分{%s}秒"></yd-countdown>
@@ -575,19 +575,15 @@ if( vm.redata.status=='2'){
           console.log(roomKeyWordsArr)
           roomKeyWordsArr.forEach(key=>{
                         let reg = new RegExp("(" + key + ")", "g");
-            let str = agentData;
+            let str = agentData.replace(/ /g,'');
             vm.newstr = str.replace(reg, "**");
           })
-//          for (x in roomKeyWordsArr)
-//          {
-//            let reg = new RegExp("(" + kew + ")", "g");
-//            let str = agentData;
-//            let newstr = str.replace(reg, "**");
-//          }
 
 
-
-
+if(vm.newstr==''){
+  vm.$toast('不能发送空值');
+          return
+}
         let sendData = {
           "roomNumber": vm.$route.params.id,
           "uuid": vm.userData.uuid,

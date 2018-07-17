@@ -180,7 +180,7 @@
         //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.newUuid ='youke'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
+        vm.newUuid ='游客'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
 
         if(localStorage.getItem('userInfo')){
           vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&token="+vm.userData.token);
