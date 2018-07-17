@@ -331,6 +331,8 @@ margin-right: 0.5rem;
   }
   .van-field__control{
     text-align: right;
+    font-family: $fontYaHei !important;
+    font-size: .35rem;
   }
   .yd-input{
     input{
@@ -351,3 +353,6 @@ margin-right: 0.5rem;
   }
 }
 
+.user_bets{
+  font-family: $fontYaHei;
+}
