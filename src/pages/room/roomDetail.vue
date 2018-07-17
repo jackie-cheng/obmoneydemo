@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root roomDa" v-if="roomData&&!$_.isEmpty(roomData)">
+  <div class="mr-root roomDa willy_roomDaBox" v-if="roomData&&!$_.isEmpty(roomData)">
     <van-nav-bar
       :title="roomData.name"
       left-arrow
