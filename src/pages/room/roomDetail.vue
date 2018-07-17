@@ -135,7 +135,7 @@
              </div>
             <div class="willy_xiaoxi" v-if="mess.status=='2'">
               <p style="color: #587cbe;font-size: 0.35rem">开奖结果</p>
-              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em> ]开奖结果：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}
+              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em>开奖结果：{{(mess.content).split("|")[0]}}+{{(mess.content).split("|")[1]}}+{{(mess.content).split("|")[2]}}={{(mess.content).split("|")[3]}}
               <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
             <i class="" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
 
@@ -153,7 +153,7 @@
             </div>
             <div class="willy_xiaoxi" v-if="mess.status=='4'">
               <p style="color:  #02ad3f;font-size: 0.3rem">开始下注</p>
-              <p> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em>开始下注！感谢您的支持捧场，祝君好运。</p>
+              <p class="willy_hs"> <em style="color:  #e1171b">[ {{mess.expect}}期 ] </em>开始下注！感谢您的支持捧场，祝君好运。</p>
             </div>
           </template>
 <!--用户进入房间个人等级消息-->

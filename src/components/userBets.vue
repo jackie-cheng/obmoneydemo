@@ -1,10 +1,10 @@
 <template>
   <div class="mr-root user_bets">
-    <van-actionsheet v-model="$store.state.show" title="定位球投注" class="touzhu_actionbac">
+    <van-actionsheet v-model="$store.state.show" :title="popTitle + '投注'" class="touzhu_actionbac">
       <div class="touzhu_action">
         <div class="touzhu_lift">
-          <span :class="{active_touzhu:touzhuType==1}" @click="touzhuType=1"> <em>特<br/>码</em> </span>
-          <span :class="{active_touzhu:touzhuType==2}" @click="touzhuType=2"> <em>定<br/>位<br/>球</em> </span>
+          <span :class="{active_touzhu:touzhuType==1}" @click="touzhuType=1,popTitle = '特码'"> <em>特<br/>码</em> </span>
+          <span :class="{active_touzhu:touzhuType==2}" @click="touzhuType=2,popTitle = '定位球'"> <em>定<br/>位<br/>球</em> </span>
         </div>
         <div class="touzhu_right" v-if="touzhuType==1">
           <van-row gutter="0">
@@ -295,6 +295,7 @@
             point: '2.05'
           }
         ],
+        popTitle: '特码',
         selectBall: [],
         curChosBallOne: 1,//当前选中球1
         curChosBallTwo: 1,//当前选中球2

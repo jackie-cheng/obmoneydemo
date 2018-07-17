@@ -206,7 +206,7 @@ top:46px;
   flex-direction: column;
   align-items: center;
   span{
-    font-size: .4rem;
+    font-size: .38rem;
   }
   em{
     color: #e1171b;
@@ -221,7 +221,7 @@ top:46px;
     background-color: #e2e3e3;
     border-radius: .1rem;
     font-weight: bold;
-    font-size: .4rem;
+    font-size: .38rem;
   }
 }
   }
@@ -231,7 +231,7 @@ top:46px;
       margin-left: 0.1rem;
     }
     .van-cell{
-      font-size: 0.4rem;
+      font-size: 0.38rem;
     }
 
     .kai_jieguo{
@@ -448,13 +448,10 @@ top:46px;
       display: block;
       max-width: 50%;
       word-wrap:break-word;
-      //position: relative;
-      //height: 1rem;
-      //line-height: 1rem;
       padding: 0.3rem 0.3rem;
       background-color: #e1171b;
-      // background-color: #9eea6a;
       border-radius: 0.2rem;
+      font-size: .33rem;
       //&:before{
       //  position: absolute;
       //  content: "";
@@ -519,9 +516,9 @@ top:46px;
   flex: 1;
   & > span {
     font-weight: bold;
+    font-size: .35rem;
   }
   .van-button--normal{
-
   }
 }
   .send_button{
@@ -684,7 +681,7 @@ margin-right: 0.3rem;
     .willy_botInput {
       width: 0;
       flex: 2 !important;
-      font-size: .4rem;
+      font-size: .38rem;
     }
   }
   input{
@@ -767,7 +764,7 @@ margin-right: 0.3rem;
         top:50%;
         transform: translateY(-50%);
         font-weight: bold;
-        font-size: .4rem;
+        font-size: .38rem;
       }
     }
   }
@@ -845,7 +842,7 @@ width: 3.2rem;
         .foz_bol{
           color: #000;
           // font-weight: bold;
-          font-size: .4rem;
+          font-size: .38rem;
         }
       }
     }
@@ -934,7 +931,7 @@ width: 3.2rem;
       }
       .foz_bol{
           // font-weight: bold;
-          font-size: .4rem !important;
+          font-size: .38rem !important;
           line-height: .9;
       }
     }
@@ -967,7 +964,7 @@ width: 3.2rem;
         font-size: 0.5rem;
       }
       .van-cell__label{
-        font-size: 0.4rem;
+        font-size: 0.38rem;
         position: absolute;
         left: 2rem;
       }
@@ -978,13 +975,13 @@ width: 3.2rem;
       }
       padding: 5px 15px;
       .van-cell__text{
-        font-size: 0.4rem;
+        font-size: 0.38rem;
         margin-left: 0.3rem;
       }
 display: inherit;
       .van-cell__value{
         input{
-          font-size: 0.4rem;
+          font-size: 0.38rem;
           font-weight: bold;
           height: 1rem;
           line-height: 1rem;
@@ -1055,13 +1052,13 @@ display: inherit;
     background: #e1171b !important;
     padding: .2rem !important;
     border-radius: 7px 7px 0 0;
-    font-size: .4rem;
+    font-size: .38rem;
   }
   & > p {
     padding: .2rem !important;
     box-shadow: 0 1px 1px #dedede;
     border-radius: 0px 0px 7px 7px !important;
-    font-size: .4rem;
+    font-size: .38rem;
     & > em {
       & > i {
         color: red !important;
@@ -1097,18 +1094,21 @@ display: inherit;
   border-radius: 3px;
   & > p{
     font-weight: bold;
-    font-size: .4rem;
+    font-size: .35rem;
     & > em {
       font-weight: bold;
     }
     &:nth-child(1) {
       padding: 0 0 3px 0;
-      font-size: 0.4rem !important;
+      font-size: 0.35rem !important;
     }
     &:nth-child(2) {
       text-align: center;
       padding:0 0 .2rem 0;
       color: #000;
+      & > i {
+        letter-spacing: -3px;
+      }
     }
   }
 }
@@ -1136,7 +1136,7 @@ display: inherit;
     & > p{
       &:nth-child(2) {
         color: #000 !important;
-        font-size: .3rem;
+        font-size: .33rem;
       }
     }
   }
@@ -1149,7 +1149,7 @@ display: inherit;
     align-items: center;
     padding: 0 .2rem;
     span{
-      font-size: .4rem;
+      font-size: .38rem;
     }
     &:nth-child(2n) {
       background:#f5f5f5;
@@ -1199,4 +1199,7 @@ display: inherit;
       display: inline-block;
     }
   }
+}
+.willy_hs{
+  color: #000 !important;
 }
