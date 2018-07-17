@@ -907,7 +907,9 @@ cancleBet(e,id){
           setTimeout(() => {
             vm.loadRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
             let content = document.getElementsByClassName('room_wechatul')[0];
-            content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
+            console.log( ' contencrollTop',content.scrollTop)
+//            content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
+            content.scrollTop =0
           }, 100);
           // setTimeout(function () {
           //   let content = document.getElementsByClassName('room_wechatul')[0];
