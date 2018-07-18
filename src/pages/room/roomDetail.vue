@@ -230,7 +230,8 @@
 
 <!--底部信息-->
     <div class="footSet">
-      <van-button @click="$store.state.show = true" v-if="roomData.guessFlag=='1'&&isCanBet">投注</van-button>
+      <!-- <van-button @click="$store.state.show = true" v-if="roomData.guessFlag=='1'&&isCanBet">投注</van-button> -->
+      <van-button @click="startGuessOk" v-if="roomData.guessFlag=='1'&&isCanBet">投注</van-button>
        <!--<van-button @click="$store.state.show = true" v-if="true">投注</van-button>-->
       <van-button @click="startGuess" v-else class="disButton">投注</van-button>
       <van-button @click="recallMenu=true">
@@ -249,7 +250,7 @@
       </van-button>
     </div>
    <!--下注组件-->
-    <userBetsCom :gameid =gameIssue.id :gameQi="gameIssue.issueApi" :gameOdd="gameOdd" v-if="gameOdd&&gameIssue&&!$_.isEmpty(gameIssue)" @betsBall="betsBall"> </userBetsCom>
+    <userBetsCom ref="refWilly" :gameid =gameIssue.id :gameQi="gameIssue.issueApi" :gameOdd="gameOdd" v-show="gameOdd&&gameIssue&&!$_.isEmpty(gameIssue)" @betsBall="betsBall"> </userBetsCom>
     <van-actionsheet v-model="recallMenu" title="撤单" class="touzhu_actionbac chedan_actionbac">
       <div class="recallMenu_action">
         <table class="ob_pay_record_table">
@@ -353,6 +354,11 @@
 
     },
     methods: {
+    // 设置筹码默认位置
+    startGuessOk() {
+        this.$store.state.show = true
+        this.$refs.refWilly.cmScrollLeft()
+    },
         //子组件用户下注成功要发送消息
       betsBall(bet){
         const vm = this
