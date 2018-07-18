@@ -4,10 +4,21 @@
       :title="roomData.name"
       left-arrow
       @click-left="onClickLeft"
+      @click-right="onClickRight"
     >
       <van-icon name="add-o" slot="right"/>
     </van-nav-bar>
 
+
+    <!--顶部下拉菜单-->
+    <div class="ob_moreOperate_content" v-if="RoomTopSelectShow">
+      <van-cell title="玩法规则" />
+      <van-cell title="赔率说明" />
+      <van-cell title="交易记录"/>
+      <van-cell title="统计记录" />
+      <van-cell title="个人中心 " />
+      <van-cell title=" 在线客服" />
+    </div>
     <div class="room_topData">
       <!--头部期数信息-->
       <div class="room_topData_up">
@@ -335,6 +346,7 @@
         clickLoadMore: false,
         oldRoom_wechatulHeight:'',
         loadRoom_wechatulHeight:'',
+        RoomTopSelectShow: false
       }
     },
     computed:{
@@ -469,6 +481,9 @@ vm.isCanBet=false
       onClickLeft() {
         const vm = this
         vm.$router.push('/')
+      },
+      onClickRight() {
+        this.RoomTopSelectShow = !this.RoomTopSelectShow
       },
       threadPoxi(){
           // 实际调用的方法
