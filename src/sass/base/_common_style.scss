@@ -11,6 +11,7 @@
   color: #e1171b;
 }
 .mr-root {
+  font-family: $fontYaHei;
   .van-nav-bar {
     background-color: #e1171b;
     color: #fff;
@@ -30,10 +31,15 @@
   margin-top: 3.4rem;
 }
 .bott_tabbarcla{
+  font-family: $fontYaHei;
   .van-tabbar{
     max-width: 800px;
     margin: 0 auto;
     position: absolute;
+  }
+  .van-icon{
+    color: #e1171b;
+    font-weight: bold;
   }
 }
 .yd-mask{

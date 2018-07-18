@@ -16,13 +16,13 @@
 
           <span style="position: absolute;right: 0.5rem;top:-0.2rem;">{{userData.username}}</span>
           <span style="position: absolute;right: 0.5rem;top:0.2rem" v-if="moneyData&&!$_.isEmpty(moneyData)">￥{{moneyData.balance}}</span>
+          <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox">
         </template>
-
-        <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox">
       </div>
       <div slot="right" class="homeLogig" v-if="nullLogin">
         <router-link to="/login">登录</router-link>
         <router-link to="/register">注册</router-link>
+        <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBoxLogin()" ref="DownBox">
       </div>
     </van-nav-bar>
     <!--选择线路-->
@@ -344,6 +344,10 @@ vm.obMoney()
         } else {
           vm.showDownNav = true
         }
+      },
+      // 点击跳登录页面
+      showDownBoxLogin() {
+        this.$router.push('/login')
       }
     }
   }

@@ -5,6 +5,7 @@
   background-color: #e1171b;
   .van-icon {
     transform: rotate(90deg);
+    font-size: 0.3rem;
   }
 }
 .homeLogig{
@@ -79,6 +80,9 @@
 
 .ob_index_imgs {
   border: 1px solid $border_color;
+  .van-swipe{
+    min-height: 3rem;
+  }
   .van-swipe-item {
     height: 3.4rem;
     img{
@@ -91,6 +95,11 @@
   .van-nav-bar__right{
     right: 3px;
   }
+  .van-icon-arrow{
+    &::before{
+      font-size: .3rem;
+    }
+  }
 }
 //首页中间app
 .ob_home_apps {
@@ -98,13 +107,25 @@
   @extend %textAlign;
   border-bottom: 0.1rem solid #efeff4;
   ul {
+    display: flex;
+    justify-content: space-around;
     li {
       @extend %display;
       .ob_home_app {
-        width: 1.45rem;
-        @include height(true, 1.45rem, 1.45rem);
+        width: 1.2rem;
+        @include height(true, 1.2rem, 1.2rem);
         border-radius: 8px;
         @extend %textAlign;
+        margin: 0 0 .2rem 0;
+        .addpeople_icon::before{
+          font-size: .65rem !important;
+        }
+        & > em{
+          font-size: 0 !important;
+          &:before{
+            font-size: .7rem !important;
+          }
+        }
         &.app_download {
           background: linear-gradient(#affab4, #42b149);
         }
@@ -124,26 +145,48 @@
 
     }
     li + li {
-      margin-left: 10%;
+      // margin-left: 10%;
     }
   }
 }
 
 //房间列表
-.ob_home_lists {
+.ob_home_lists {  
+  font-family: $fontYaHei;
+  .van-icon-arrow::before{
+    font-size: .2rem;
+    margin: 0 0 .16rem 0;
+  }
   .van-cell {
     .van-cell__title {
       width: 5rem;
       //margin: 0 auto;
+      & > span {
+        color: #000;
+      }
+      .van-cell__label{
+        color: red;
+      }
     }
   }
   .van-cell__value{
-
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     vertical-align: middle;
     //line-height: 1.5rem;
     span{
      vertical-align: middle;
-
+     display: flex;
+     align-items: center;
+     &::after{
+       content: '\F006';
+       font-size: .3rem;
+       margin: 0 0 0 .1rem;
+       display: inline-block;
+       font: normal normal normal 14px/1 vant-icon;
+       color: rgb(233, 230, 230);
+     }
     }
   }
 }
@@ -167,8 +210,8 @@
 
 }
 .sd_home_room_picteo{
-
   img{
+    border: 1px solid #efeff4;
     @extend %float;
     width: 1.45rem;
     @include height(true, 1.45rem, 1.45rem);
@@ -188,7 +231,7 @@
 //底部
 .ob_footer {
   position: absolute;
-  bottom: 1.3rem;
+  bottom: 1.5rem;
   width: 100%;
   //max-width: 800px;
   ul {
@@ -198,6 +241,7 @@
       @extend %display;
       @extend %fontSize16;
       color: #666;
+      font-size: .35rem;
     }
     li + li {
       margin-left: 0.8rem;
@@ -1263,6 +1307,20 @@ display: inherit;
       width: .05rem;
       height: .4rem;
       background: #fff;
+    }
+  }
+}
+.bott_tabbarcla{
+  .van-tabbar{
+    height: auto !important;
+    .van-tabbar-item{
+      padding: .3rem 0;
+    }
+    .van-tabbar-item__icon{
+      font-size: .55rem !important;
+    }
+    .van-tabbar-item__text{
+      font-size: .3rem !important;
     }
   }
 }
