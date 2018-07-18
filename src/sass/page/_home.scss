@@ -1241,4 +1241,28 @@ display: inherit;
   .van-nav-bar__title{
     font-size: .35rem;
   }
+  .van-nav-bar__text{
+    font-size: .9rem !important;
+    font-weight: 100;
+  }
+  .willy_topRo{
+    position: relative;
+    margin: 0 0 0 -15px;
+    &::after{
+      content: '';
+      width: .05rem;
+      height: .4rem;
+      background: #fff;
+      transform: rotate(90deg);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &::before{
+      content: '';
+      width: .05rem;
+      height: .4rem;
+      background: #fff;
+    }
+  }
 }

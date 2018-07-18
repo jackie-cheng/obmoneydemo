@@ -2,16 +2,16 @@
   <div class="mr-root roomDa willy_roomDaBox" v-if="roomData&&!$_.isEmpty(roomData)">
     <van-nav-bar
       :title="roomData.name"
+      right-text="+"
       left-arrow
       @click-left="onClickLeft"
-      @click-right="onClickRight"
     >
-      <van-icon name="add-o" slot="right"/>
+      <van-icon id="willy_id" class="willy_id willy_topRo" slot="right"/>
     </van-nav-bar>
 
 
     <!--顶部下拉菜单-->
-    <div class="ob_moreOperate_content" v-if="RoomTopSelectShow">
+    <div class="ob_moreOperate_content" v-show="RoomTopSelectShow" ref="willy_id2">
       <van-cell title="玩法规则" />
       <van-cell title="赔率说明" />
       <van-cell title="交易记录"/>
@@ -354,6 +354,14 @@
 
     },
     methods: {
+    handleDocumentClick(e) {
+      if (!this.$refs.willy_id2.contains(e.target) && document.getElementById('willy_id').contains(e.target)) {
+          this.RoomTopSelectShow = !this.RoomTopSelectShow
+      }
+      if (!this.$refs.willy_id2.contains(e.target) && !document.getElementById('willy_id').contains(e.target)) {
+          this.RoomTopSelectShow = false
+      }
+    },
     // 设置筹码默认位置
     startGuessOk() {
         this.$store.state.show = true
@@ -925,6 +933,8 @@ cancleBet(e,id){
       }
     },
     mounted(){
+      document.addEventListener('click', this.handleDocumentClick);
+      // document.addEventListener('touchstart', this.handleDocumentClick);
       const vm = this
 
       vm.$watch('mySendMessage', () => {
