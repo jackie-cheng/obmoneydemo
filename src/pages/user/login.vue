@@ -13,7 +13,7 @@
         <van-field v-model="username" placeholder="请输入用户名"   icon="clear"
                    @click-icon="username = ''" />
         <van-field v-model="pass" placeholder="请输入密码"  type="password" />
-
+        <van-checkbox v-model="checked">记住密码</van-checkbox>
       </van-cell-group>
       <!--<el-input-->
         <!--placeholder="请输入用户名"-->
@@ -48,6 +48,7 @@
     name: 'login',
     data(){
       return {
+        checked:true,
           username:'',
           pass: '',
         terminalType:'',
@@ -62,7 +63,10 @@
     created(){
       const vm = this
 vm.IsPC()
-
+      if(localStorage.getItem('userLoginData')){
+        vm.username =  JSON.parse(localStorage.getItem('userLoginData')).userName
+        vm.pass =  JSON.parse(localStorage.getItem('userLoginData')).password
+      }
     },
     methods:{
       IsPC() {
@@ -107,6 +111,10 @@ vm.IsPC()
           duration: 10000,       // 持续展示 toast
           message: '登录中...'
         });
+        let userLogin = {
+          password: vm.pass,
+          userName: vm.username,
+        }
         let param = new URLSearchParams(); //创建form对象
         param.append('username', vm.username);//通过append向form对象添加数据
         param.append('password', vm.pass);//添加form表单中其他数据
@@ -118,6 +126,10 @@ vm.IsPC()
               if (response.data.resultInfo.status != 'fail') {
 
                 localStorage.setItem('userInfo',JSON.stringify(response.data.resultInfo))
+                if(vm.checked){
+                  localStorage.setItem('userLoginData',JSON.stringify(userLogin))
+                }
+
 //                window.reload()
 //                let userData = response.data.resultInfo
 //                axios.defaults.headers.common['uuid'] = userData.uuid;

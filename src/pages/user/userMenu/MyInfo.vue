@@ -22,7 +22,7 @@
         <van-uploader :after-read="onRead" accept="image/*" :max-size="1024*1024*0.5" @oversize="overSize" multiple>
           <span>个人头像</span>
           <img src="../../../assets/qq.png" alt="" v-if="userData&&userData.photourl==null">
-          <img :src="'http://47.106.11.246:8086'+userData.photourl" alt="" v-if="userData&&userData.photourl!=null">
+          <img :src="'http://47.106.11.246/'+userData.photourl" alt="" v-if="userData&&userData.photourl!=null">
         </van-uploader>
 
       </div>

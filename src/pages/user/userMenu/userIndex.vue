@@ -7,7 +7,7 @@
   </div>
   <div class="touxiang_header" @click="myInfo">
     <img src="../../../assets/qq.png" alt="" v-if="userData&&userData.photourl==null">
-    <img :src="'http://47.106.11.246:8086'+userData.photourl" alt="" v-if="userData&&userData.photourl!=null">
+    <img :src="'http://47.106.11.246/'+userData.photourl" alt="" v-if="userData&&userData.photourl!=null">
     <div><p>{{userData.username}}</p><p>{{userData.phone}}</p></div>
   </div>
   <van-tabbar>

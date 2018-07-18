@@ -98,6 +98,11 @@
     methods: {
       loadList() {
         const vm = this
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 10000,       // 持续展示 toast
+          message: ''
+        });
         if(!localStorage.getItem('userInfo')){
           vm.$router.push('/login')
           return
@@ -110,6 +115,7 @@
         const url = 'api/chatRecord/queryCustomerServiceChatRecord';
 
         vm.$axios.get(url, {params}).then((response) => {
+          toast1.clear();
           if(response.data.statusCode==-100){
             vm.$dialog.confirm({
               message: response.data.resultInfo
@@ -121,7 +127,6 @@
               vm.$router.push('/')
             });
           }else{
-              console.log(response.data)
             const _list = (response.data.resultInfo||[]).map(a=>JSON.parse(a.msgContent));
             _list.reverse()
             vm.mySendMessage= [..._list, ...vm.mySendMessage];
@@ -180,7 +185,7 @@
         //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.newUuid ='游客'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
+        vm.newUuid ='youke'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
 
         if(localStorage.getItem('userInfo')){
           vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&token="+vm.userData.token);

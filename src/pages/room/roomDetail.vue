@@ -48,10 +48,10 @@
               {{Number((gameRecordList[0].note).split("|")[3])}}
             </i>
             ( <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('da')!=-1">大</i>
-            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
+            <i class="xiaoShuang_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('xiao')!=-1">小</i>
 
             <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('dan')!=-1">单</i>
-            <i class="daDan_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i>)</span>
+            <i class="xiaoShuang_color" v-if="(gameRecordList[0].resultStr).split('|').indexOf('shuang')!=-1">双</i>)</span>
           </div>
           <div slot="title" v-if="gameRecordList[0].status=='-1'"><span>第 <em>{{gameRecordList[0].issueApi}}</em> 期
             <i style="color: red;margin-left: 0.5rem">开奖异常</i></span>
@@ -130,7 +130,7 @@
               <p style="background-color:white " v-for="ball in (JSON.parse(mess.message).betStr).split(',')">
                 <b v-if="ball.indexOf('tema')!=-1">特码-{{ball.substr(4,ball.length)}}</b>
                 <b v-if="ball.indexOf('tema')==-1">{{ballType[ball]}}</b>
-                <em> <i>￥{{JSON.parse(mess.message).point}}</i> </em>
+                <em><i>{{JSON.parse(mess.message).ballOdd}}</i>x <i>￥{{JSON.parse(mess.message).point}}</i> </em>
               </p>
 
             </div>
@@ -404,6 +404,11 @@ vm.isCanBet=false
       },
       loadList() {
         const vm = this
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 10000,       // 持续展示 toast
+          message: ''
+        });
         vm.clickLoadMore = true
         vm.oldRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
         console.log(vm.oldRoom_wechatulHeight)
@@ -415,7 +420,7 @@ vm.isCanBet=false
         const url = 'api/chatRecord/queryChatRecordByRoomnumber';
 
         vm.$axios.get(url, {params}).then((response) => {
-
+          toast1.clear();
             const _list = (response.data.resultInfo || []).map(a => JSON.parse(a.msgContent));
             _list.reverse()
             vm.mySendMessage = [..._list, ...vm.mySendMessage];
@@ -428,6 +433,11 @@ vm.isCanBet=false
       },
       loadListOne() {
         const vm = this
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 10000,       // 持续展示 toast
+          message: ''
+        });
         let params = {
           roomNumber: vm.$route.params.id,
           pageNo: this.page,
@@ -440,6 +450,7 @@ vm.isCanBet=false
           _list.reverse()
           vm.mySendMessage = [..._list, ...vm.mySendMessage];
           vm.page++;
+          toast1.clear();
         });
       },
       startGuess(){
@@ -923,8 +934,8 @@ cancleBet(e,id){
             vm.loadRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
             let content = document.getElementsByClassName('room_wechatul')[0];
             console.log( ' contencrollTop',content.scrollTop)
-//            content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
-            content.scrollTop =0
+            content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
+//            content.scrollTop =0
           }, 100);
           // setTimeout(function () {
           //   let content = document.getElementsByClassName('room_wechatul')[0];

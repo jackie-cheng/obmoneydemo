@@ -43,7 +43,7 @@
     <section class="ob_index_imgs">
       <van-swipe :autoplay="3000" v-if="homeData&&homeData.length>0">
         <van-swipe-item to="/notice" v-for="(image,index) in homeData" :key="index">
-          <img :src="'http://47.106.11.246:8080'+image.pictureAddress"/>
+          <img :src="'http://47.106.11.246/'+image.pictureAddress"/>
         </van-swipe-item>
 
       </van-swipe>
@@ -103,7 +103,7 @@
           <div class="sd_home_room_pic" slot="icon" v-if="r.roomIcon==''">
           </div>
           <div class="sd_home_room_picteo" slot="icon">
-            <img :src="'http://47.106.11.246:8080'+r.roomIcon" alt="" v-if="r.roomIcon!=''">
+            <img :src="'http://47.106.11.246/'+r.roomIcon" alt="" v-if="r.roomIcon!=''">
           </div>
         </van-cell>
       </van-cell-group>
@@ -262,10 +262,22 @@ vm.obMoney()
       //退出登录
       outLogin(){
         const vm = this
-        localStorage.removeItem('userInfo')
+        let param = new URLSearchParams(); //创建form对象
+        param.append('token', vm.userData.token);//通过append向form对象添加数据
+        param.append('userOnlineStatus', '0');//添加form表单中其他数据
+        vm.$axios.post(`/user/geamUserAccountDown/updateUserOnlineStatus`, param)
+          .then(response => {
+            if (response.status == 200 && response.data) {
+              localStorage.removeItem('userInfo')
 //        window.location.href = '/login'
 //        location.reload()
-        vm.$router.push('/login')
+              vm.$router.push('/login')
+            } else {
+
+            }
+          }).catch(response => {
+        })
+
       },
       //选择线路
       selectRoad() {
