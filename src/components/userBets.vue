@@ -69,9 +69,9 @@
 
         <div class="foot_but">
           <div class="willy_foot_butBox">
-            <ul class="willy_foot_but">
+            <ul class="willy_foot_but" ref="willy_foot_but_Ref">
               <!-- <li :class="{active_monbut:index==active}" @click="touzhuNum+=num,active=index" v-for="(num,index) in touzhuButList.slice(0,4)"> -->
-              <li :class="{active_monbut:index==active}" @click="touzhuNum+=num,active=index" v-for="(num,index) in touzhuButList">
+              <li class="willy_ssn" ref="willy_fbf_li_Ref" :class="{active_monbut:index==active}" @click="touzhuNum+=num,active=index" v-for="(num,index) in touzhuButList" :key="index">
                 <span v-if="num==50000">5W</span> <span v-if="num==10000">1W</span> <span v-if="num!=10000&&num!=50000">{{num}}</span>
               </li>
             </ul>
@@ -302,7 +302,9 @@
         touzhuType: 1,
         touzhuNum: null,
         touzhuBut:null,//当前选择按钮
-        point: '' //下注倍数
+        point: '', //下注倍数
+        //willy
+        onlyRun: false
       }
     },
 props:['gameid','gameQi','gameOdd'],
@@ -317,8 +319,8 @@ if(vm.touzhuNum>0){
   }
 },
 mounted(){
+  // this.$refs.willy_foot_but_Ref.addEventListener('scroll', this.handleScroll)
   const vm = this
-
   vm.$watch('touzhuNum', function () {
 
       if(vm.touzhuNum!=null){
@@ -327,16 +329,38 @@ mounted(){
           vm.touzhuNum=1000000
           vm.$toast('最大输入一百万');
         }
+        //
+        vm.onlyRun = true
       }
 
   }, {deep: true})
-
 },
     created(){
       const vm = this
 
     },
     methods:{
+      handleScroll () {
+        var scrollLeft = this.$refs.willy_foot_but_Ref.scrollLeft
+        console.log(scrollLeft)
+      },
+      // 从父组件传来的FN,用来设置筹码默认位置
+      cmScrollLeft() {
+        if (!this.onlyRun) {
+          this.$nextTick(function () {
+            let wfbrLiLength = this.$refs.willy_fbf_li_Ref.length
+            let wfbr = this.$refs.willy_foot_but_Ref
+            if (wfbr !== undefined) {
+              let a = this.$refs.willy_foot_but_Ref.clientWidth
+              let b = this.$refs.willy_fbf_li_Ref[0].offsetParent.offsetLeft  + this.$refs.willy_fbf_li_Ref[0].clientWidth
+              let d = 2 * b
+              this.$refs.willy_foot_but_Ref.scrollLeft = d
+            } else {
+              console.log('none')
+            }
+          })
+        }
+      },
 //赔率去零
       getPercent(num){
         const vm = this
