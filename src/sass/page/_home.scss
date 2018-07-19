@@ -3,12 +3,15 @@
   @extend %relative;
   border: none;
   background-color: #e1171b;
+  font-size: 0.35rem;
   .van-icon {
     transform: rotate(90deg);
     font-size: 0.3rem;
   }
 }
 .homeLogig{
+  height: 1.3rem;
+  line-height: 1.3rem;
   a{
     color: white;
   }
@@ -17,17 +20,24 @@
     padding: .02rem .18rem;
     border-radius: 7px;
     font-weight: 550;
+    font-size: .3rem;
   }
 }
 .willy_notice{
   border-bottom: 1px solid #efefef;
-  padding: .3rem .6rem .3rem .2rem;
+  padding: 0 .6rem 0 .2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
   .van-icon-arrow:before{
     font-size: .3rem !important;
     color: #999 !important;
   }
   .van-notice-bar__content{
     color: #000;
+    font-size: .3rem;
+  }
+  .van-notice-bar__wrap{
+    height: 100%;
   }
   .van-notice-bar__left-icon{
     & > img{
@@ -112,20 +122,63 @@
     min-height: 3rem;
   }
   .van-swipe-item {
-    height: 3.4rem;
+    min-height: 3.4rem;
     img{
-      height: 3.4rem;
+      min-height: 3.4rem;
       width: 100%;
     }
   }
 }
+.van-nav-bar__left{
+  // position: initial;
+  margin: 0;
+  height: 1.3rem;
+  line-height: 1.3rem;
+  text-align: center;
+}
+.van-nav-bar__right{
+  // position: initial;
+  height: 1.3rem;
+  right: 3px;
+  font-size: .3rem;
+}
 .home_head{
-  .van-nav-bar__right{
-    right: 3px;
-  }
   .van-icon-arrow{
     &::before{
       font-size: .3rem;
+    }
+  }
+}
+.van-nav-bar, .home_head{
+  height: 1.2rem !important;
+  display: flex;
+  padding: 0 0 0 .2rem;
+  box-sizing: border-box;
+  align-items: center;
+  .willy_userInfo{
+    display: flex;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    align-items: center;
+    .van-icon-contact{
+      display: flex;
+      align-items: center;
+      margin: 0 .08rem 0 0 ;
+    }
+    .willy_userInfo_nm{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      &> span{
+        height: auto;
+        line-height: 1;
+        text-align: right;
+        max-width: 1.6rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 }
@@ -188,11 +241,14 @@
     margin: 0 0 .16rem 0;
   }
   .van-cell {
+    line-height: 1.5;
+    padding: .35rem .3rem;
+    font-size: .35rem;
+    .van-cell__label{
+      font-size: .3rem;
+    }
     .van-cell__title {
       width: 5rem;
-      //margin: 0 auto;
-      display: flex;
-      flex-direction: column;
       & > span {
         color: #000;
         font-size: .4rem !important;
@@ -280,10 +336,11 @@
 }
 //底部
 .ob_footer {
-  position: absolute;
+  position: fixed;
   bottom: 1.5rem;
   width: 100%;
-  //max-width: 800px;
+  background: #efeff4;
+  max-width: 800px;
   ul {
     padding: 0.25rem;
     @extend %textAlign;
@@ -306,8 +363,7 @@
   max-width: 800px;
   margin: 0 auto;
   height: 3.25rem;
-  top:1.1rem;
-  //padding: 0.2rem 0.4rem;
+  top:1.24rem;
   width: 100%;
   .room_topData_up{
     background-color: white;
@@ -1332,6 +1388,12 @@ display: inherit;
   .van-nav-bar__left, .van-nav-bar__right{
     position: static;
   }
+  .van-nav-bar__right{
+    width: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .van-nav-bar__title{
     font-size: .35rem;
   }
@@ -1341,7 +1403,7 @@ display: inherit;
   }
   .willy_topRo{
     position: relative;
-    margin: 0 0 0 -15px;
+    // margin: 0 -.2rem 0 0;
     &::after{
       content: '';
       width: .05rem;
@@ -1361,6 +1423,10 @@ display: inherit;
   }
 }
 .bott_tabbarcla{
+  max-width: 800%;
+  .van-tabbar--fixed{
+    left: initial;
+  }
   .van-tabbar{
     height: auto !important;
     .van-tabbar-item{
@@ -1375,7 +1441,11 @@ display: inherit;
   }
 }
 .willy_mr_root{
+  padding: 0 0 2.5rem 0;
   .van-notice-bar{
     background: #fff;
+  }
+  .van-nav-bar__title{
+    font-size: .35rem;
   }
 }
