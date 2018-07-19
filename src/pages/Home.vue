@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root willy_mr_root">
     <!--<Header></Header>-->
     <van-nav-bar title="7-18晚更新" class="home_head">
       <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
@@ -20,8 +20,8 @@
         </template>
       </div>
       <div slot="right" class="homeLogig" v-if="nullLogin">
-        <router-link to="/login">登录</router-link>
-        <router-link to="/register">注册</router-link>
+        <router-link class="willy_homeLogig_a" to="/login">登录</router-link>
+        <router-link class="willy_homeLogig_a" to="/register">注册</router-link>
         <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBoxLogin()" ref="DownBox">
       </div>
     </van-nav-bar>
@@ -43,7 +43,8 @@
     <section class="ob_index_imgs">
       <van-swipe :autoplay="3000" v-if="homeData&&homeData.length>0">
         <van-swipe-item to="/notice" v-for="(image,index) in homeData" :key="index">
-          <img :src="'http://47.106.11.246/'+image.pictureAddress"/>
+          <!-- <img :src="'http://47.106.11.246/'+image.pictureAddress"/> -->
+          <img :src="require('../assets/w_lb.jpg')"/>
         </van-swipe-item>
 
       </van-swipe>
@@ -56,7 +57,10 @@
     </section>
     <!--消息提示-->
     <van-notice-bar @click="routerNotice()"
+    class="willy_notice"
       text="欢迎来到帝魂国际!2欢迎来到帝魂国际3欢迎来到帝魂国际4欢迎来到帝魂国际5欢迎来到帝魂国际6欢迎来到帝魂国际7欢迎来到帝魂国际8欢迎来到帝魂国际欢迎来到帝魂国际欢迎来到帝魂国际"
+      :left-icon="require('../assets/w_notice001.png')"
+       mode="link"
     />
     <!--<van-cell-group>-->
       <!--<van-cell title="欢迎来到ce国际!" is-link to="/notice">-->
@@ -99,7 +103,12 @@
     <!--房间list-->
     <section class="ob_home_lists">
       <van-cell-group v-for="r in roomList" :key="r.no">
-        <van-cell :title="r.name" value="进入房间" :label="'当前在线'+r.count+'人'" @click="intoRoom(r)">
+        <!-- <van-cell :title="r.name" value="进入房间" :label="'当前在线：'+r.count+'人'" @click="intoRoom(r)"> -->
+        <van-cell value="进入房间" @click="intoRoom(r)">
+          <template slot="title">
+            <span class="van-cell-text">{{r.name}}</span>
+            <div class="willy_con">当前在线：<b>{{r.count}}人</b></div>
+          </template>
           <div class="sd_home_room_pic" slot="icon" v-if="r.roomIcon==''">
           </div>
           <div class="sd_home_room_picteo" slot="icon">
