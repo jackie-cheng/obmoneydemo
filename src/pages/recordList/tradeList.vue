@@ -2,8 +2,8 @@
   <div class="mr-root">
     <!--header-->
     <van-nav-bar title="交易记录" left-arrow @click-left="onClickLeft()"/>
-    <van-tabs v-model="activeIndex" swipeable>
-      <van-tab v-for="(menu,index) in menuList" :key="index" :title="menu">
+    <van-tabs v-model="activeIndex">
+      <van-tab v-for="(menu,index) in menuList"   :key="index" :title="menu">
 
         <!--交易记录-->
         <div>
@@ -15,25 +15,33 @@
 
             <span style="margin: 0 0.2rem">至</span>
             <yd-datetime   v-model="datetimeEnd" type="date" :start-date="datetimeStar"></yd-datetime>
-            <span class="search_but" @click="searchList,page=1">查询</span>
+            <span class="search_but" @click="searchList(),page=1">查询</span>
           </div>
           <table class="ob_pay_record_table" >
             <tr>
-              <th width="30%">时间</th>
+              <th width="40%">时间</th>
               <th width="20%">类型</th>
-              <th width="30%">金额</th>
+              <th width="20%">金额</th>
               <th width="20%">余额</th>
             </tr>
+            <van-list
+            v-model="loading"
+            :finished="finished"
+            @load="searchList"
+            >
 
-            <tr v-for="trade in tradeData" v-if="tradeData&&tradeData.length>0">
-              <td width="30%">{{trade.changeTime.slice(0,10)}}</td>
+            <tr v-for="trade in tradeData" v-if="tradeData&&tradeData.length>0" >
+              <td width="40%">{{trade.changeTime.slice(0,16)}}</td>
               <td width="20%">{{allType[trade.betType]}}</td>
               <!--如果为充值，则颜色添加红色，添加样式pay_money-->
-              <td width="30%" :class="{pay_money:trade.change.indexOf('-')!=-1}">{{trade.change}}</td>
-              <td width="20%">{{trade.resultBlnc}}</td>
+              <!--<td width="20%" :class="{pay_money:trade.change.indexOf('-')!=-1}">{{trade.change}}</td>-->
+              <td width="20%">{{trade.change}}</td>
+              <td width="20%" class="pay_money">{{trade.resultBlnc}}</td>
             </tr>
-
+            </van-list>
           </table>
+
+
         </div>
         <div  v-if="tradeData&&tradeData.length==0">
           <div style="position: absolute;top: 5rem">暂无记录</div>
@@ -70,7 +78,7 @@
         allType:{
           bet:'下注',
           cancelBet:'取消下注',
-          bonus:'奖金',
+          bonus:'中奖',
           recharge:'充值',
           withdraw:'提现',
         }
@@ -126,11 +134,12 @@
               }else{
                   let newList =response.data.resultInfo
                 vm.tradeData =(vm.tradeData||[]).concat(newList)
-                vm.page++
+
                 vm.loading = false;
-                if ( newList.length == 0) {
+                if ( newList.length <10) {
                   vm.finished = true;
                 }
+
               }
 
 
@@ -185,7 +194,7 @@ vm.activeType=null
       var dd = new Date();
       vm.datetimeEnd=dd.toJSON().slice(0,10)
       let sevenTime= dd.getTime()-1000*60*60*24*7
-      vm.datetimeStar = new Date(sevenTime).toJSON().slice(0,10)
+//      vm.datetimeStar = vm.datetimeEnd
       vm.starSevenTime=new Date(sevenTime).toJSON().slice(0,10)
       if(localStorage.getItem('userInfo')){
         vm.userData = JSON.parse(localStorage.getItem('userInfo'))

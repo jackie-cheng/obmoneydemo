@@ -151,7 +151,7 @@
 }
 
 //房间列表
-.ob_home_lists {  
+.ob_home_lists {
   font-family: $fontYaHei;
   .van-icon-arrow::before{
     font-size: .2rem;
@@ -1295,7 +1295,7 @@ display: inherit;
     &::after{
       content: '';
       width: .05rem;
-      height: .4rem;
+      height: .5rem;
       background: #fff;
       transform: rotate(90deg);
       position: absolute;
@@ -1305,7 +1305,7 @@ display: inherit;
     &::before{
       content: '';
       width: .05rem;
-      height: .4rem;
+      height: .5rem;
       background: #fff;
     }
   }

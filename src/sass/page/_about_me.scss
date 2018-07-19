@@ -79,6 +79,7 @@
 .ob_pay_record_table {
   width: 100%;
   background-color: #fff;
+  overflow: scroll;
   tr {
     @extend %textAlign;
     @include height(true, 1.5rem, 1.5rem);
@@ -95,6 +96,29 @@
       background-color: #c7c6cb;
       color: #fff;
 
+    }
+  }
+  .statis_che{
+    font-weight: bold;
+    position: relative;
+    i{
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      color: #fff;
+      font-size:0.6rem;
+      font-weight: normal;
+      -webkit-transform: scale(0.8);
+      transform: scale(0.8);
+      transform:rotate(20deg);
+      text-align: center;
+      box-sizing: border-box;
+      padding: 0 6px;
+      min-width: 18px;
+      line-height:30px;
+      border-radius: 9px;
+      background-color: #c7c6cb;
+      opacity: 0.7;
     }
   }
 }

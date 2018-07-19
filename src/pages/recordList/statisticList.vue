@@ -7,7 +7,7 @@
       <yd-datetime   v-model="datetimeStar" :start-date="starSevenTime"   type="date" style=" background-color: #efeff4;"></yd-datetime>
       <span style="margin: 0 0.2rem">至</span>
       <yd-datetime   v-model="datetimeEnd" type="date" :start-date="datetimeStar" style=" background-color: #efeff4;"></yd-datetime>
-      <span class="search_but" @click="searchList,page=1">查询</span>
+      <span class="search_but" @click="searchList(),page=1">查询</span>
     </div>
 <!--总数-->
 <div class="tab_statis" v-if="statisticData&&statisticData!=null">
@@ -18,18 +18,18 @@
        总单数
       </template>
     </van-tabbar-item>
-    <van-tabbar-item icon="chat"><span>{{statisticData.totleAmt}}</span>
+    <van-tabbar-item icon="chat"><span v-if="statisticData.totleAmt">{{statisticData.totleAmt}}</span> <span v-else="">0</span>
       <template slot="icon" slot-scope="props">
         总下注
       </template></van-tabbar-item>
-    <van-tabbar-item icon="records"><span>{{statisticData.bonusAmt -statisticData.totleAmt}}</span>
+    <van-tabbar-item icon="records"><span v-if="statisticData.totleAmt&&statisticData.bonusAmt">{{statisticData.bonusAmt -statisticData.totleAmt}}</span> <span v-else="">0</span>
       <template slot="icon" slot-scope="props">
         总盈亏
       </template></van-tabbar-item>
   </van-tabbar>
 
 </div>
-    <van-tabs v-model="activeIndex" swipeable>
+    <van-tabs v-model="activeIndex" :swipe-threshold="4">
       <van-tab v-for="(room,index) in roomList" :key="index" :title="room.roomLotteryTicketTypeContext" v-if="roomList&&roomList.length>0">
 
         <!--交易记录-->
@@ -43,13 +43,16 @@
               <th width="20%">中奖</th>
             </tr>
             <tr v-for="trade in tradeData" v-if="tradeData&&tradeData.length>0">
-              <td width="30%">{{trade.issueApi}}</td>
-              <td width="20%" v-if="(trade.betStr).indexOf('tema')==-1">{{ballType[trade.betStr]}}</td>
+
+              <td width="30%" >
+                <span>{{trade.issueApi}} </span>
+                </td>
+              <td width="20%" v-if="(trade.betStr).indexOf('tema')==-1" > {{ballType[trade.betStr]}}   </td>
               <td width="20%" v-if="(trade.betStr).indexOf('tema')!=-1">特码 - {{trade.betStr.substr(4,trade.betStr.length)}}</td>
               <!--<td width="20%">{{trade.issueApi}}</td>-->
               <!--如果为充值，则颜色添加红色，添加样式pay_money-->
               <td width="30%" class="pay_money">{{trade.totleAmt}}</td>
-              <td width="20%">{{trade.issueApi}}</td>
+              <td width="20%" class="statis_che"> <i v-if="trade.delFlag==1">撤单</i> <span v-if="trade.delFlag!=1">{{trade.issueApi}}</span> </td>
             </tr>
           </table>
         </div>
@@ -76,7 +79,12 @@
         loading: false,
         finished: false,
 
-        roomList:null,
+        roomList:[
+          {
+            roomLotteryTicketTypeContext:"全部",
+            roomnumber:null
+          }
+        ],
         statisticData:null,
         tradeData:null,
         userData:null,
@@ -127,7 +135,7 @@
         });
         let params={
           token: vm.userData.token,
-//          gameId: vm.activeRoomNumber,
+          gameId: vm.activeRoomNumber,
           pageNo:vm.page,
           pageSize:10,
           startDate:vm.datetimeStar,
@@ -220,7 +228,7 @@
       var dd = new Date();
       vm.datetimeEnd=dd.toJSON().slice(0,10)
       let sevenTime= dd.getTime()-1000*60*60*24*7
-      vm.datetimeStar = new Date(sevenTime).toJSON().slice(0,10)
+      vm.datetimeStar = vm.datetimeEnd
       vm.starSevenTime=new Date(sevenTime).toJSON().slice(0,10)
       if(localStorage.getItem('userInfo')){
         vm.userData = JSON.parse(localStorage.getItem('userInfo'))
@@ -233,7 +241,7 @@
       vm.$axios.get(`/api/RoomController/queryRoomList`, {params})
         .then(response => {
           if (response.status == 200 && response.data) {
-            vm.roomList = response.data.resultInfo
+            vm.roomList =vm.roomList.concat(response.data.resultInfo)
             vm.activeRoomNumber=vm.roomList[0].roomnumber
             vm.searchList()
             vm.searchAll()
