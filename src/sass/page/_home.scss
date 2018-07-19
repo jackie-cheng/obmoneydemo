@@ -12,6 +12,34 @@
   a{
     color: white;
   }
+  .willy_homeLogig_a{
+    border: 1px solid #efefef;
+    padding: .02rem .18rem;
+    border-radius: 7px;
+    font-weight: 550;
+  }
+}
+.willy_notice{
+  border-bottom: 1px solid #efefef;
+  padding: .3rem .6rem .3rem .2rem;
+  .van-icon-arrow:before{
+    font-size: .3rem !important;
+    color: #999 !important;
+  }
+  .van-notice-bar__content{
+    color: #000;
+  }
+  .van-notice-bar__left-icon{
+    & > img{
+      vertical-align: text-top !important;
+    }
+  }
+  .van-notice-bar__right-icon{
+    top: 50%;
+    right: .15rem;
+    margin: -.15rem 0 0 0;
+    font-size: .3rem;
+  }
 }
 .ob_show_road{
   position: absolute;
@@ -79,7 +107,7 @@
 }
 
 .ob_index_imgs {
-  border: 1px solid $border_color;
+  border-bottom: 1px solid $border_color;
   .van-swipe{
     min-height: 3rem;
   }
@@ -103,7 +131,9 @@
 }
 //首页中间app
 .ob_home_apps {
-  padding: 0.2rem 0.2rem 0.1rem 0.2rem;
+  padding: 0.4rem 0.2rem 0.3rem 0.2rem;
+  margin: 0 0 .1rem 0;
+  background: #fff;
   @extend %textAlign;
   border-bottom: 0.1rem solid #efeff4;
   ul {
@@ -161,11 +191,24 @@
     .van-cell__title {
       width: 5rem;
       //margin: 0 auto;
+      display: flex;
+      flex-direction: column;
       & > span {
         color: #000;
+        font-size: .4rem !important;
+        font-weight: bold;
       }
       .van-cell__label{
         color: red;
+      }
+      .willy_con{
+        font-size: .3rem;
+        color: #666;
+        line-height: 1;
+        & > b{
+          font-weight: 100;
+          color: red;
+        }
       }
     }
   }
@@ -179,14 +222,17 @@
      vertical-align: middle;
      display: flex;
      align-items: center;
-     &::after{
-       content: '\F006';
-       font-size: .3rem;
-       margin: 0 0 0 .1rem;
-       display: inline-block;
-       font: normal normal normal 14px/1 vant-icon;
-       color: rgb(233, 230, 230);
-     }
+     border:1px solid #efefef;
+     padding: .06rem .18rem;
+     border-radius: 7px;
+    //  &::after{
+    //    content: '\F006';
+    //    font-size: .3rem;
+    //    margin: 0 0 0 .1rem;
+    //    display: inline-block;
+    //    font: normal normal normal 14px/1 vant-icon;
+    //    color: rgb(233, 230, 230);
+    //  }
     }
   }
 }
@@ -210,13 +256,17 @@
 
 }
 .sd_home_room_picteo{
+  border-radius: 8px;
+  margin-right: 8px;
+  overflow: hidden;
+  width: 1.45rem;
+  @include height(true, 1.45rem, 1.45rem);
+  // background: #f29019;
+  border: 1px solid #efeff4;
   img{
-    border: 1px solid #efeff4;
     @extend %float;
     width: 1.45rem;
     @include height(true, 1.45rem, 1.45rem);
-    border-radius: 8px;
-    margin-right: 8px;
   }
 }
 .daDan_color{
@@ -1322,5 +1372,10 @@ display: inherit;
     .van-tabbar-item__text{
       font-size: .3rem !important;
     }
+  }
+}
+.willy_mr_root{
+  .van-notice-bar{
+    background: #fff;
   }
 }
