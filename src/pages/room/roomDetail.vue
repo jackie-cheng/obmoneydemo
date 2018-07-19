@@ -545,7 +545,7 @@ vm.isCanBet=false
             }
 
             vm.websock.send(JSON.stringify(sendData));
-            console.log('发的消息', JSON.stringify(sendData))
+//            console.log('发的消息', JSON.stringify(sendData))
             vm.mySendMessage.push(sendData)
 
           }
@@ -560,13 +560,14 @@ vm.isCanBet=false
         vm.websock.onmessage = vm.websocketonmessage;
         vm.websock.onclose = vm.websocketclose;
         // 路由跳转时结束websocket链接
-//        vm.$router.afterEach(function () {
-//          vm.websock.onclose
-//        })
+        vm.$router.afterEach(function () {
+          vm.websock.onclose
+//          console.log(6666)
+        })
       },
       websocketonmessage(e){ //数据接收
         const vm = this
-        console.log('收到的', JSON.parse(e.data))
+//        console.log('收到的', JSON.parse(e.data))
         let pullData = JSON.parse(e.data)
         if (pullData.chatType != '9') {
           vm.redata = JSON.parse(pullData.msgContent);
@@ -598,7 +599,7 @@ if( vm.redata.status=='2'){
 
           }
 
-          console.log('系统消息', vm.redata)
+//          console.log('系统消息', vm.redata)
 
           vm.mySendMessage.push(vm.redata)
         }
@@ -612,7 +613,7 @@ if( vm.redata.status=='2'){
 
           let roomKeyWords=vm.AllhomeData.roomKeyWordsShielding
           const roomKeyWordsArr = roomKeyWords.split('|');
-          console.log(roomKeyWordsArr)
+//          console.log(roomKeyWordsArr)
           roomKeyWordsArr.forEach(key=>{
                         let reg = new RegExp("(" + key + ")", "g");
             let str = agentData.replace(/ /g,'');
@@ -852,6 +853,7 @@ cancleBet(e,id){
     token: vm.userData.token,
           pageSize:10,
           pageNo:1,
+          roomId:vm.$route.params.id
 //          gameId:vm.gameIssue.id ||vm.gameRecordList[0].id,
         }
 
@@ -1023,6 +1025,10 @@ cancleBet(e,id){
     },
     beforeDestroy () {
       this.websock.onclose
+      //        // 路由跳转时结束websocket链接
+//        this.$router.afterEach(function () {
+//          ws.close()
+//        })
     },
     components:{
       userBetsCom

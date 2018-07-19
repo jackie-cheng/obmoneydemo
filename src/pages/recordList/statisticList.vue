@@ -52,12 +52,12 @@
               <!--<td width="20%">{{trade.issueApi}}</td>-->
               <!--如果为充值，则颜色添加红色，添加样式pay_money-->
               <td width="30%" class="pay_money">{{trade.totleAmt}}</td>
-              <td width="20%" class="statis_che"> <i v-if="trade.delFlag==1">撤单</i> <span v-if="trade.delFlag!=1">{{trade.issueApi}}</span> </td>
+              <td width="20%" class="statis_che"> <i v-if="trade.delFlag==1">撤单</i> <span v-if="trade.delFlag!=1">{{trade.bonus}}</span> </td>
             </tr>
           </table>
         </div>
-        <div style="height: 80vh">
-          <div style="margin:0.2rem 0.3rem;color: #666;">暂无记录</div>
+        <div  v-if="tradeData&&tradeData.length==0">
+          <div style="position: absolute;top: 5rem">暂无记录</div>
         </div>
       </van-tab>
     </van-tabs>
@@ -135,7 +135,7 @@
         });
         let params={
           token: vm.userData.token,
-          gameId: vm.activeRoomNumber,
+          roomId: vm.activeRoomNumber,
           pageNo:vm.page,
           pageSize:10,
           startDate:vm.datetimeStar,

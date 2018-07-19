@@ -47,14 +47,14 @@
       <!--</van-cell-group>-->
       <van-button type="danger"  @click="moneySubmit" v-if="!$_.isEmpty(shouAccount)&&!isNaN(shouAccount)&&!$_.isEmpty(userName)">提交</van-button>
       <van-button type="danger"  style="opacity: 0.6" v-else>提交</van-button>
-      <div class="inWord">
-        <p>温馨提示：</p>
-        <p>1、我公司不定时更换收款二维码，请每次转账前先保存我公司二维码</p>
-        <p>2、长按二维码，系统会自动保存二维码到您的手机相册</p>
-        <p>3、启动微信，点击“扫一扫”，点击“从相册选取二维码”，选择二维码扫码支付</p>
-        <p>4、完成转账后，填写汇款支付宝账号，汇款金额，再点击“已完成转账，提交入款申请”</p>
-        <p>5、请转账完成后，再提交入款申请，避免额度延迟到账</p>
-        <p>6、请勿重复提交入款申请，如遇见任何问题请立即联系客服</p>
+      <div class="inWord" v-html="escapeChars(curRecharge.kindlyReminder)">
+        <!--<p>温馨提示：</p>-->
+        <!--<p>1、我公司不定时更换收款二维码，请每次转账前先保存我公司二维码</p>-->
+        <!--<p>2、长按二维码，系统会自动保存二维码到您的手机相册</p>-->
+        <!--<p>3、启动微信，点击“扫一扫”，点击“从相册选取二维码”，选择二维码扫码支付</p>-->
+        <!--<p>4、完成转账后，填写汇款支付宝账号，汇款金额，再点击“已完成转账，提交入款申请”</p>-->
+        <!--<p>5、请转账完成后，再提交入款申请，避免额度延迟到账</p>-->
+        <!--<p>6、请勿重复提交入款申请，如遇见任何问题请立即联系客服</p>-->
       </div>
     </div>
 </template>
@@ -70,6 +70,15 @@
             }
         },
       methods: {
+     escapeChars(str) {
+//      str = str.replace(/&/g, '&amp;');
+      str = str.replace(/&lt;/g, '<');
+      str = str.replace(/&gt;/g, '>');
+//      str = str.replace(/'/g, '&acute;');
+//      str = str.replace(/"/g, '&quot;');
+//      str = str.replace(/\|/g, '&brvbar;');
+      return str;
+    },
         copyText(){
             const vm = this
           vm.$toast('复制成功');
@@ -103,6 +112,7 @@
                   });
                 }else{
                   vm.curRecharge = response.data
+
                 }
 
 
