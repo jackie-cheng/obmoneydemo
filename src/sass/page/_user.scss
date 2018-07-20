@@ -1,363 +1,353 @@
 @charset "UTF-8";
 //登录页样式
 .mr-root .login-content {
-
-  .van-cell-group {
-    background-color: #efeff4;
-    width: 80%;
-    max-width: 8rem;
-    margin: 1rem auto;
-    .van-cell {
-      border: 1px solid #dcdfe6;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      height: 1.2rem;
-      line-height: 1.2rem;
-      max-height: 40px;
-      .van-cell__value {
-        //overflow: visible;
-      }
+    .van-icon {
+        line-height: 1.3;
     }
-
-  }
-  .userPhoto {
-    width: 2.4rem;
-    height: 2.4rem;
-    margin: 1.2rem auto;
-    img {
-      width: 2.4rem;
-      height: 2.4rem;
-      border-radius: 50%;
+    .van-cell-group {
+        background-color: #efeff4;
+        width: 80%;
+        max-width: 8rem;
+        margin: 1rem auto;
+        .van-cell {
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            max-height: 40px;
+            .van-cell__value {
+                //overflow: visible;
+            }
+        }
     }
-  }
-  .van-button {
-    width: 80%;
-    display: block;
-    max-width: 8rem;
-    margin: 0.4rem auto;
-    line-height: 1rem;
-    height: 1rem;
-    //max-height: 40px;
-
-  }
-  p {
-    //display: block;
-    width: 80%;
-    max-width: 8rem;
-    margin: 0 auto;
-
-    //margin-right:14px;
-    a:nth-child(1) {
-      float: left;
-      color: #606266;
+    .userPhoto {
+        width: 2.4rem;
+        height: 2.4rem;
+        margin: 1.2rem auto;
+        img {
+            width: 2.4rem;
+            height: 2.4rem;
+            border-radius: 50%;
+        }
     }
-    a:nth-child(2) {
-      float: right;
-      color: #606266;
+    .van-button {
+        width: 80%;
+        display: block;
+        max-width: 8rem;
+        margin: 0.4rem auto;
+        line-height: 1rem;
+        height: 1rem;
+        //max-height: 40px;
     }
-  }
-
+    p {
+        //display: block;
+        width: 80%;
+        max-width: 8rem;
+        margin: 0 auto;
+        //margin-right:14px;
+        a:nth-child(1) {
+            float: left;
+            color: #606266;
+        }
+        a:nth-child(2) {
+            float: right;
+            color: #606266;
+        }
+    }
 }
 
 //注册页样式
 .mr-root .register {
-  .demo-ruleForm {
-    .el-form-item {
-      width: 70%;
-      max-width: 8rem;
-      margin: 0 auto 0.5rem;
-
-      //line-height: 0.5rem;
-      .el-form-item__content {
-        width: 100%;
-        .el-input .el-input__inner {
-          height: 1rem;
-          max-height: 40px;
+    .demo-ruleForm {
+        .el-form-item {
+            width: 70%;
+            max-width: 8rem;
+            margin: 0 auto 0.5rem;
+            //line-height: 0.5rem;
+            .el-form-item__content {
+                width: 100%;
+                .el-input .el-input__inner {
+                    height: 1rem;
+                    max-height: 40px;
+                }
+            }
         }
-      }
+        .twoInput {
+            .el-input__inner {
+                width: 100%;
+            }
+            img {
+                height: 1rem;
+                line-height: 1rem;
+                padding: 0 0.1rem;
+            }
+        }
+        .threeInput {
+            .el-input__inner {
+                width: 100%;
+            }
+            .el-button {
+                height: 1rem;
+                line-height: 1rem;
+                padding: 0 0.1rem;
+                //max-height: 40px;
+                background-color: white;
+                border-color: red;
+                color: red;
+                border-top: 1px solid red;
+                border-bottom: 1px solid red;
+                margin: -10px -20px -10px -11px;
+            }
+        }
     }
-    .twoInput {
-      .el-input__inner {
+    .goRegis {
         width: 100%;
-      }
-      img {
-        height: 1rem;
-        line-height:1rem ;
-        padding: 0 0.1rem;
-      }
+        text-align: center;
+        .el-button--primary {
+            width: 70%;
+            max-width: 8rem;
+            background-color: #e1171b;
+            border-color: #e1171b;
+        }
+        .van-button {
+            height: 1rem;
+            max-height: 40px;
+        }
     }
-    .threeInput {
-      .el-input__inner {
-        width: 100%;
-      }
-      .el-button {
-        height: 1rem;
-        line-height:1rem ;
-        padding: 0 0.1rem;
-        //max-height: 40px;
-        background-color: white;
-        border-color: red;
-        color: red;
-        border-top: 1px solid red;
-        border-bottom: 1px solid red;
-        margin: -10px -20px -10px -11px;
-      }
-    }
-  }
-
-  .goRegis {
-    width: 100%;
-    text-align: center;
-    .el-button--primary {
-      width: 70%;
-      max-width: 8rem;
-
-      background-color: #e1171b;
-      border-color: #e1171b;
-    }
-    .van-button {
-      height: 1rem;
-      max-height: 40px;
-    }
-  }
-
 }
 
 //找回密码
 .forgetPass {
-  .van-cell-group {
-    background-color: #efeff4;
-    width: 80%;
-    max-width: 8rem;
-    margin: 1rem auto;
-    .van-cell {
-      border: 1px solid #dcdfe6;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      height: 1.2rem;
-      line-height: 1.2rem;
-      max-height: 40px;
-      .van-cell__value {
-        //overflow: visible;
-      }
-    }
-.forgetTwoInput{
-  img{
-    //height: 1rem;
-    //line-height:1rem ;
-    //padding: 0 0.1rem;
-  }
-}
-  }
-  .nextBut {
-    text-align: center;
-    .van-button {
-      width: 80%;
-      max-width: 8rem;
-      margin: 0 auto;
-      height: 1rem;
-      line-height: 1rem;
-    }
-  }
-
-}
-//修改密码
-.modifyPass{
-
-  .nextBut {
-    text-align: center;
-    .van-button {
-      width: 80%;
-      max-width: 8rem;
-      margin: 0 auto;
-      height: 1.1rem;
-      line-height: 1.1rem;
-    }
-  }
-}
-//用户首页
-.user_index_class{
-  .user_header{
-    position: relative;
-height: 5rem;
-    width: 100%;
-    color: white;
-    font-size: 0.4rem;
-    //padding: 0.5rem;
-    background-color:#e1171b;
-    .top_head{
-span:nth-child(1){
-  float: left;
-  margin-left: 0.5rem;
-  margin-top: 0.5rem;
-
-}
-      span:nth-child(2){
-float: right;
-margin-right: 0.5rem;
-        margin-top: 0.5rem;
-      }
-    }
-    .touxiang_header{
-      margin-top: 0.7rem;
-      margin-left: 0.5rem;
-      //text-align: center;
-      img{
-        float: left;
-        width: 1.7rem;
-        height: 1.7rem;
-        border-radius: 100%;
-        border: 1px solid white;
-        background-color: white;
-        margin-right: 0.4rem;
-      }
-      div{
-       padding: 0.3rem;
-        margin-left: 0.3rem;
-
-      }
-    }
-    .van-hairline--top-bottom::after{
-      border: none;
-    }
-    .van-tabbar--fixed{
-      position: absolute;
-
-      background-color: #912a26;
-
-      .van-tabbar-item{
-        color: white;
-        &:nth-child(1){
-          border-right: 0.1px solid white;
+    .van-cell-group {
+        background-color: #efeff4;
+        width: 80%;
+        max-width: 8rem;
+        margin: 1rem auto;
+        .van-cell {
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            max-height: 40px;
+            .van-cell__value {
+                //overflow: visible;
+            }
         }
-      }
+        .forgetTwoInput {
+            img {
+                //height: 1rem;
+                //line-height:1rem ;
+                //padding: 0 0.1rem;
+            }
+        }
+    }
+    .nextBut {
+        text-align: center;
+        .van-button {
+            width: 80%;
+            max-width: 8rem;
+            margin: 0 auto;
+            height: 1rem;
+            line-height: 1rem;
+        }
+    }
+}
 
+//修改密码
+.modifyPass {
+    .nextBut {
+        text-align: center;
+        .van-button {
+            width: 80%;
+            max-width: 8rem;
+            margin: 0 auto;
+            height: 1.1rem;
+            line-height: 1.1rem;
+        }
     }
-  }
-  .gongneng_list{
-    margin-top: 0.5rem;
-    .van-cell-group{
-      margin-bottom: 0.3rem;
+}
+
+//用户首页
+.user_index_class {
+    .user_header {
+        position: relative;
+        height: 5rem;
+        width: 100%;
+        color: white;
+        font-size: 0.4rem;
+        //padding: 0.5rem;
+        background-color: #e1171b;
+        .top_head {
+            span:nth-child(1) {
+                float: left;
+                margin-left: 0.5rem;
+                margin-top: 0.5rem;
+            }
+            span:nth-child(2) {
+                float: right;
+                margin-right: 0.5rem;
+                margin-top: 0.5rem;
+            }
+        }
+        .touxiang_header {
+            margin-top: 0.7rem;
+            margin-left: 0.5rem;
+            //text-align: center;
+            img {
+                float: left;
+                width: 1.7rem;
+                height: 1.7rem;
+                border-radius: 100%;
+                border: 1px solid white;
+                background-color: white;
+                margin-right: 0.4rem;
+            }
+            div {
+                padding: 0.3rem;
+                margin-left: 0.3rem;
+            }
+        }
+        .van-hairline--top-bottom::after {
+            border: none;
+        }
+        .van-tabbar--fixed {
+            position: absolute;
+            background-color: #912a26;
+            .van-tabbar-item {
+                color: white;
+                &:nth-child(1) {
+                    border-right: 0.1px solid white;
+                }
+            }
+        }
     }
-  }
+    .gongneng_list {
+        margin-top: 0.5rem;
+        .van-cell-group {
+            margin-bottom: 0.3rem;
+        }
+    }
 }
-.myInfo_touxiang{
-  padding:0.4rem;
-  color: #333;
-  font-size: 14px;
-  border-bottom: 1px solid #e5e5e5;
-  .van-uploader{
-    width: 100%;
-  }
-  img {
-    width: 1.6rem;
-    height: 1.6rem;
-    border-radius: 100%;
-    background-color: white;
-    float: right;
-    margin-right: 0.5rem;
-  }
+
+.myInfo_touxiang {
+    padding: 0.4rem;
+    color: #333;
+    font-size: 14px;
+    border-bottom: 1px solid #e5e5e5;
+    .van-uploader {
+        width: 100%;
+    }
+    img {
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 100%;
+        background-color: white;
+        float: right;
+        margin-right: 0.5rem;
+    }
 }
+
 //提现账户设置
-.accountSet_class{
-  .van-cell {
-    img{
-      width: 1rem;
-      height: 1rem;
+.accountSet_class {
+    .van-cell {
+        img {
+            width: 1rem;
+            height: 1rem;
+        }
+        .van-cell__title {
+            width: 5rem;
+            //margin: 0 auto;
+        }
     }
-    .van-cell__title {
-      width: 5rem;
-      //margin: 0 auto;
+    //.van-cell__value{
+    //
+    //  vertical-align: middle;
+    //  //line-height: 1.5rem;
+    //  span{
+    //    vertical-align: middle;
+    //
+    //  }
+    //}
+    .first_cell {
+        .van-cell__title {
+            img {
+                @extend %float;
+                width: 1.45rem;
+                @include height(true, 1.45rem, 1.45rem);
+                //border-radius: 8px;
+                margin-right: 8px;
+            }
+        }
     }
-  }
-  //.van-cell__value{
-  //
-  //  vertical-align: middle;
-  //  //line-height: 1.5rem;
-  //  span{
-  //    vertical-align: middle;
-  //
-  //  }
-  //}
-  .first_cell{
-    .van-cell__title{
-      img{
-        @extend %float;
-        width: 1.45rem;
-        @include height(true, 1.45rem, 1.45rem);
-        //border-radius: 8px;
-        margin-right: 8px;
-      }
+    //提现账户设置详情页
+    .frist_accountDel {
+        margin-top: 0.5rem;
     }
-  }
-  //提现账户设置详情页
-.frist_accountDel{
-  margin-top: 0.5rem;
-}
-  .van-button {
-    width: 80%;
-    display: block;
-    max-width: 8rem;
-    margin: 0.4rem auto;
-    line-height: 1rem;
-    height: 1rem;
-    //max-height: 40px;
-
-  }
+    .van-button {
+        width: 80%;
+        display: block;
+        max-width: 8rem;
+        margin: 0.4rem auto;
+        line-height: 1rem;
+        height: 1rem;
+        //max-height: 40px;
+    }
 }
 
 //添加银行卡
-.addBack_class{
-  .tishi_bank{
-    margin: 0.35rem 0.2rem;
-    font-size: 0.35rem;
-    color: #666;
-  }
-  .frist_accountDel{
-    margin-top: 0.35rem;
-  }
-  .van-button {
-    width: 80%;
-    display: block;
-    max-width: 8rem;
-    margin: 0.4rem auto;
-    line-height: 1rem;
-    height: 1rem;
-    //max-height: 40px;
-
-  }
-  .yd-cell-left{
-    min-width: 90px;
-  }
-  .van-field__control{
-    text-align: right;
-    font-family: $fontYaHei !important;
-    font-size: .35rem;
-  }
-  .yd-input{
-    input{
-      text-align: right!important;
+.addBack_class {
+    .tishi_bank {
+        margin: 0.35rem 0.2rem;
+        font-size: 0.35rem;
+        color: #666;
     }
-
-  }
-
-
+    .frist_accountDel {
+        margin-top: 0.35rem;
+    }
+    .van-button {
+        width: 80%;
+        display: block;
+        max-width: 8rem;
+        margin: 0.4rem auto;
+        line-height: 1rem;
+        height: 1rem;
+        //max-height: 40px;
+    }
+    .yd-cell-left {
+        min-width: 90px;
+    }
+    .van-field__control {
+        text-align: right;
+        font-family: $fontYaHei !important;
+        font-size: .35rem;
+    }
+    .yd-input {
+        input {
+            text-align: right!important;
+        }
+    }
 }
-.xuanzhong_bank{
-  color: red;font-weight: bold
-}
-.addbank{
-  .van-actionsheet__content{
-    max-height: 8rem!important;
-    overflow: scroll;
-  }
+
+.xuanzhong_bank {
+    color: red;
+    font-weight: bold
 }
 
-.user_bets{
-  font-family: $fontYaHei;
+.addbank {
+    .van-actionsheet__content {
+        max-height: 8rem!important;
+        overflow: scroll;
+    }
 }
-.touzhu_actionbac{
-  .van-actionsheet__header{
-    font-size: .4rem;
-  }
+
+.user_bets {
+    font-family: $fontYaHei;
+}
+
+.touzhu_actionbac {
+    .van-actionsheet__header {
+        font-size: .4rem;
+    }
 }

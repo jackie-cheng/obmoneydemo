@@ -4,7 +4,7 @@
   @extend %relative;
   background-color: #efeff4;
   height: 100%;
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto!important;
 }
 .van-tabbar-item--active{
@@ -33,7 +33,7 @@
 .bott_tabbarcla{
   font-family: $fontYaHei;
   .van-tabbar{
-    max-width: 800px;
+    max-width: 640px;
     margin: 0 auto;
     // position: absolute;
   }
@@ -43,23 +43,23 @@
   }
 }
 .yd-mask{
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto;
 
 
 }
 .yd-datetime{
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto;
   //position: absolute!important;
   left: auto!important;
 }
 .van-actionsheet{
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto;
 }
 .van-dialog{
-  max-width: 800px;
+  max-width: 640px;
   width: 65%;
 }
 

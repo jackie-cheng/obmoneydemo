@@ -58,7 +58,7 @@
 }
 
 %containerWidth {
-  @include containerWidth(750px, auto);
+  @include containerWidth(640px, auto);
 }
 
 // 定位 position relative obsolute fixed ...
@@ -108,7 +108,7 @@
 //最大宽度
 @mixin max-width {
   width: 100%;
-  max-width: 750px;
+  max-width: 640px;
 }
 
 // 文字设置
