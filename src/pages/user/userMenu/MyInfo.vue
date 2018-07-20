@@ -70,7 +70,11 @@ const vm = this
 
       onRead(file) {
         const vm = this
-
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 10000,       // 持续展示 toast
+          message: '上传中...'
+        });
         lrz(file.file, {
           quality: 0.5
         })
@@ -100,7 +104,9 @@ const vm = this
                 } else {
                   vm.$toast('请求失败');
                 }
+                toast1.clear();
               }).catch(response => {
+              toast1.clear();
               vm.$toast('请求失败');
             })
           })
