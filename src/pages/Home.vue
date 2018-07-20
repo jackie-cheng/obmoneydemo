@@ -116,8 +116,8 @@
           </template> -->
           <div class="sd_home_room_pic" slot="icon" v-if="r.roomIcon==''">
           </div>
-          <div class="sd_home_room_picteo" slot="icon">
-            <img :src="'http://47.106.11.246/'+r.roomIcon" alt="" v-if="r.roomIcon!=''">
+          <div class="sd_home_room_picteo" slot="icon" v-if="r.roomIcon!=''">
+            <img :src="'http://47.106.11.246/'+r.roomIcon" alt="">
           </div>
         </van-cell>
       </van-cell-group>
@@ -130,7 +130,7 @@
         <li>免责声明</li>
         <li>技术支持</li>
       </ul>
-
+      <div class="willy_dx">— 已经到底了，没有更多内容了 —</div>
     </section>
 
 

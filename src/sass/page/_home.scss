@@ -3,15 +3,15 @@
   @extend %relative;
   border: none;
   background-color: #e1171b;
-  font-size: 0.35rem;
+  font-size: (30rem/75);
   .van-icon {
     transform: rotate(90deg);
-    font-size: 0.3rem;
+    font-size: (30rem/75);
   }
 }
 .homeLogig{
-  height: 1.3rem;
-  line-height: 1.3rem;
+  height: (88rem/75);
+  line-height: (88rem/75);
   a{
     color: white;
   }
@@ -26,21 +26,27 @@
 .willy_notice{
   border-bottom: 1px solid #efefef;
   padding: 0 .6rem 0 .2rem;
-  height: 1.2rem;
-  line-height: 1.2rem;
+  height: (87rem/75);
+  line-height: (87rem/75);
   .van-icon-arrow:before{
     font-size: .3rem !important;
     color: #999 !important;
   }
   .van-notice-bar__content{
     color: #000;
-    font-size: .3rem;
+    font-size: (28rem/75);
   }
   .van-notice-bar__wrap{
     height: 100%;
   }
   .van-notice-bar__left-icon{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
     & > img{
+      width: (48rem/75);
+      height: (48rem/75);
       vertical-align: text-top !important;
     }
   }
@@ -119,12 +125,12 @@
 .ob_index_imgs {
   border-bottom: 1px solid $border_color;
   .van-swipe{
-    min-height: 3rem;
+    height: (320rem/75);
   }
   .van-swipe-item {
-    min-height: 3.4rem;
+    height: (320rem/75);
     img{
-      min-height: 3.4rem;
+      height: (320rem/75);
       width: 100%;
     }
   }
@@ -132,34 +138,37 @@
 .van-nav-bar__left{
   // position: initial;
   margin: 0;
-  height: 1.3rem;
-  line-height: 1.3rem;
+  height: (88rem/75);
+  line-height: (88rem/75);
   text-align: center;
 }
 .van-nav-bar__right{
   // position: initial;
-  height: 1.3rem;
+  height: (88rem/75);
   right: 3px;
   font-size: .3rem;
 }
 .home_head{
   .van-icon-arrow{
     &::before{
-      font-size: .3rem;
+      font-size: (30rem/75);
     }
   }
 }
 .van-nav-bar, .home_head{
-  height: 1.2rem !important;
+  height: (88rem/75) !important;
   display: flex;
   padding: 0 0 0 .2rem;
   box-sizing: border-box;
   align-items: center;
   .willy_userInfo{
     display: flex;
-    height: 1.2rem;
+    height: (88rem/75);
     line-height: 1.2rem;
     align-items: center;
+    .van-icon::before{
+      font-size: (40rem/75) !important;
+    }
     .van-icon-contact{
       display: flex;
       align-items: center;
@@ -184,29 +193,30 @@
 }
 //首页中间app
 .ob_home_apps {
-  padding: 0.4rem 0.2rem 0.3rem 0.2rem;
-  margin: 0 0 .1rem 0;
+  padding: (50rem/75) 0.2rem (50rem/75) 0.2rem;
+  margin: 0 0 (16rem/75) 0;
   background: #fff;
   @extend %textAlign;
   border-bottom: 0.1rem solid #efeff4;
   ul {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     li {
       @extend %display;
       .ob_home_app {
-        width: 1.2rem;
-        @include height(true, 1.2rem, 1.2rem);
-        border-radius: 8px;
+        width: (60rem/37.5);
+        height: (60rem/37.5);
+        line-height: (60rem/37.5);
+        border-radius: (28rem/75);
         @extend %textAlign;
         margin: 0 0 .2rem 0;
         .addpeople_icon::before{
-          font-size: .65rem !important;
+          font-size: 1rem !important;
         }
         & > em{
           font-size: 0 !important;
           &:before{
-            font-size: .7rem !important;
+            font-size: 1.1rem !important;
           }
         }
         &.app_download {
@@ -224,6 +234,7 @@
       }
       span {
         @extend %fontSize12;
+        color: #000 !important;
       }
 
     }
@@ -241,9 +252,9 @@
     margin: 0 0 .16rem 0;
   }
   .van-cell {
-    line-height: 1.5;
-    padding: .35rem .3rem;
-    font-size: .35rem;
+    padding: (24rem/75) .3rem;
+    font-size: (26rem/75);
+    line-height: (26rem/75);
     .van-cell__label{
       font-size: .3rem;
     }
@@ -251,11 +262,12 @@
       width: 5rem;
       & > span {
         color: #000;
-        font-size: .4rem !important;
+        font-size: (30rem/75) !important;
         font-weight: bold;
       }
       .van-cell__label{
         color: red;
+        padding: (23rem/75) 0 0 0;
       }
       .willy_con{
         font-size: .3rem;
@@ -273,33 +285,24 @@
     align-items: center;
     justify-content: flex-end;
     vertical-align: middle;
-    //line-height: 1.5rem;
     span{
      vertical-align: middle;
      display: flex;
      align-items: center;
      border:1px solid #efefef;
-     padding: .06rem .18rem;
-     border-radius: 7px;
-    //  &::after{
-    //    content: '\F006';
-    //    font-size: .3rem;
-    //    margin: 0 0 0 .1rem;
-    //    display: inline-block;
-    //    font: normal normal normal 14px/1 vant-icon;
-    //    color: rgb(233, 230, 230);
-    //  }
+     padding: .2rem .18rem;
+     border-radius: (10rem/75);
     }
   }
 }
 
 .sd_home_room_pic {
   @extend %float;
-  width: 1.45rem;
-  @include height(true, 1.45rem, 1.45rem);
+  width: (120rem/75);
+  height: (120rem/75);
   background-color: $jige_color;
-  border-radius: 8px;
-  margin-right: 8px;
+  border-radius: (18rem/75);
+  margin-right: (18rem/75);
 
 }
 .sd_home_room_set {
@@ -312,17 +315,16 @@
 
 }
 .sd_home_room_picteo{
-  border-radius: 8px;
-  margin-right: 8px;
+  border-radius: (18rem/75);
+  margin-right: (18rem/75);
   overflow: hidden;
-  width: 1.45rem;
-  @include height(true, 1.45rem, 1.45rem);
-  // background: #f29019;
+  width: (120rem/75);
+  height: (120rem/75);
   border: 1px solid #efeff4;
   img{
     @extend %float;
-    width: 1.45rem;
-    @include height(true, 1.45rem, 1.45rem);
+    width: 100%;
+    height: 100%;
   }
 }
 .daDan_color{
@@ -336,13 +338,10 @@
 }
 //底部
 .ob_footer {
-  position: fixed;
-  bottom: 1.5rem;
   width: 100%;
-  background: #efeff4;
   max-width: 800px;
+  padding: (40rem/75) 0 0 0;
   ul {
-    padding: 0.25rem;
     @extend %textAlign;
     li {
       @extend %display;
@@ -353,6 +352,13 @@
     li + li {
       margin-left: 0.8rem;
     }
+  }
+  .willy_dx{
+    width: 100%;
+    font-size: (28rem/75);
+    color: #abaaaa;
+    padding: (40rem/75) 0 0 0;
+    text-align: center;
   }
 }
 //房间顶部
@@ -1395,7 +1401,7 @@ display: inherit;
     justify-content: center;
   }
   .van-nav-bar__title{
-    font-size: .35rem;
+    font-size: (33rem/75);
   }
   .van-nav-bar__text{
     font-size: .9rem !important;
@@ -1431,6 +1437,9 @@ display: inherit;
     height: auto !important;
     .van-tabbar-item{
       padding: .3rem 0;
+      &:active{
+        background: #ffd1d2;
+      }
     }
     .van-tabbar-item__icon{
       font-size: .55rem !important;
@@ -1442,10 +1451,11 @@ display: inherit;
 }
 .willy_mr_root{
   padding: 0 0 2.5rem 0;
+  min-height: 100%;
   .van-notice-bar{
     background: #fff;
   }
   .van-nav-bar__title{
-    font-size: .35rem;
+    font-size: (33rem/75);
   }
 }
