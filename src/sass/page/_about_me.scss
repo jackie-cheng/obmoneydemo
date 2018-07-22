@@ -80,7 +80,11 @@
   width: 100%;
   background-color: #fff;
   overflow: scroll;
+  .van-list{
+    width: 100%;
+  }
   tr {
+    width: 100%;
     @extend %textAlign;
     @include height(true, 1.5rem, 1.5rem);
     @extend %fontSize16;
@@ -120,5 +124,18 @@
       background-color: #c7c6cb;
       opacity: 0.7;
     }
+  }
+}
+.willy_zwjl{
+  width: 100%;
+  text-align: center;
+  height: auto;
+  & > div {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: (20rem/75);
+    color: #000;
+    opacity: .6;
   }
 }

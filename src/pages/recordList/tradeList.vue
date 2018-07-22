@@ -17,6 +17,11 @@
             <yd-datetime   v-model="datetimeEnd" type="date" :start-date="datetimeStar"></yd-datetime>
             <span class="search_but" @click="searchList(),page=1">查询</span>
           </div>
+            <van-list
+            v-model="loading"
+            :finished="finished"
+            @load="searchList"
+            >
           <table class="ob_pay_record_table" >
             <tr>
               <th width="40%">时间</th>
@@ -24,11 +29,6 @@
               <th width="20%">金额</th>
               <th width="20%">余额</th>
             </tr>
-            <van-list
-            v-model="loading"
-            :finished="finished"
-            @load="searchList"
-            >
 
             <tr v-for="trade in tradeData" v-if="tradeData&&tradeData.length>0" >
               <td width="40%">{{trade.changeTime.slice(0,16)}}</td>
@@ -38,12 +38,12 @@
               <td width="20%">{{trade.change}}</td>
               <td width="20%" class="pay_money">{{trade.resultBlnc}}</td>
             </tr>
-            </van-list>
           </table>
+            </van-list>
 
 
         </div>
-        <div  v-if="tradeData&&tradeData.length==0">
+        <div class="willy_zwjl"  v-if="tradeData&&tradeData.length==0">
           <div style="position: absolute;top: 5rem">暂无记录</div>
         </div>
       </van-tab>
