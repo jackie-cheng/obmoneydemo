@@ -1,7 +1,7 @@
 <template>
   <div class="mr-root willy_mr_root">
     <!--<Header></Header>-->
-    <van-nav-bar title="7-19晚更新" class="home_head">
+    <van-nav-bar title="7-20午更新" class="home_head">
       <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
         {{roadSelect}}
         <van-icon name="arrow"/>
@@ -11,12 +11,18 @@
       <!--<option value="">线路一</option>-->
       <!--</select>-->
       <div slot="right">
-        <van-icon name="contact" style="margin-right: 1.78rem"/>
-        <template v-if="!nullLogin&&userData&&!$_.isEmpty(userData)">
-
-          <span style="position: absolute;right: 0.5rem;top:-0.2rem;">{{userData.username}}</span>
-          <span style="position: absolute;right: 0.5rem;top:0.2rem" v-if="moneyData&&!$_.isEmpty(moneyData)">￥{{moneyData.balance}}</span>
-          <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox">
+        <template class="willy_useInfo" v-if="!nullLogin&&userData&&!$_.isEmpty(userData)">
+          <div class="willy_userInfo">
+            <van-icon name="contact"/>
+            <div class="willy_userInfo_nm">
+              <span >{{userData.username}}</span>
+              <span v-if="moneyData&&!$_.isEmpty(moneyData)">￥{{moneyData.balance}}</span>
+            </div>
+            <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox">
+            <!-- <span style="position: absolute;right: 0.5rem;top:-0.2rem;">{{userData.username}}</span>
+            <span style="position: absolute;right: 0.5rem;top:0.2rem" v-if="moneyData&&!$_.isEmpty(moneyData)">￥{{moneyData.balance}}</span>
+            <img src="../assets/maohao.png" style="width: 0.6rem;height: 0.6rem;" @click="showDownBox()" ref="DownBox"> -->
+          </div>
         </template>
       </div>
       <div slot="right" class="homeLogig" v-if="nullLogin">
@@ -46,7 +52,6 @@
           <!-- <img :src="'http://47.106.11.246/'+image.pictureAddress"/> -->
           <img :src="require('../assets/w_lb.jpg')"/>
         </van-swipe-item>
-
       </van-swipe>
       <van-swipe :autoplay="3000" v-else>
         <van-swipe-item to="/notice">1</van-swipe-item>
@@ -103,16 +108,16 @@
     <!--房间list-->
     <section class="ob_home_lists">
       <van-cell-group v-for="r in roomList" :key="r.no">
-        <!-- <van-cell :title="r.name" value="进入房间" :label="'当前在线：'+r.count+'人'" @click="intoRoom(r)"> -->
-        <van-cell value="进入房间" @click="intoRoom(r)">
-          <template slot="title">
+        <van-cell :title="r.name" value="进入房间" :label="'在线人数：'+r.count+'人'" @click="intoRoom(r)">
+        <!-- <van-cell value="进入房间" @click="intoRoom(r)"> -->
+          <!-- <template slot="title">
             <span class="van-cell-text">{{r.name}}</span>
-            <div class="willy_con">当前在线：<b>{{r.count}}人</b></div>
-          </template>
+            <span class="willy_con">在线人数：<b>{{r.count}}人</b></span>
+          </template> -->
           <div class="sd_home_room_pic" slot="icon" v-if="r.roomIcon==''">
           </div>
-          <div class="sd_home_room_picteo" slot="icon">
-            <img :src="'http://47.106.11.246/'+r.roomIcon" alt="" v-if="r.roomIcon!=''">
+          <div class="sd_home_room_picteo" slot="icon" v-if="r.roomIcon!=''">
+            <img :src="'http://47.106.11.246/'+r.roomIcon" alt="">
           </div>
         </van-cell>
       </van-cell-group>
@@ -125,7 +130,7 @@
         <li>免责声明</li>
         <li>技术支持</li>
       </ul>
-
+      <div class="willy_dx">— 已经到底了，没有更多内容了 —</div>
     </section>
 
 

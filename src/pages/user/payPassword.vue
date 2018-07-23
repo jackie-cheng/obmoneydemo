@@ -6,7 +6,7 @@
       @click-left="onClickLeft"
 
     />
-    <!--<div style="max-width: 800px">-->
+    <!--<div style="max-width: 640px">-->
 
       <!--&lt;!&ndash; 密码输入框 &ndash;&gt;-->
       <!--<span style="position: relative">-->

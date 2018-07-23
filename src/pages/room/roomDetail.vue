@@ -103,7 +103,7 @@
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="" class="touxiangImg">
+              <img :src="'http://47.106.11.246/'+mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
@@ -117,7 +117,7 @@
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p class="willy_Home_name" v-text="mess.sendernickname" style="text-align: left;margin-left: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="" class="touxiangImg">
+              <img :src="'http://47.106.11.246/'+mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
@@ -188,7 +188,7 @@
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="" class="touxiangImg">
+              <img :src="'http://47.106.11.246/'+mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
@@ -202,7 +202,7 @@
               <span v-text="mess.mySendTime" >2018-05-29 09:21</span></p>
             <p v-text="mess.sendernickname" style="text-align: right;margin-right: 1rem;color: #ce5c4d">张三</p>
             <a v-if="mess.photourl">
-              <img :src="mess.photourl" alt="" class="touxiangImg">
+              <img :src="'http://47.106.11.246/'+mess.photourl" alt="" class="touxiangImg">
             </a>
             <a v-else>
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
@@ -381,6 +381,7 @@
           "message": bet,
           'mySendTime': curTime,
           'sendernickname': vm.userData.username,
+          'photourl':vm.userData.photourl,
           "betsSend": true
         }
 
@@ -631,12 +632,14 @@ if(vm.newstr==''){
           "senderPhone": vm.userData.phone,
           "message": vm.newstr,
           'mySendTime': curTime,
-          'sendernickname': vm.userData.username
+          'sendernickname': vm.userData.username,
+          'photourl':vm.userData.photourl
         }
 
         vm.websock.send(JSON.stringify(sendData));
 
         vm.mySendMessage.push(sendData)
+        console.log(vm.mySendMessage)
       },
       websocketclose(e){  //关闭
         console.log("connection closed (" + e.code + ")");

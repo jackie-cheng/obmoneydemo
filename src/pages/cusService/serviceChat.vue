@@ -209,6 +209,7 @@
       },
       websocketonmessage(e){ //数据接收
         const vm = this
+        console.log('收到的最初始消息',e)
         vm.redata = JSON.parse(e.data.msgContent);
 
         console.log('收到的',vm.redata)
