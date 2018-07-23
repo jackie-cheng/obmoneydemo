@@ -8,6 +8,7 @@
 <script>
   import Vue from 'vue'
   // import 'lib-flexible'
+  import 'hammer-touchemulator/touch-emulator'
   import './utils/lib-flexible.js'
   import Vant from 'vant';
   import tabbar from './components/tabbar'

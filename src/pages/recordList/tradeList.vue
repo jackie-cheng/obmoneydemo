@@ -109,11 +109,11 @@
       },
       searchList(){
         const vm = this
-//        const toast1 = vm.$toast.loading({
-//          mask: true,
-//          duration: 5000,       // 持续展示 toast
-//          message: ''
-//        });
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 5000,       // 持续展示 toast
+          message: ''
+        });
         let params={
           token: vm.userData.token,
           pageNo:vm.page,
@@ -125,7 +125,7 @@
         let url = '/user/bet/getUserMoneyChangeList'
         vm.$axios.get(url,{params})
           .then(response => {
-//            toast1.clear();
+            toast1.clear();
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
