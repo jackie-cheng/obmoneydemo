@@ -109,7 +109,7 @@
     <section class="ob_home_lists">
       <van-cell-group v-for="r in roomList" :key="r.no">
         <van-cell :title="r.name" value="进入房间" :label="'在线人数：'+r.count+'人'" @click="intoRoom(r)">
-        
+
           <div class="sd_home_room_pic" slot="icon" v-if="r.roomIcon==''">
           </div>
           <div class="sd_home_room_picteo" slot="icon" v-if="r.roomIcon!=''">
