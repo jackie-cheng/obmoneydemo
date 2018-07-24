@@ -503,13 +503,16 @@
         } else if (vm.roomData.guessFlag != '1') {
           vm.$toast('当前房间聊天已关闭');
           return
-        }  else {
+        }
+                else if (!vm.$_.isEmpty(vm.userData) && vm.userData.chatstatus == '1') {
+          vm.$toast('您已被禁言,联系管理处理');
+          return
+        }
+
+        else {
           vm.threadPoxi()
         }
-//        else if (!vm.$_.isEmpty(vm.userData) && vm.userData.chatstatus == '1') {
-//          vm.$toast('您已被禁言,联系管理处理');
-//          return
-//        }
+
 
 
 

@@ -124,7 +124,7 @@
         let params={
           token: vm.userData.token,
           pageNo:vm.page,
-          pageSize:20,
+          pageSize:10,
           startDate:vm.datetimeStar,
           endDate:vm.datetimeEnd,
           type:vm.activeType,
@@ -151,7 +151,7 @@ console.log("ff",_list)
                 vm.list  = [... vm.list, ..._list]
 
                 if (_list.length < 10 ) {
-//                    console.log("10SSS")
+                    console.log("10SSS")
                   /* 所有数据加载完毕 */
 //                  this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
                  return;
