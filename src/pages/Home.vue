@@ -49,15 +49,15 @@
     <section class="ob_index_imgs">
       <van-swipe :autoplay="3000" v-if="homeData&&homeData.length>0">
         <van-swipe-item to="/notice" v-for="(image,index) in homeData" :key="index">
-          <!-- <img :src="'http://47.106.11.246/'+image.pictureAddress"/> -->
-          <img :src="require('../assets/w_lb.jpg')"/>
+           <img :src="'http://47.106.11.246'+image.pictureAddress"/>
+          <!--<img :src="require('../assets/w_lb.jpg')"/>-->
         </van-swipe-item>
       </van-swipe>
       <van-swipe :autoplay="3000" v-else>
-        <van-swipe-item to="/notice">1</van-swipe-item>
-        <van-swipe-item to="/notice">2</van-swipe-item>
-        <van-swipe-item to="/notice">3</van-swipe-item>
-        <van-swipe-item to="/notice">4</van-swipe-item>
+        <!--<van-swipe-item to="/notice">1</van-swipe-item>-->
+        <!--<van-swipe-item to="/notice">2</van-swipe-item>-->
+        <!--<van-swipe-item to="/notice">3</van-swipe-item>-->
+        <!--<van-swipe-item to="/notice">4</van-swipe-item>-->
       </van-swipe>
     </section>
     <!--消息提示-->
@@ -167,7 +167,8 @@ vm.obAllData()
         vm.nullLogin = true
       } else {
         vm.userData = JSON.parse(localStorage.getItem('userInfo'))
-vm.obMoney()
+        vm.initWebSocket()
+//vm.obMoney()
       }
 
       const toast1 = vm.$toast.loading({
@@ -205,6 +206,61 @@ vm.obMoney()
       document.querySelector('body').removeEventListener('click', this.handleBodyClick);
     },
     methods: {
+      initWebSocket(){
+          const vm = this
+          vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=9&token="+vm.userData.token);
+        console.log(vm.websock)
+        vm.websock.onmessage = vm.websocketonmessage;
+
+
+//        //若是ws开启状态
+//        vm.websock.onopen = () => {
+//          // Web Socket 已连接上，使用 send() 方法发送数据
+//
+//
+//          vm.websock.send('6666');
+//console.log('发的消息', 888)
+//
+//        }
+
+        // 路由跳转时结束websocket链接
+//        vm.$router.afterEach(function () {
+//          vm.websock.onclose
+//        })
+      },
+      websocketonmessage(e){ //数据接收
+        const vm = this
+
+        let pullData = JSON.parse(e.data)
+        console.log('收到的封禁信息', pullData)
+//        type 有01 02 03 分别是 禁言、封号01、封ip03 ，status是'0' 或者'1'
+        if (pullData.type == '02' && pullData.status == '1') {
+          vm.$dialog.alert({
+            message: '该账户已被封号'
+          }).then(() => {
+            localStorage.removeItem('userInfo')
+            vm.$router.push('/login')
+          })
+        } else if (pullData.type == '03' && pullData.status == '1') {
+          vm.$dialog.alert({
+            message: '该ip已被封禁'
+          }).then(() => {
+            localStorage.removeItem('userInfo')
+            vm.$router.push('/login')
+          })
+        } else if (pullData.type == '01' && pullData.status == '1') {
+          if (!vm.$_.isEmpty(vm.userData)) {
+            vm.userData.chatstatus = '1'
+            localStorage.setItem('userInfo', JSON.stringify(vm.userData))
+          }
+        } else if (pullData.type == '01' && pullData.status == '0') {
+          if (!vm.$_.isEmpty(vm.userData)) {
+            vm.userData.chatstatus = '0'
+            localStorage.setItem('userInfo', JSON.stringify(vm.userData))
+          }
+
+        }
+      },
         //获取首页数据
       obAllData(){
           const vm = this
