@@ -15,44 +15,36 @@
 </template>
 
 <script>
-  export default {
-    name: 'tabbar',
-    data() {
-      return {
-        active:this.activeNum
+export default {
+  name: 'tabbar',
+  data() {
+    return {
+      active: this.activeNum
+    }
+  },
+  props: ['activeNum'],
+  methods: {},
+  created() {
+    // document.body.addEventListener('touchstart', function() {})
+  },
+  mounted() {
+    const vm = this
+    vm.$watch('active', () => {
+      if (vm.active == 0) {
+        vm.$router.push('/')
+      } else if (vm.active == 1) {
+        vm.$router.push('/wallet_in')
+      } else if (vm.active == 2) {
+        vm.$router.push('/discount')
+      } else if (vm.active == 3) {
+        vm.$router.push('/customerSerVice')
+      } else if (vm.active == 4) {
+        vm.$router.push('/user')
       }
-    },
-    props:['activeNum'],
-    methods:{
-
-    },
-    created(){
-
-    },
-    mounted() {
-      const vm = this
-      vm.$watch('active',()=>{
-        if(vm.active==0){
-          vm.$router.push('/')
-        }else if(vm.active==1){
-          vm.$router.push('/wallet_in')
-        }
-        else if(vm.active==2){
-          vm.$router.push('/discount')
-        }
-        else if(vm.active==3){
-          vm.$router.push('/customerSerVice')
-        }
-        else if(vm.active==4){
-          vm.$router.push('/user')
-        }
-      })
-    },
+    })
   }
-
+}
 </script>
 
 <style>
-
-
 </style>
