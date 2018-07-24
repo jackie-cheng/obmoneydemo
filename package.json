@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.3.6",
+    "hammer-touchemulator": "^0.0.2",
     "lib-flexible": "^0.3.2",
     "lodash": "^4.17.5",
     "lrz": "^4.9.40",

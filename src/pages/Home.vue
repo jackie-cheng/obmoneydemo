@@ -79,7 +79,7 @@
           <div class="ob_home_app app_download">
             <em class="iconfont download_icon"></em>
           </div>
-          <span>App下载</span>
+          <span>APP下载</span>
 
         </li>
         <li>
