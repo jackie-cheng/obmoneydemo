@@ -8,7 +8,7 @@
         <th width="30%">时间</th>
         <th width="20%">类型</th>
         <th width="30%">金额</th>
-        <th width="20%">状态</th>
+        <th width="20%">余额</th>
       </tr>
       <!--<tr v-for="n in 4">-->
         <!--<td width="30%">2018-4-40</td>-->
@@ -19,12 +19,12 @@
       <!--</tr>-->
       <tr v-for="trade in list" v-if="list&&list.length>0">
 
-        <td width="30%" >
+        <td width="40%" >
           <span>{{trade.changeTime.slice(0,16)}} </span>
         </td>
         <td width="20%" > {{allType[trade.betType]}}  </td>
         <!--如果为充值，则颜色添加红色，添加样式pay_money-->
-        <td width="30%" class="pay_money">{{trade.change}}</td>
+        <td width="20%" class="pay_money">{{trade.changeAmt}}</td>
         <td width="20%" class="pay_money">{{trade.resultBlnc}}</td>
       </tr>
     </table>
@@ -45,9 +45,16 @@
         allType:{
           bet:'下注',
           cancelBet:'取消下注',
-          bonus:'中奖',
           recharge:'充值',
-          withdraw:'提现',
+          bonus:'中奖',
+         downchange:'提现',
+          supplement:'补分',
+          koufeng:'扣分',
+          songfen:'送分',
+          huishui:'回水',
+//          betAll:'下注相关/下注取消下注奖金',
+//          inOut:'充值提现'
+
         }
       }
     },
@@ -65,7 +72,7 @@
         let params={
           token: vm.userData.token,
           pageNo:vm.page,
-          pageSize:10,
+          pageSize:20,
           startDate:null,
           endDate:null,
           type:'inOut',

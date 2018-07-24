@@ -1,7 +1,7 @@
 <template>
   <div class="mr-root willy_mr_root">
     <!--<Header></Header>-->
-    <van-nav-bar title="7-23午更新" class="home_head">
+    <van-nav-bar title="7-24午更新" class="home_head">
       <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
         {{roadSelect}}
         <van-icon name="arrow"/>
@@ -211,7 +211,7 @@ vm.obMoney()
         vm.$axios.get(`/api/OperationalSetController/queryOperationalSetInfo`)
           .then(response => {
 //            toast1.clear();
-            console.log(response.data)
+//            console.log(response.data)
             if (response.status == 200 && response.data) {
               vm.AllhomeData = response.data
 

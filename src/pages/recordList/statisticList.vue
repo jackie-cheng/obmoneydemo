@@ -7,7 +7,7 @@
       <yd-datetime   v-model="datetimeStar" :start-date="starSevenTime"   type="date" style=" background-color: #efeff4;"></yd-datetime>
       <span style="margin: 0 0.2rem">至</span>
       <yd-datetime   v-model="datetimeEnd" type="date" :start-date="datetimeStar" style=" background-color: #efeff4;"></yd-datetime>
-      <span class="search_but" @click="searchList(),page=1">查询</span>
+      <span class="search_but" @click="tradeData=[],page=1,searchList()">查询</span>
     </div>
 <!--总数-->
 <div class="tab_statis" v-if="statisticData&&statisticData!=null">
@@ -30,7 +30,7 @@
 
 </div>
     <van-tabs v-model="activeIndex" :swipe-threshold="4">
-      <van-tab v-for="(room,index) in roomList" :key="index" :title="room.roomLotteryTicketTypeContext" v-if="roomList&&roomList.length>0">
+      <van-tab v-for="(room,index) in roomList" :key="index" :title="room.name" v-if="roomList&&roomList.length>0">
 
         <!--交易记录-->
         <div>
@@ -56,13 +56,12 @@
             </tr>
           </table>
         </div>
-        <div  v-if="tradeData&&tradeData.length==0">
-          <div style="position: absolute;top: 5rem">暂无记录</div>
-        </div>
       </van-tab>
     </van-tabs>
 
-
+    <div  v-if="tradeData&&tradeData.length==0&&!thisNullData" style=" background-color: #efeff4;padding: 0.2rem 0.2rem">
+      <div>暂无记录</div>
+    </div>
 
 
   </div>
@@ -78,10 +77,10 @@
       return {
         loading: false,
         finished: false,
-
+        thisNullData:false,
         roomList:[
           {
-            roomLotteryTicketTypeContext:"全部",
+            name:"全部",
             roomnumber:null
           }
         ],
@@ -120,6 +119,7 @@
       vm.$watch('activeIndex',()=>{
           vm.activeRoomNumber=vm.roomList[vm.activeIndex].roomnumber
         vm.page=1
+        vm.tradeData=[]
         vm.searchList()
       }, {deep: true})
 
@@ -127,7 +127,7 @@
     methods: {
       searchList(){
         const vm = this
-        vm.tradeData=[]
+        vm.thisNullData=true
         const toast1 = vm.$toast.loading({
           mask: true,
           duration: 5000,       // 持续展示 toast
@@ -137,7 +137,7 @@
           token: vm.userData.token,
           roomId: vm.activeRoomNumber,
           pageNo:vm.page,
-          pageSize:10,
+          pageSize:20,
           startDate:vm.datetimeStar,
           endDate:vm.datetimeEnd,
         }
@@ -145,6 +145,7 @@
         vm.$axios.get(url,{params})
           .then(response => {
             toast1.clear();
+            vm.thisNullData=false
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
@@ -171,6 +172,7 @@
               vm.$toast('获取信息失败');
             }
           }).catch(response => {
+          vm.thisNullData=false
           vm.$toast('获取信息失败');
         })
 

@@ -6,24 +6,7 @@
       @click-left="onClickLeft"
 
     />
-    <!--<div style="max-width: 640px">-->
 
-      <!--&lt;!&ndash; 密码输入框 &ndash;&gt;-->
-      <!--<span style="position: relative">-->
-      <!--<yd-keyboard v-model="showKeyboard" :callback="done1" ref="keyboardDemo1" :title="'支付密码为6位数字'"-->
-                   <!--:input-text="'请设置您的支付密码'"-->
-      <!--&gt;</yd-keyboard>-->
-        <!--</span>-->
-    <!--</div>-->
-
-
-    <!-- 数字键盘 -->
-    <!--<van-number-keyboard-->
-      <!--:show="showKeyboard"-->
-      <!--@input="onInput"-->
-      <!--@delete="onDelete"-->
-      <!--@blur="showKeyboard = false"-->
-    <!--/>-->
     <div class="modifyPass">
       <yd-cell-group style="margin-top: 0.6rem">
         <yd-cell-item>
@@ -65,8 +48,8 @@
   /* 使用px：import {Input} from 'vue-ydui/dist/lib.px/input'; */
 
   Vue.component(Input.name, Input);
-  import {KeyBoard} from 'vue-ydui/dist/lib.px/keyboard';
-  Vue.component(KeyBoard.name, KeyBoard);
+//  import {KeyBoard} from 'vue-ydui/dist/lib.px/keyboard';
+//  Vue.component(KeyBoard.name, KeyBoard);
   export default {
 
     name: 'modifyPass',
@@ -75,7 +58,6 @@
         userData:null,
         payPass:'',
         value: '',
-        showKeyboard: true,
 //        phoneNum:'',
 
       }
@@ -107,22 +89,7 @@
       onClickLeft() {
         this.$router.go(-1)
       },
-      done1(val) {
-        const vm = this
-        console.log('输入的密码是：' + val);
-        const toast1 = vm.$toast.loading({
-          mask: true,
-          duration: 3000,       // 持续展示 toast
-          message: '密码提交中...'
-        });
-//        this.$dialog.loading.open('验证支付密码');
-//
-//        /* 模拟异步验证密码 */
-//        setTimeout(() => {
-//          this.$refs.keyboardDemo1.$emit('ydui.keyboard.error', '对不起，您的支付密码不正确，请重新输入。');
-//          this.$dialog.loading.close();
-//        }, 2000);
-      },
+
 
 //     修改密码
       obNewPass(){
@@ -143,6 +110,17 @@
           .then(response => {
 //            toast1.clear();
             if (response.status == 200) {
+              if(response.data.statusCode==-100){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else
               if (response.data.status == 'success') {
 
                 vm.$toast.success('修改成功');

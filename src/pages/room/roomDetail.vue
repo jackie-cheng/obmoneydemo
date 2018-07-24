@@ -503,13 +503,14 @@
         } else if (vm.roomData.guessFlag != '1') {
           vm.$toast('当前房间聊天已关闭');
           return
-        } else if (!vm.$_.isEmpty(vm.userData) && vm.userData.chatstatus == '1') {
-          vm.$toast('该账号已被禁言');
-          return
-        }
-        else {
+        }  else {
           vm.threadPoxi()
         }
+//        else if (!vm.$_.isEmpty(vm.userData) && vm.userData.chatstatus == '1') {
+//          vm.$toast('您已被禁言,联系管理处理');
+//          return
+//        }
+
 
 
       },
@@ -580,14 +581,25 @@
       },
       websocketonmessage(e){ //数据接收
         const vm = this
-//        console.log('收到的', JSON.parse(e.data))
+
         let pullData = JSON.parse(e.data)
-        if (pullData.chatType != '9') {
+        console.log('收到的', e.data)
+        if (pullData.chatType != '9'&&pullData.chatstatus != '1') {
           vm.redata = JSON.parse(pullData.msgContent);
-
-
+//          if (!vm.$_.isEmpty(vm.userData)) {
+//            vm.userData.chatstatus = '0'
+//            localStorage.setItem('userInfo',JSON.stringify(vm.userData))
+//          }
           vm.mySendMessage.push(vm.redata)
-        } else {
+        }else if(pullData.chatstatus == '1'){
+//          if (!vm.$_.isEmpty(vm.userData)) {
+//            vm.userData.chatstatus = '1'
+//            localStorage.setItem('userInfo',JSON.stringify(vm.userData))
+//          }
+
+          vm.$toast('您已被禁言,联系管理处理');
+        }
+        else {
 
           vm.redata = JSON.parse(pullData.msgContent)
           //收到开奖消息后刷新当前游戏其次和历史

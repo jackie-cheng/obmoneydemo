@@ -146,7 +146,17 @@
           .then(response => {
 //            toast1.clear();
             if (response.status == 200) {
-              if (response.data.status == 'success') {
+              if(response.data.statusCode==-100){
+                vm.$dialog.confirm({
+                  message: response.data.resultInfo
+                }).then(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/login')
+                }).catch(() => {
+                  localStorage.removeItem('userInfo')
+                  vm.$router.push('/')
+                });
+              }else if (response.data.status == 'success') {
                 const toast1 = vm.$toast.success({
                   mask: true,
                   duration: 2000,       // 持续展示 toast

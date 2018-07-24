@@ -15,7 +15,7 @@
 
             <span style="margin: 0 0.2rem">至</span>
             <yd-datetime   v-model="datetimeEnd" type="date" :start-date="datetimeStar"></yd-datetime>
-            <span class="search_but" @click="searchList(),page=1">查询</span>
+            <span class="search_but" @click="list=[],page=1,searchList()">查询</span>
           </div>
           <table class="ob_pay_record_table" >
             <tr>
@@ -32,7 +32,7 @@
     <span style="width: 20%">{{allType[trade.betType]}}</span>
     <!--如果为充值，则颜色添加红色，添加样式pay_money-->
     <!--<td width="20%" :class="{pay_money:trade.change.indexOf('-')!=-1}">{{trade.change}}</td>-->
-    <span style="width: 15%">{{trade.change}}</span>
+    <span style="width: 15%">{{trade.changeAmt}}</span>
     <span style="width: 20%" class="pay_money">{{trade.resultBlnc}}</span>
   </div>
 </div>
@@ -46,14 +46,14 @@
 
           </yd-infinitescroll>
         </div>
-        <div  v-if="list&&list.length==0">
-          <div style="position: absolute;top: 5rem">暂无记录</div>
-        </div>
+
       </van-tab>
     </van-tabs>
 
 
-
+    <div  v-if="list&&list.length==0&&!thisNullData" style=" background-color: #efeff4;padding: 0.2rem 0.2rem">
+      <div>暂无记录</div>
+    </div>
 
   </div>
 </template>
@@ -71,7 +71,7 @@
       return {
         loading: false,
         finished: false,
-
+        thisNullData:false,
         list:[],
         userData:null,
         page: 1,
@@ -84,9 +84,15 @@
         allType:{
           bet:'下注',
           cancelBet:'取消下注',
-          bonus:'中奖',
           recharge:'充值',
-          withdraw:'提现',
+          bonus:'中奖',
+          downchange:'提现',
+          supplement:'补分',
+          koufeng:'扣分',
+          songfen:'送分',
+          huishui:'回水',
+          //          betAll:'下注相关/下注取消下注奖金',
+//          inOut:'充值提现'
         }
       }
     },
@@ -109,6 +115,7 @@
       },
       searchList(){
         const vm = this
+       vm. thisNullData=true
         const toast1 = vm.$toast.loading({
           mask: true,
           duration: 5000,       // 持续展示 toast
@@ -117,7 +124,7 @@
         let params={
           token: vm.userData.token,
           pageNo:vm.page,
-          pageSize:10,
+          pageSize:20,
           startDate:vm.datetimeStar,
           endDate:vm.datetimeEnd,
           type:vm.activeType,
@@ -126,6 +133,7 @@
         vm.$axios.get(url,{params})
           .then(response => {
             toast1.clear();
+            vm.thisNullData=false
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
@@ -167,7 +175,9 @@ console.log("ff",_list)
             } else {
               vm.$toast('获取余额信息失败');
             }
+
           }).catch(response => {
+          vm. thisNullData=false
           vm.$toast('获取余额信息失败');
         })
 
@@ -193,16 +203,16 @@ vm.activeType=null
          vm.page=1
          vm.searchList()
        }
-       else if(vm.activeIndex==1){
+       else if(vm.activeIndex==2){
            //提现
-         vm.activeType='withdraw'
+         vm.activeType='downchange'
          vm.list=[]
          vm.page=1
          vm.searchList()
        }
        else if(vm.activeIndex==3){
          //投注
-         vm.activeType='bet'
+         vm.activeType='betAll'
          vm.list=[]
          vm.page=1
          vm.searchList()
