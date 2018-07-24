@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root statis_cla" style=" background-color: white">
+  <div class="mr-root statis_cla willy_tradeList" style=" background-color: white">
     <!--header-->
     <van-nav-bar title="统计记录" left-arrow @click-left="onClickLeft()"/>
     <!--时间查询-->
@@ -149,7 +149,8 @@
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
@@ -197,7 +198,8 @@
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')

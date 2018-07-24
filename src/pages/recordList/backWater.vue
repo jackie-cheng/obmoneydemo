@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root willy_tradeList">
     <!--header-->
     <van-nav-bar title="我的回水" right-text="回水规则"  @click-right="onClickRight" left-arrow @click-left="onClickLeft()"/>
     <van-tabs v-model="activeIndex" swipeable>

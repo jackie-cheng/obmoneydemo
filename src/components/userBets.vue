@@ -409,7 +409,8 @@ return parseInt(Number(num))
             if (response.status == 200 && response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
@@ -422,7 +423,7 @@ return parseInt(Number(num))
               }else if(response.data.statusCode==-1){
                 vm.$toast(response.data.resultInfo);
               }else{
-                vm.$toast('下注成功');
+                vm.$toast.success('下注成功');
                 vm.selectBall=[]
                 vm.touzhuNum=null
                 vm.$emit('betsBall',JSON.stringify(params))

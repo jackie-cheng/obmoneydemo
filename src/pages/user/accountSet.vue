@@ -71,7 +71,8 @@
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
@@ -83,7 +84,8 @@
                 vm.bankData = response.data.a
                 if(vm.bankData.length==0){
                   vm.$dialog.confirm({
-                    message: '暂无提现账户，立即添加'
+                    message: '暂无提现账户，立即添加',
+                    className: 'willy_pup'
                   }).then(() => {
                     vm.$router.push('/addBank')
                   }).catch(() => {

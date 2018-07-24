@@ -516,7 +516,7 @@
 
 //房间聊天记录
 .kefu_chart {
-    padding-top: 50px!important;
+    // padding-top: 50px!important;
 }
 
 .room_wechatul {
@@ -1389,7 +1389,7 @@
     overflow: hidden;
     height: 1.4rem;
     .willy_foot_but {
-        width: 63%;
+        width: 4rem * 1.5;
         height: auto;
         overflow: hidden;
         overflow-x: scroll;
@@ -1495,4 +1495,134 @@
     .ob_home_apps ul li .ob_home_app>em:before {
         line-height: 1.9rem;
     }
+}
+.willy_pup{
+  color: #000;
+  font-family: $fontYaHei;
+  .van-dialog__header{
+    font-size: (34rem/75);
+    color: #000;
+  }
+  .van-dialog__message--has-title{
+    font-size: (32rem/75);
+    color: #000;
+  }
+  .van-dialog__confirm:active{
+    // color: #e1171b;
+  }
+  .van-button__text, .van-dialog__message{
+    font-size: (32rem/75);
+    text-align: center;
+  }
+  .van-hairline--left{
+    .van-button__text{
+      font-size: (34rem/75);
+      color: #e1171b;
+    }
+  }
+}
+.van-button--large{
+  padding: (5rem/75);
+  font-family: $fontYaHei;
+  height: (90rem/75);
+  line-height: (90rem/75);
+}
+.willy_tradeList{
+  .van-tab{
+    font-size: (28rem/75);
+    height: (80rem/75);
+    line-height: (80rem/75);
+  }
+  .van-tabs__wrap{
+  height: auto;
+  }
+  .van-tabs__nav--line{
+    padding: 0;
+  }
+  .van-tabs__line{
+    bottom: 0;
+  }
+  .van-tabs--line{
+    padding: 0;
+  }
+  .van-tabs__wrap{
+    position: initial;
+  }
+  .van-tabbar-item__icon{
+    font-size: (30rem/75);
+    font-weight: bold;
+  }
+  .van-tabbar-item__text{
+    font-size: (26rem/75);
+    font-weight: bold;
+  }
+  .van-hairline--top-bottom{
+    padding: 0 0 (20rem/75) 0;
+  }
+}
+.wiily_record{
+  font-family: $fontYaHei;
+  font-size: (26rem/75);
+  .willy_zwjl{
+    padding: (30rem/75) 0;
+  }
+}
+.willy_safeSet{
+  font-family: $fontYaHei;
+  font-size: (26rem/75);
+  .van-cell{
+    height: (88rem/75);
+    line-height: (88rem/75);
+    padding: (10rem/75) (15rem/75);
+    margin: 0 0 1px 0;
+  }
+  .van-cell__title{
+    display: flex;
+    align-items: center;
+    font-size: (30rem/75);
+  }
+  .van-cell__right-icon{
+    display: flex;
+    align-items: center;
+  }
+  .van-cell-group{
+    background: none;
+  }
+}
+.willy_moneyIn{
+  font-family: $fontYaHei;
+  font-size: (26rem/75);
+  .van-cell{
+    font-size: (26rem/75);
+    display: flex;
+    align-items: center;
+    height: (120rem/75) !important;
+    line-height: (120rem/75) !important;
+  }
+  .van-cell-text{
+    font-size: (30rem/75);
+  }
+  .van-button{
+    width: 92% !important;
+    font-family: $fontYaHei;
+  }
+}
+.willy_serviceChat{
+  //房间聊天记录
+  font-family: $fontYaHei;
+  font-size: (28rem/75);
+  .kefu_chart {
+      padding-top: (110rem/75) !important;
+  }
+  p{
+    &:first-child{}
+    border-radius: (7rem/75);
+    padding: (4rem/75) 0;
+  }
+  .right_wechat{
+    span{
+      color: #fff;
+    }
+  }
+  
 }

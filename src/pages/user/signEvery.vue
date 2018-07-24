@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root willy_user">
     <van-nav-bar
       title="签到有奖"
       right-text="签到规则"  @click-right="onClickRight"

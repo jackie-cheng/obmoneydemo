@@ -190,7 +190,8 @@
             vm.hadBank= true
           vm.$dialog.alert({
             title: '友情提示',
-            message: '您已有'+vm.curAccountType+'账户，修改'+vm.curAccountType+'账户请联系管理员'
+            message: '您已有'+vm.curAccountType+'账户，修改'+vm.curAccountType+'账户请联系管理员',
+            className: 'willy_pup'
           });
         }else{
           vm.hadBank= false
@@ -243,7 +244,8 @@
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
@@ -289,7 +291,8 @@ console.log(params)
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
@@ -300,7 +303,8 @@ console.log(params)
               }else{
 //                vm.$toast.success('添加账户成功');
                 vm.$dialog.confirm({
-                  message: '添加账户成功,点击返回'
+                  message: '添加账户成功,点击返回',
+                  className: 'willy_pup'
                 }).then(() => {
                   vm.$router.go(-1)
 

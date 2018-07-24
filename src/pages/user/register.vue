@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root wiily_register">
     <van-nav-bar
       title="注册"
       left-text="返回"

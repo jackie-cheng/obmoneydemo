@@ -485,12 +485,13 @@
 //        vm.$toast('当前竞猜已关闭');
         vm.$dialog.alert({
           title: '友情提示',
-          message: '已封盘，禁止提示'
+          message: '已封盘，禁止投注',
+          className: 'willy_pup'
         });
       },
       toRecall(){
         const vm = this
-        vm.$toast('撤单成功');
+        vm.$toast.success('撤单成功');
       },
       sendMess(){
         const vm = this
@@ -792,7 +793,8 @@
             if (response.status == 200 && response.data) {
               if (response.data.statusCode == -100) {
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
@@ -848,7 +850,8 @@
             if (response.status == 200 && response.data) {
               if (response.data.statusCode == -100) {
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
@@ -862,11 +865,11 @@
                 //撤单成功刷新余额 和投注历史
                 vm.obUserBetList()
                 vm.obMoney()
-                vm.$toast('撤单成功');
+                vm.$toast.success('撤单成功');
               }
 
             } else {
-              vm.$toast('撤单失败');
+              vm.$toast.fail('撤单失败');
             }
           }).catch(response => {
 
@@ -891,7 +894,8 @@
             if (response.status == 200 && response.data) {
               if (response.data.statusCode == -100) {
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')
