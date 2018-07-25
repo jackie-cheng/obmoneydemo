@@ -2,7 +2,7 @@
     <div class="mr-root money_in willy_moneyIn">
 
         <!--header-->
-        <van-nav-bar title="充值" left-arrow @click-left="onClickLeft()"/>
+        <van-nav-bar title="充值中心" left-arrow @click-left="onClickLeft()"/>
         <!--页面内容-->
 
 
@@ -36,9 +36,11 @@
           <!--</template>-->
         <!--</van-cell>-->
       </van-cell-group>
+      <tabbar :activeNum="1"></tabbar>
     </div>
 </template>
 <script>
+  import tabbar from '../../components/tabbar'
     export default{
         name: 'monetIn',
         data () {
@@ -94,7 +96,9 @@ console.log(response.headers)
           }
 
         },
-        components: {},
+      components: {
+        tabbar
+      },
     }
 </script>
 <style>
