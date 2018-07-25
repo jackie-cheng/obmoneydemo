@@ -20,7 +20,7 @@
             v-for="mess in mySendMessage">
           <template v-if="mess.sendernickname&&mess.sendernickname!=userName">
 
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" v-text="mess.mySendTime">
+            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" v-text="mess.timestamp">
               2018-05-29 09:21</p>
             <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
             <a v-if="mess.photourl">
@@ -29,7 +29,7 @@
             <a v-else>
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
-            <span>{{mess.message}}</span>
+            <span>{{JSON.parse(mess.msgContent).message}}</span>
 
           </template>
 
@@ -44,7 +44,7 @@
             <a v-else>
               <img src="../../assets/qq.png" alt="" class="touxiangImg">
             </a>
-            <span>{{mess.message}}</span>
+            <span style="color: white">{{mess.message}}</span>
           </template>
           <div style="clear:both"></div>
         </li>
@@ -185,7 +185,7 @@
         //初始化weosocketnew WebSocket("ws://ip:8080/websocket");ws://localhost:8080/websocket
         //ws地址
         const vm = this
-        vm.newUuid ='youke'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
+        vm.newUuid ='游客'+ new Date().getTime()+ Math.floor(Math.random()*11)+10
 
         if(localStorage.getItem('userInfo')){
           vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=1&token="+vm.userData.token);
@@ -210,7 +210,7 @@
       websocketonmessage(e){ //数据接收
         const vm = this
         console.log('收到的最初始消息',e)
-        vm.redata = JSON.parse(e.data.msgContent);
+        vm.redata = JSON.parse(e.data);
 
         console.log('收到的',vm.redata)
         vm.mySendMessage.push(vm.redata)
@@ -228,14 +228,14 @@
             'sendernickname':vm.userData.username
           }
           vm.websock.send(JSON.stringify(sendData));
-//          console.log('发的消息',JSON.stringify(sendData))
+          console.log('发的消息',JSON.stringify(sendData))
           vm.mySendMessage.push(sendData)
         }else {
           let sendData ={"uuid": vm.newUuid,"message":agentData,'mySendTime':curTime,
             'sendernickname':vm.newUuid
           }
           vm.websock.send(JSON.stringify(sendData));
-//          console.log('发的消息',JSON.stringify(sendData))
+          console.log('匿名发的消息',JSON.stringify(sendData))
           vm.mySendMessage.push(sendData)
         }
 //          let content = document.getElementsByClassName('room_wechatul')[0];

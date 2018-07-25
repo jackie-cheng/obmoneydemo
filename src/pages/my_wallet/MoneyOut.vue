@@ -113,14 +113,15 @@
                       vm.moneyOut()
 
                   } else {
-                    vm.$toast(response.data.message);
+                    vm.$toast('支付密码错误');
                   }
 
                 } else {
-                  vm.$toast('请求失败');
+                  vm.$toast('支付密码验证失败');
                 }
               }).catch(response => {
               toast1.clear();
+              vm.$toast('支付密码验证失败');
             })
           },
 

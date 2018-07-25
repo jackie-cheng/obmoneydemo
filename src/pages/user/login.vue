@@ -45,7 +45,8 @@ export default {
       checked: true,
       username: '',
       pass: '',
-      terminalType: ''
+      terminalType: '',
+      userData:'',
     }
   },
   computed: {},
@@ -132,18 +133,15 @@ export default {
               if (vm.checked) {
                 localStorage.setItem('userLoginData', JSON.stringify(userLogin))
               }
+              vm.userData = response.data.resultInfo
 
-              //                window.reload()
-              //                let userData = response.data.resultInfo
-              //                axios.defaults.headers.common['uuid'] = userData.uuid;
-              //                axios.defaults.headers.common['token'] = userData.token;
-              //                axios.defaults.headers.common['terminalType'] = userData.terminalType;
-              //console.log(response.data)
-              vm.$toast('登录成功')
-              vm.$router.push('/')
-              //                window.location.href = '/login'
-              //              } else {
-              //                vm.$toast(response.data.resultInfo.message);
+              vm.$toast.success('登录成功')
+              //连接全局通讯
+              vm.initWebSocket()
+              setTimeout(function () {
+                vm.$router.push('/')
+              }, 1000);
+
             } else {
               vm.$toast(response.data.resultInfo.message)
             }
@@ -155,7 +153,60 @@ export default {
         .catch(response => {
           vm.$toast('登录失败')
         })
-    }
+    },
+    initWebSocket(){
+      const vm = this
+      vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=9&token="+vm.userData.token);
+      console.log(vm.websock)
+      vm.websock.onmessage = vm.websocketonmessage;
+
+
+//        //若是ws开启状态
+//        vm.websock.onopen = () => {
+////          vm.$toast('通讯连接成功')
+////console.log('全局开启', 888)
+//
+//
+//        }
+
+      // 路由跳转时结束websocket链接
+//        vm.$router.afterEach(function () {
+//          vm.websock.onclose
+//        })
+    },
+    websocketonmessage(e){ //数据接收
+      const vm = this
+      vm.userData = JSON.parse(localStorage.getItem('userInfo'))
+      let pullData = JSON.parse(e.data)
+      console.log('收到的封禁信息', pullData)
+//        type 有01 02 03 分别是 禁言、封号01、封ip03 ，status是'0' 或者'1'
+      if (pullData.type == '02' && pullData.status == '1') {
+        vm.$dialog.alert({
+          message: '该账户已被封号'
+        }).then(() => {
+          localStorage.removeItem('userInfo')
+          vm.$router.push('/login')
+        })
+      } else if (pullData.type == '03' && pullData.status == '1') {
+        vm.$dialog.alert({
+          message: '该ip已被封禁'
+        }).then(() => {
+          localStorage.removeItem('userInfo')
+          vm.$router.push('/login')
+        })
+      } else if (pullData.type == '01' && pullData.status == '1') {
+
+          vm.userData.chatstatus = '1'
+          localStorage.setItem('userInfo', JSON.stringify(vm.userData))
+
+      } else if (pullData.type == '01' && pullData.status == '0') {
+
+          vm.userData.chatstatus = '0'
+          localStorage.setItem('userInfo', JSON.stringify(vm.userData))
+
+
+      }
+    },
   }
 }
 </script>
