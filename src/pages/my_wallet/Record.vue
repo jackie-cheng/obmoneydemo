@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root wiily_record">
     <!--header-->
     <van-nav-bar title="充值/提现记录" left-arrow @click-left="onClickLeft()"/>
     <!--消费记录-->
@@ -29,7 +29,7 @@
       </tr>
     </table>
     <div  v-if="list&&list.length==0">
-      <div style="position: absolute;top: 5rem">暂无记录</div>
+      <div class="willy_zwjl">暂无记录</div>
     </div>
   </div>
 </template>
@@ -84,7 +84,8 @@
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')

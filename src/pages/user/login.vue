@@ -6,12 +6,12 @@
         <img src="../../assets/qq.png" alt="">
       </div>
       <van-cell-group>
-        <van-field v-model="username" placeholder="请输入用户名" icon="clear" @click-icon="username = ''" />
+        <van-field v-model="username" placeholder="请输入手机号码" icon="clear" @click-icon="username = ''" />
         <van-field v-model="pass" placeholder="请输入密码" type="password" />
         <van-checkbox v-model="checked">记住密码</van-checkbox>
       </van-cell-group>
       <!--<el-input-->
-      <!--placeholder="请输入用户名"-->
+      <!--placeholder="请输入手机号码"-->
       <!--v-model="username"-->
       <!--clearable>-->
       <!--</el-input>-->
@@ -42,7 +42,7 @@ export default {
   name: 'login',
   data() {
     return {
-      checked: true,
+      checked: false,
       username: '',
       pass: '',
       terminalType: '',

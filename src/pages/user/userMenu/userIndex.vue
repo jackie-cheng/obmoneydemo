@@ -1,9 +1,8 @@
 <template>
-  <div class="mr-root user_index_class">
+  <div class="mr-root user_index_class willy_user">
 <div class="user_header" v-if="userData&&!$_.isEmpty(userData)">
   <div class="top_head">
     <span><van-icon name="setting" /></span>  <span><van-icon name="chat" /></span>
-    <div style="clear: both"></div>
   </div>
   <div class="touxiang_header" @click="myInfo">
     <img src="../../../assets/qq.png" alt="" v-if="userData&&userData.photourl==null">

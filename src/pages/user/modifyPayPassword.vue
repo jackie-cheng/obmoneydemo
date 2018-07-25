@@ -148,7 +148,8 @@ type="number"
             if (response.status == 200) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')

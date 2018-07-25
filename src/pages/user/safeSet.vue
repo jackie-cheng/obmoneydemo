@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root willy_safeSet">
     <van-nav-bar
       title="安全设置"
       left-arrow

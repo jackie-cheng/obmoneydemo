@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root willy_tradeList">
     <!--header-->
     <van-nav-bar title="交易记录" left-arrow @click-left="onClickLeft()"/>
     <van-tabs v-model="activeIndex">
@@ -137,7 +137,8 @@
             if (response.status == 200&&response.data) {
               if(response.data.statusCode==-100){
                 vm.$dialog.confirm({
-                  message: response.data.resultInfo
+                  message: response.data.resultInfo,
+                  className: 'willy_pup'
                 }).then(() => {
                   localStorage.removeItem('userInfo')
                   vm.$router.push('/login')

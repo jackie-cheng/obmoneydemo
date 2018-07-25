@@ -1,5 +1,5 @@
 <template>
-    <div class="mr-root money_in">
+    <div class="mr-root money_in willy_moneyIn">
 
         <!--header-->
         <van-nav-bar title="充值" left-arrow @click-left="onClickLeft()"/>
@@ -61,7 +61,8 @@ console.log(response.headers)
                   console.log(response)
                 if(response.data.statusCode==-100){
                   vm.$dialog.confirm({
-                    message: response.data.resultInfo
+                    message: response.data.resultInfo,
+                    className: 'willy_pup'
                   }).then(() => {
                     localStorage.removeItem('userInfo')
                     vm.$router.push('/login')
