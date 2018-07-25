@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root statis_cla willy_tradeList" style=" background-color: white">
+  <div class="mr-root statis_cla willy_tradeList willy_statisticList" style=" background-color: white">
     <!--header-->
     <van-nav-bar title="统计记录" left-arrow @click-left="onClickLeft()"/>
     <!--时间查询-->
@@ -60,7 +60,7 @@
     </van-tabs>
 
     <div  v-if="tradeData&&tradeData.length==0&&!thisNullData" style=" background-color: #efeff4;padding: 0.2rem 0.2rem">
-      <div>暂无记录</div>
+      <div class="willy_zwjl">暂无记录</div>
     </div>
 
 

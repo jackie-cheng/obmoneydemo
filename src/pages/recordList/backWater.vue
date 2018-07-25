@@ -22,7 +22,7 @@
           </table>
         </div>
         <div style="height: 80vh" v-else>
-        <div style="margin:0.2rem 0.3rem;color: #666;">暂无记录</div>
+        <div class="willy_zwjl" style="margin:0.2rem 0.3rem;color: #666;">暂无记录</div>
         </div>
       </van-tab>
     </van-tabs>

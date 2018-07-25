@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root willy_addBank">
     <van-nav-bar
       title="添加提现账户"
       left-arrow
