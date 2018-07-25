@@ -132,6 +132,8 @@ export default {
               )
               if (vm.checked) {
                 localStorage.setItem('userLoginData', JSON.stringify(userLogin))
+              }else{
+                localStorage.removeItem('userLoginData')
               }
               vm.userData = response.data.resultInfo
 

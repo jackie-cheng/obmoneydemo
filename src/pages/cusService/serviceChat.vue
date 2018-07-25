@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root roomDa">
+  <div class="mr-root roomDa willy_serviceChat">
     <van-nav-bar
       title="客服聊天"
       left-arrow
@@ -20,7 +20,7 @@
             v-for="mess in mySendMessage">
           <template v-if="mess.sendernickname&&mess.sendernickname!=userName">
 
-            <p style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" v-text="mess.timestamp">
+            <p class="willy_Pone" style="text-align: center;margin: 0 auto;background-color: #dfdfdf;width: 50%" v-text="mess.timestamp">
               2018-05-29 09:21</p>
             <p style="text-align: left;margin-left: 1rem;color: #ce5c4d">{{mess.sendernickname}}</p>
             <a v-if="mess.photourl">
@@ -118,7 +118,8 @@
           toast1.clear();
           if(response.data.statusCode==-100){
             vm.$dialog.confirm({
-              message: response.data.resultInfo
+              message: response.data.resultInfo,
+              className: 'willy_pup'
             }).then(() => {
               localStorage.removeItem('userInfo')
               vm.$router.push('/login')
