@@ -184,14 +184,14 @@ export default {
 //        type 有01 02 03 分别是 禁言、封号01、封ip03 ，status是'0' 或者'1'
       if (pullData.type == '02' && pullData.status == '1') {
         vm.$dialog.alert({
-          message: '该账户已被封号'
+          message: '账号已被冻结,联系管理处理。'
         }).then(() => {
           localStorage.removeItem('userInfo')
           vm.$router.push('/login')
         })
       } else if (pullData.type == '03' && pullData.status == '1') {
         vm.$dialog.alert({
-          message: '该ip已被封禁'
+          message: '该环境违规账号已冻结。'
         }).then(() => {
           localStorage.removeItem('userInfo')
           vm.$router.push('/login')
