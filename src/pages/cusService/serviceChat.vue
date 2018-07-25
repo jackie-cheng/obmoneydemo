@@ -138,7 +138,45 @@
           }
         });
       },
+      friLoadList() {
+        const vm = this
+        if(!localStorage.getItem('userInfo')){
+          return
+        }
+        const toast1 = vm.$toast.loading({
+          mask: true,
+          duration: 10000,       // 持续展示 toast
+          message: ''
+        });
 
+        let params={
+          token: vm.userData.token,
+          pageNo:this.page,
+          pageSize:10,
+        }
+        const url = 'api/chatRecord/queryCustomerServiceChatRecord';
+
+        vm.$axios.get(url, {params}).then((response) => {
+          toast1.clear();
+          if(response.data.statusCode==-100){
+            vm.$dialog.confirm({
+              message: response.data.resultInfo,
+              className: 'willy_pup'
+            }).then(() => {
+              localStorage.removeItem('userInfo')
+              vm.$router.push('/login')
+            }).catch(() => {
+              localStorage.removeItem('userInfo')
+              vm.$router.push('/')
+            });
+          }else{
+            const _list = (response.data.resultInfo||[]).map(a=>JSON.parse(a.msgContent));
+            _list.reverse()
+            vm.mySendMessage= [..._list, ...vm.mySendMessage];
+            vm.page++;
+          }
+        });
+      },
       onClickLeft() {
           const vm = this
         vm.$router.push('/')
@@ -311,7 +349,7 @@
         vm.userName = vm.userData.username
       }
       vm.initWebSocket()
-
+vm.friLoadList()
     },
     beforeDestroy () {
       this.websock.onclose
