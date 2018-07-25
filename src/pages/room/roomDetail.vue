@@ -438,7 +438,7 @@
         });
         vm.clickLoadMore = true
         vm.oldRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
-        console.log(vm.oldRoom_wechatulHeight)
+        console.log('liangyige ',vm.oldRoom_wechatulHeight)
         let params = {
           roomNumber: vm.$route.params.id,
           pageNo: this.page,
@@ -666,6 +666,10 @@
         vm.websock.send(JSON.stringify(sendData));
 
         vm.mySendMessage.push(sendData)
+                  setTimeout(function () {
+            let content = document.getElementsByClassName('room_wechatul')[0];
+            content.scrollTop = content.scrollHeight + 90
+          }, 100);
         console.log(vm.mySendMessage)
       },
       websocketclose(e){  //关闭
@@ -973,47 +977,60 @@
 
       vm.$watch('mySendMessage', () => {
         // 为false设置滚动条（点击下拉或点击可查看聊天记录,不设置滚动条到底部）
-        if (!vm.clickLoadMore) {
-          setTimeout(function () {
-            let content = document.getElementsByClassName('room_wechatul')[0];
-            content.scrollTop = content.scrollHeight + 90
-          }, 100);
-        } else {
+//        if (!vm.clickLoadMore) {
+//          setTimeout(function () {
+//            let content = document.getElementsByClassName('room_wechatul')[0];
+//            content.scrollTop = content.scrollHeight + 90
+//          }, 100);
+//        } else {
+//          // 设置下拉加载历史记录滚动位置
+//          setTimeout(() => {
+//            vm.loadRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
+//            let content = document.getElementsByClassName('room_wechatul')[0];
+////            console.log(' contencrollTop', content.scrollTop)
+//            content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
+////            content.scrollTop =0
+//          }, 100);
+//
+//        }
+
+        if (vm.clickLoadMore) {
           // 设置下拉加载历史记录滚动位置
           setTimeout(() => {
             vm.loadRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
             let content = document.getElementsByClassName('room_wechatul')[0];
-            console.log(' contencrollTop', content.scrollTop)
+//            console.log(' contencrollTop', content.scrollTop)
             content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
+            vm.clickLoadMore=false
 //            content.scrollTop =0
           }, 100);
-          // setTimeout(function () {
-          //   let content = document.getElementsByClassName('room_wechatul')[0];
-          //   content.scrollTop = vm.loadRoom_wechatulHeight - vm.oldRoom_wechatulHeight
-          // }, 100);
         }
-//         let content = document.getElementsByClassName('room_wechatul')[0];
-// //        console.log('scrollHeight',content.scrollHeight)
-// //        console.log('scrollTop',content.scrollTop)
-//         content.scrollTop = content.scrollHeight + 90
-
       }, {deep: true})
-//      vm.$watch('gameIssue', () => {
-//          if(vm.gameIssue.duration&&vm.gameIssue.duration>0){
-//            vm.overGameTime=vm.gameIssue.duration
-//          }else{
-//            vm.overGameTime=false
-//          }
-//
-//      }, {deep: true})
+
       setTimeout(function () {
         let content = document.getElementsByClassName('room_wechatul')[0];
         content.scrollTop = content.scrollHeight
-      }, 900);
+      }, 600);
+//      setTimeout(function () {
+//        vm.oldRoom_wechatul= document.getElementsByClassName('room_wechatul')[0];
+//        vm.watch_scrollTop= document.getElementsByClassName('room_wechatul')[0].scrollTop;
+//        vm.watch_scrollHeight= document.getElementsByClassName('room_wechatul')[0].scrollHeight;
+//        console.log('元素高度', document.getElementsByClassName('willy_ltulli')[0].clientHeight)
+//        vm.oldRoom_wechatul.addEventListener('scroll', () => {
+//          console.log('元素高度', document.getElementsByClassName('willy_ltulli')[0].clientHeight)
+//          console.log(document.getElementsByClassName('room_wechatul')[0].scrollTop)
+//          if(document.getElementsByClassName('room_wechatul')[0].scrollTop<document.getElementsByClassName('room_wechatul')[0].scrollHeight){
+//              vm.noChatBottom = true
+//          }
+//        }, true)
+//      }, 2000);
 
     },
     created () {
       const vm = this
+
+//      vm.oldRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
+//      console.log(vm.oldRoom_wechatulHeight)
       vm.obAllData()
 //      vm.obChatRecord()
       // 获取房间游戏期次
