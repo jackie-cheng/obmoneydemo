@@ -55,6 +55,7 @@ export default {
     const vm = this
     vm.IsPC()
     if (localStorage.getItem('userLoginData')) {
+        vm.checked = JSON.parse(localStorage.getItem('userLoginData')).hisChecked
       vm.username = JSON.parse(localStorage.getItem('userLoginData')).userName
       vm.pass = JSON.parse(localStorage.getItem('userLoginData')).password
     }
@@ -111,6 +112,7 @@ export default {
         message: '登录中...'
       })
       let userLogin = {
+        hisChecked:vm.checked,
         password: vm.pass,
         userName: vm.username
       }

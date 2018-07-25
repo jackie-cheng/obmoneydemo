@@ -121,6 +121,7 @@
         vm.page=1
         vm.tradeData=[]
         vm.searchList()
+        vm.searchAll()
       }, {deep: true})
 
     },
@@ -189,7 +190,7 @@
           token: vm.userData.token,
           startDate:vm.datetimeStar,
           endDate:vm.datetimeEnd,
-          roomNumber:null,
+          roomNumber:vm.activeRoomNumber,
         }
         let url = '/user/bet/userBetSum'
         vm.$axios.get(url,{params})
