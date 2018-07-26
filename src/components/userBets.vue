@@ -419,9 +419,9 @@ return parseInt(Number(num))
                   vm.$router.push('/')
                 });
               }else if(response.data.statusCode==-200){
-                vm.$toast('下注失败，当前期数已停止下注');
+                vm.$toast.fail('下注失败，当前期数已停止下注');
               }else if(response.data.statusCode==-1){
-                vm.$toast(response.data.resultInfo);
+                vm.$toast.fail(response.data.resultInfo);
               }else{
                 vm.$toast.success('下注成功');
                 vm.selectBall=[]
@@ -430,7 +430,7 @@ return parseInt(Number(num))
               }
 
             } else {
-              vm.$toast('下注失败');
+              vm.$toast.fail('下注失败');
             }
           }).catch(response => {
 

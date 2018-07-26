@@ -370,7 +370,8 @@
         if (!this.$refs.willy_id2.contains(e.target) && document.getElementById('willy_id').contains(e.target)) {
           this.RoomTopSelectShow = !this.RoomTopSelectShow
         }
-        if (!this.$refs.willy_id2.contains(e.target) && !document.getElementById('willy_id').contains(e.target)) {
+        if (!document.getElementById('willy_id').contains(e.target)) {
+        // if (!this.$refs.willy_id2.contains(e.target) && !document.getElementById('willy_id').contains(e.target)) {
           this.RoomTopSelectShow = false
         }
       },

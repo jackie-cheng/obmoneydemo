@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-root">
+  <div class="mr-root willy_tradeList">
     <!--header-->
     <van-nav-bar title="积分记录" left-arrow @click-left="onClickLeft()"/>
 <!--时间查询-->

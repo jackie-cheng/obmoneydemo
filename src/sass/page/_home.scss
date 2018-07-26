@@ -1531,11 +1531,33 @@
   line-height: (90rem/75);
 }
 .willy_tradeList{
+  .van-nav-bar__text{
+    &:active{
+      background: red;
+    }
+  }
   .van-tab{
     font-size: (28rem/75);
     height: (80rem/75);
     line-height: (80rem/75);
   }
+  .search_date{
+    margin: (26rem/75) 0 !important;
+    font-size: (26rem/75);
+    padding: 0 (20rem/75);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .yd-datetime-input{
+      width: (300rem/75) !important;
+    }
+    .search_but{
+      margin: 0 0 0 (18rem/75)!important;
+      width: (140rem/75) !important;
+    }
+  }
+
   .van-tabs__wrap{
   height: auto;
   }
@@ -1560,6 +1582,9 @@
     font-weight: bold;
   }
   .van-hairline--top-bottom{
+    // padding: 0 0 (20rem/75) 0;
+  }
+  .tab_statis{
     padding: 0 0 (20rem/75) 0;
   }
 }
@@ -1593,14 +1618,38 @@
   }
 }
 .willy_moneyIn{
+  input{
+    font-family: $fontYaHei;
+  }
   font-family: $fontYaHei;
   font-size: (26rem/75);
+  .van-field__button{
+    width: 24%;
+    padding: 0;
+  }
+  .willy_placeholder{
+    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    #000;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color:    #000;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color:    #000;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color:    #000;
+    }
+  }
+  .van-field .van-cell__title{
+    max-width: (150rem/75);
+  }
   .van-cell{
-    font-size: (26rem/75);
+    font-size: (30rem/75);
     display: flex;
     align-items: center;
-    height: (120rem/75) !important;
-    line-height: (120rem/75) !important;
+    height: (110rem/75) !important;
+    line-height: (110rem/75) !important;
   }
   .van-cell-text{
     font-size: (30rem/75);
@@ -1628,4 +1677,52 @@
     }
   }
 
+}
+.van-toast--default{
+  width: (340rem/75);
+  min-height: (120rem/75);
+  font-size: (28rem/75);
+  padding: (40rem/75);
+  .van-toast__text{
+    font-size: (32rem/75);
+    text-align: center;
+  }
+}
+.willy_pageIndex{
+  .ob_myWallet_btns{
+    margin: 0 auto !important;
+    width: 92% !important;
+    padding: (20rem/75) 0 0 0;
+    .willy_tx{
+      background: #fff;
+    }
+  }
+  .wallet_icon{
+    font-size: (320rem/75);
+  }
+  .ob_myWallet_num{
+    padding: (20rem/75) 0;
+  }
+  .ob_myWallet_btns{
+    font-size: (33rem/75);
+    .van-button__text{
+      font-size: (33rem/75);
+    }
+    .van-button--large{
+      height: (88rem/75);
+      line-height: (80rem/75);
+    }
+  }
+}
+.willy_statisticList{
+  .pay_money{
+    color: #000 !important;
+  }
+  .statis_che{
+    color: red;
+    & > i {
+      background: red !important;
+      // opacity: 1 !important;
+    }
+  }
 }
