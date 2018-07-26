@@ -4,13 +4,13 @@
     <!--header-->
     <van-nav-bar :title="curRecharge.accountType+'充值'" left-arrow @click-left="onClickLeft()" />
     <!--页面内容-->
-    <img :src="'http://47.106.11.246:8080'+curRecharge.twoDimensionalCode" alt="">
+    <img :src="'http://47.106.11.246/'+curRecharge.twoDimensionalCode" alt="">
     <van-cell-group>
       <van-field class="willy_placeholder" center label="收款账户" :placeholder="curRecharge.account" disabled="true">
-        <van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>
+        <!--<van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>-->
       </van-field>
       <van-field class="willy_placeholder" center label="收款姓名" :placeholder="curRecharge.realName" disabled="true">
-        <van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>
+        <!--<van-button slot="button" size="small" type="default" @click="copyText">复制</van-button>-->
       </van-field>
       <van-field center label="汇款金额" placeholder="请输入汇款金额" v-model="shouAccount" type="number" pattern="[0-9]*">
 
