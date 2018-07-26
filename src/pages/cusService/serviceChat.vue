@@ -179,7 +179,7 @@
       },
       onClickLeft() {
           const vm = this
-        vm.$router.push('/')
+        vm.$router.go(-1)
       },
       sendMess(){
         const vm = this

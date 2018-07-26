@@ -27,7 +27,7 @@
         </van-cell-group>
 
           <div class="ob_myWallet_btns">
-           <van-button size="large" type="danger" @click="showKeyboard=true" v-if="outNumber&&outNumber!=''">确认提现</van-button>
+           <van-button size="large" type="danger" @click="sureTixian()" v-if="outNumber&&outNumber!=''">确认提现</van-button>
             <van-button size="large" type="danger"  style="opacity: 0.6" v-else @click="$toast('请输入提现金额')">确认提现</van-button>
           </div>
 
@@ -73,15 +73,21 @@
             }
         },
         methods: {
-          done1(val) {
-            console.log('输入的密码是：' + val);
-            this.$dialog.loading.open('验证支付密码');
+          sureTixian() {
+const vm = this
+            if(vm.userData&&vm.userData.paymentPassword=='false'){
+              vm.$dialog.confirm({
+                message: '您的账户还未设置支付密码，前往设置',
+                className: 'willy_pup'
+              }).then(() => {
+                vm.$router.push('/payPassword')
+              }).catch(() => {
+               return
+              });
+            }else{
+              vm.showKeyboard=true
+            }
 
-            /* 模拟异步验证密码 */
-            setTimeout(() => {
-              this.$refs.keyboardDemo1.$emit('ydui.keyboard.error', '对不起，您的支付密码不正确，请重新输入。');
-              this.$dialog.loading.close();
-            }, 2000);
           },
           //     验证支付密码
           obNewPass(val){

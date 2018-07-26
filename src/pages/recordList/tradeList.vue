@@ -118,7 +118,7 @@ export default {
       let params = {
         token: vm.userData.token,
         pageNo: vm.page,
-        pageSize: 10,
+        pageSize: 20,
         startDate: vm.datetimeStar,
         endDate: vm.datetimeEnd,
         type: vm.activeType
