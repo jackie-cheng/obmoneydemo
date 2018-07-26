@@ -497,6 +497,7 @@
       sendMess(){
         const vm = this
         vm.clickLoadMore = false
+        vm.userData =JSON.parse(localStorage.getItem('userInfo'))
         if (!localStorage.getItem('userInfo')) {
           vm.$router.push('/login')
         } else if (vm.$_.isEmpty(vm.messageValue)) {
