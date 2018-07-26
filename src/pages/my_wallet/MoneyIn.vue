@@ -9,7 +9,7 @@
       <van-cell-group v-if="cardList&&!$_.isEmpty(cardList)">
         <van-cell :to="'/wechat_in/'+car.id" v-for = "(car,index) in cardList" :key = 'car.id'>
           <template slot="title">
-            <img :src="'http://47.106.11.246:8080'+car.iconPhoto" alt="">
+            <img :src="'http://47.106.11.246/'+car.iconPhoto" alt="">
             <span class="van-cell-text">{{car.accountType}}</span>
 
           </template>

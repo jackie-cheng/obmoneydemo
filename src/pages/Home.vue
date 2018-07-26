@@ -1,7 +1,7 @@
 <template>
   <div class="mr-root willy_mr_root">
     <!--<Header></Header>-->
-    <van-nav-bar title="7-24午更新" class="home_head">
+    <van-nav-bar :title="AllhomeData.websiteTitle" class="home_head" v-if="AllhomeData">
       <span slot="left" class="ob_header_select" @click="selectRoad()" ref="selectBox">
         {{roadSelect}}
         <van-icon name="arrow"/>
@@ -49,7 +49,7 @@
     <section class="ob_index_imgs">
       <van-swipe :autoplay="3000" v-if="homeData&&homeData.length>0">
         <van-swipe-item to="/notice" v-for="(image,index) in homeData" :key="index">
-           <img :src="'http://47.106.11.246'+image.pictureAddress"/>
+           <img :src="'http://47.106.11.246/'+image.pictureAddress"/>
           <!--<img :src="require('../assets/w_lb.jpg')"/>-->
         </van-swipe-item>
       </van-swipe>
@@ -61,9 +61,9 @@
       </van-swipe>
     </section>
     <!--消息提示-->
-    <van-notice-bar @click="routerNotice()"
+    <van-notice-bar @click="routerNotice()" v-if="AllhomeData"
     class="willy_notice"
-      text="欢迎来到帝魂国际!2欢迎来到帝魂国际3欢迎来到帝魂国际4欢迎来到帝魂国际5欢迎来到帝魂国际6欢迎来到帝魂国际7欢迎来到帝魂国际8欢迎来到帝魂国际欢迎来到帝魂国际欢迎来到帝魂国际"
+      :text="AllhomeData.roomAdvertisement"
       :left-icon="require('../assets/w_notice001.png')"
        mode="link"
     />
@@ -74,13 +74,14 @@
     <!--</van-cell-group>-->
     <!--App -->
     <section class="ob_home_apps">
-      <ul>
+      <ul v-if="AllhomeData">
         <li>
+          <a :href="AllhomeData.appDownLoadLink" target="_blank">
           <div class="ob_home_app app_download">
             <em class="iconfont download_icon"></em>
           </div>
-          <span>APP下载</span>
-
+          <span> APP下载 </span>
+          </a>
         </li>
         <li>
           <div class="ob_home_app app_arrive">

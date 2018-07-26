@@ -518,7 +518,10 @@
 .kefu_chart {
     // padding-top: 50px!important;
 }
-
+.room_wechatul::-webkit-scrollbar {
+  display: none
+  /* 隐藏滚动条，但依旧具备可以滚动的功能 */
+}
 .room_wechatul {
     font-family: $fontYaHei;
     position: absolute;
@@ -1624,5 +1627,5 @@
       color: #fff;
     }
   }
-  
+
 }

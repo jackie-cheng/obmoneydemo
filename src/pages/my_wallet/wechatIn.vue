@@ -4,7 +4,7 @@
         <!--header-->
         <van-nav-bar :title="curRecharge.accountType+'充值'" left-arrow @click-left="onClickLeft()"/>
         <!--页面内容-->
-      <img :src="'http://47.106.11.246:8080'+curRecharge.twoDimensionalCode" alt="">
+      <img :src="'http://47.106.11.246/'+curRecharge.twoDimensionalCode" alt="">
       <van-cell-group>
         <van-field
           center

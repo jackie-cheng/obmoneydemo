@@ -550,6 +550,9 @@
         if (vm.userToken) {
           vm.websock = new WebSocket("ws://47.106.11.246:8086/websocket?chatType=0&roomNumber=" + vm.$route.params.id + "&token=" + vm.userToken);
           vm.websock.onopen = () => {
+              if(!vm.userData.userRank){
+                  return
+              }
             // Web Socket 已连接上，使用 send() 方法发送数据
             let curTime = vm.getNowFormatDate()
             let sendData = {
@@ -668,7 +671,7 @@
         vm.mySendMessage.push(sendData)
                   setTimeout(function () {
             let content = document.getElementsByClassName('room_wechatul')[0];
-            content.scrollTop = content.scrollHeight + 90
+            content.scrollTop = content.scrollHeight
           }, 100);
         console.log(vm.mySendMessage)
       },
@@ -908,7 +911,7 @@
                   vm.$router.push('/')
                 });
               } else if (response.data.statusCode == -200) {
-                console.log("获取下注历史")
+                console.log("获取下注历史失败")
               } else {
                 if (response.data.statusCode == 1) {
                   vm.userBetList = response.data.resultInfo
@@ -993,7 +996,32 @@
 //          }, 100);
 //
 //        }
+        if (!vm.clickLoadMore) {
+//          vm.oldRoom_wechatul= document.getElementsByClassName('room_wechatul')[0];
+//        vm.watch_scrollTop= document.getElementsByClassName('room_wechatul')[0].scrollTop;
+//        vm.watch_scrollHeight= document.getElementsByClassName('room_wechatul')[0].scrollHeight;
+          let content = document.getElementsByClassName('room_wechatul')[0];
+//          console.log('元素高度', document.getElementsByClassName('room_wechatul')[0].scrollHeight)
 
+//            console.log('元素高度总和', document.getElementsByClassName('room_wechatul')[0].scrollHeight)
+
+//            console.log(document.getElementsByClassName('room_wechatul')[0].scrollTop)
+            let sumHeigth = content.scrollTop+content.clientHeight
+//            console.log('滚轮和高度', sumHeigth)
+            if(sumHeigth>content.scrollHeight-80){
+//                console.log(666)
+//              console.log(document.getElementsByClassName('room_wechatul')[0].scrollTop)
+//              console.log(document.getElementsByClassName('room_wechatul')[0].scrollHeight)
+              setTimeout(() => {
+                document.getElementsByClassName('room_wechatul')[0].scrollTop = document.getElementsByClassName('room_wechatul')[0].scrollHeight
+              }, 800);
+
+//              console.log(document.getElementsByClassName('room_wechatul')[0].scrollTop)
+
+            }
+
+
+        }
         if (vm.clickLoadMore) {
           // 设置下拉加载历史记录滚动位置
           setTimeout(() => {
@@ -1006,18 +1034,21 @@
           }, 100);
         }
       }, {deep: true})
+//最开始进来操作
+//      setTimeout(function () {
+//        let content = document.getElementsByClassName('room_wechatul')[0];
+//        content.scrollTop = content.scrollHeight
+//      }, 600);
 
-      setTimeout(function () {
-        let content = document.getElementsByClassName('room_wechatul')[0];
-        content.scrollTop = content.scrollHeight
-      }, 600);
+
 //      setTimeout(function () {
 //        vm.oldRoom_wechatul= document.getElementsByClassName('room_wechatul')[0];
-//        vm.watch_scrollTop= document.getElementsByClassName('room_wechatul')[0].scrollTop;
-//        vm.watch_scrollHeight= document.getElementsByClassName('room_wechatul')[0].scrollHeight;
-//        console.log('元素高度', document.getElementsByClassName('willy_ltulli')[0].clientHeight)
+////        vm.watch_scrollTop= document.getElementsByClassName('room_wechatul')[0].scrollTop;
+////        vm.watch_scrollHeight= document.getElementsByClassName('room_wechatul')[0].scrollHeight;
+//        console.log('元素高度', document.getElementsByClassName('room_wechatul')[0].scrollHeight)
 //        vm.oldRoom_wechatul.addEventListener('scroll', () => {
-//          console.log('元素高度', document.getElementsByClassName('willy_ltulli')[0].clientHeight)
+//          console.log('元素高度总和', document.getElementsByClassName('room_wechatul')[0].scrollHeight)
+//          console.log('元素高度', document.getElementsByClassName('room_wechatul')[0].clientHeight )
 //          console.log(document.getElementsByClassName('room_wechatul')[0].scrollTop)
 //          if(document.getElementsByClassName('room_wechatul')[0].scrollTop<document.getElementsByClassName('room_wechatul')[0].scrollHeight){
 //              vm.noChatBottom = true
