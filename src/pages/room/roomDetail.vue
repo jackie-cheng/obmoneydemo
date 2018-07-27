@@ -250,7 +250,7 @@
         撤单
       </van-button>
       <van-cell-group>
-        <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess" v-if="roomData.guessFlag=='1'"/>
+        <van-field v-model="messageValue" placeholder="发送聊天" @keydown.enter="sendMess" maxlength="30" v-if="roomData.guessFlag=='1'"/>
         <van-field placeholder="房间禁言中" disabled v-if="roomData.guessFlag!='1'"/>
       </van-cell-group>
 
@@ -651,6 +651,9 @@
           let reg = new RegExp("(" + key + ")", "g");
           let str = agentData.replace(/ /g, '');
           vm.newstr = str.replace(reg, "**");
+          if(str.indexOf(key)!=-1){
+            vm.userChatStatus()
+          }
         })
 
 
@@ -676,6 +679,29 @@
             content.scrollTop = content.scrollHeight
           }, 100);
         console.log(vm.mySendMessage)
+      },
+
+      userChatStatus(){
+        const vm = this
+        let params = {
+          bannedStatus: 1,
+          phone: vm.userData.phone,
+        }
+        vm.$axios.get(`/api/OperationalSetController/updateUserStatus`, {params})
+          .then(response => {
+            if (response.status == 200 && response.data) {
+                if(response.data.status=="success"){
+                  vm.userData.chatstatus = '1'
+                  localStorage.setItem('userInfo', JSON.stringify(vm.userData))
+                  vm.$toast('您已被禁言,联系管理处理');
+                }
+
+            } else {
+              vm.$toast('禁言失败');
+            }
+          }).catch(response => {
+
+        })
       },
       websocketclose(e){  //关闭
         console.log("connection closed (" + e.code + ")");

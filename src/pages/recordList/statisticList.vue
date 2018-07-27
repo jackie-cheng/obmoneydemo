@@ -7,7 +7,7 @@
       <yd-datetime   v-model="datetimeStar" :start-date="starSevenTime"   type="date" style=" background-color: #efeff4;"></yd-datetime>
       <span style="margin: 0 0.2rem">至</span>
       <yd-datetime   v-model="datetimeEnd" type="date" :start-date="datetimeStar" style=" background-color: #efeff4;"></yd-datetime>
-      <span class="search_but" @click="tradeData=[],page=1,searchList()">查询</span>
+      <span class="search_but" @click="finished = false,tradeData=[],page=1,searchList(),searchAll()">查询</span>
     </div>
 <!--总数-->
 <div class="tab_statis" v-if="statisticData&&statisticData!=null">
@@ -42,19 +42,33 @@
               <th width="30%">金额</th>
               <th width="20%">中奖</th>
             </tr>
-            <tr v-for="trade in tradeData" v-if="tradeData&&tradeData.length>0">
 
-              <td width="30%" >
-                <span>{{trade.issueApi}} </span>
-                </td>
-              <td width="20%" v-if="(trade.betStr).indexOf('tema')==-1" > {{ballType[trade.betStr]}}   </td>
-              <td width="20%" v-if="(trade.betStr).indexOf('tema')!=-1">特码 - {{trade.betStr.substr(4,trade.betStr.length)}}</td>
+          </table>
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            @load="searchList"
+            v-if="tradeData&&tradeData.length>0"
+          >
+            <div  class="traVan_list ob_pay_record_table">
+            <div v-for="trade in tradeData"  class="tra_list">
+
+              <span style="width: 30%">
+                {{trade.issueApi}}
+             </span>
+              <span style="width: 20%" v-if="(trade.betStr).indexOf('tema')==-1">{{ballType[trade.betStr]}} </span>
+              <span style="width: 20%" v-if="(trade.betStr).indexOf('tema')!=-1">特码 - {{trade.betStr.substr(4,trade.betStr.length)}} </span>
               <!--<td width="20%">{{trade.issueApi}}</td>-->
               <!--如果为充值，则颜色添加红色，添加样式pay_money-->
-              <td width="30%" class="pay_money">{{trade.totleAmt}}</td>
-              <td width="20%" class="statis_che"> <i v-if="trade.delFlag==1">撤单</i> <span v-if="trade.delFlag!=1">{{trade.bonus}}</span> </td>
-            </tr>
-          </table>
+              <span style="width: 25%" class="pay_money">
+                {{trade.totleAmt}}
+             </span>
+              <span style="width: 20%" class="statis_che">
+                <i v-if="trade.delFlag==1">撤单</i> <span v-if="trade.delFlag!=1">{{trade.bonus}}</span>
+             </span>
+            </div>
+            </div>
+          </van-list>
         </div>
       </van-tab>
     </van-tabs>
@@ -62,7 +76,9 @@
     <div  v-if="tradeData&&tradeData.length==0&&!thisNullData" style=" background-color: #efeff4;padding: 0.2rem 0.2rem">
       <div class="willy_zwjl">暂无记录</div>
     </div>
-
+    <section class="ob_footer" v-if="finished&&tradeData&&tradeData.length>10" style="padding: 0">
+      <div class="willy_dx" style="padding: 0.2rem 0 ">— 已经到底了，没有更多内容了 —</div>
+    </section>
 
   </div>
 </template>
@@ -85,7 +101,7 @@
           }
         ],
         statisticData:null,
-        tradeData:null,
+        tradeData:[],
         userData:null,
         page: 1,
         activeIndex:0,
@@ -118,6 +134,7 @@
       const vm = this
       vm.$watch('activeIndex',()=>{
           vm.activeRoomNumber=vm.roomList[vm.activeIndex].roomnumber
+        vm.finished = false
         vm.page=1
         vm.tradeData=[]
         vm.searchList()
@@ -160,11 +177,12 @@
                   vm.$router.push('/')
                 });
               }else{
-                let newList =response.data.resultInfo
-                vm.tradeData =(vm.tradeData||[]).concat(newList)
+                let _newList =response.data.resultInfo
+                vm.tradeData =[...vm.tradeData, ..._newList]
+//                (vm.tradeData||[]).concat(newList)
                 vm.page++
                 vm.loading = false;
-                if ( newList.length == 0) {
+                if ( _newList.length <20) {
                   vm.finished = true;
                 }
               }
@@ -175,7 +193,7 @@
             }
           }).catch(response => {
           vm.thisNullData=false
-          vm.$toast('获取信息失败');
+          vm.$toast('获取信息失败666');
         })
 
       },

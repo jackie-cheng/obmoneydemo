@@ -15,7 +15,7 @@
 
             <span style="margin: 0 0.2rem">至</span>
             <yd-datetime v-model="datetimeEnd" type="date" :start-date="datetimeStar"></yd-datetime>
-            <span class="search_but" @click="list=[],page=1,searchList()">查询</span>
+            <span class="search_but" @click="finished = false,list=[],page=1,searchList()">查询</span>
           </div>
           <table class="ob_pay_record_table">
             <tr>
@@ -25,8 +25,14 @@
               <th width="20%">余额</th>
             </tr>
           </table>
-          <yd-infinitescroll :callback="searchList" ref="infinitescrollDemo" v-if="list&&list.length>0">
-            <div slot="list" class="traVan_list">
+          <!--<yd-infinitescroll :callback="searchList" ref="infinitescrollDemo" v-if="list&&list.length>0">-->
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            @load="searchList"
+            v-if="list&&list.length>0"
+          >
+            <div  class="traVan_list">
               <div v-for="trade in list" class="tra_list">
                 <span style="width: 40%">{{trade.changeTime.slice(0,16)}}</span>
                 <span style="width: 20%">{{allType[trade.betType]}}</span>
@@ -36,14 +42,14 @@
                 <span style="width: 20%" class="pay_money">{{trade.resultBlnc}}</span>
               </div>
             </div>
-
+          </van-list>
             <!-- 数据全部加载完毕显示 -->
-            <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
+            <!--<span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>-->
 
-            <!-- 加载中提示，不指定，将显示默认加载中图标 -->
-            <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg" />
+            <!--&lt;!&ndash; 加载中提示，不指定，将显示默认加载中图标 &ndash;&gt;-->
+            <!--<img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg" />-->
 
-          </yd-infinitescroll>
+          <!--</yd-infinitescroll>-->
         </div>
 
       </van-tab>
@@ -52,7 +58,9 @@
     <div v-if="list&&list.length==0&&!thisNullData" style=" background-color: #efeff4;padding: 0.2rem 0.2rem">
       <div class="willy_zwjl">暂无记录</div>
     </div>
-
+    <section class="ob_footer" v-if="finished&&list&&list.length>10" style="padding: 0">
+      <div class="willy_dx" style="padding: 0.2rem 0 ">— 已经到底了，没有更多内容了 —</div>
+    </section>
   </div>
 </template>
 <script>
@@ -108,75 +116,68 @@ export default {
       }, 500)
     },
     searchList() {
+
       const vm = this
+//      vm.finished = false
       vm.thisNullData = true
       const toast1 = vm.$toast.loading({
         mask: true,
         duration: 5000, // 持续展示 toast
         message: ''
       })
-      let params = {
-        token: vm.userData.token,
-        pageNo: vm.page,
-        pageSize: 20,
-        startDate: vm.datetimeStar,
-        endDate: vm.datetimeEnd,
-        type: vm.activeType
-      }
-      let url = '/user/bet/getUserMoneyChangeList'
-      vm.$axios
-        .get(url, { params })
-        .then(response => {
-          toast1.clear()
-          vm.thisNullData = false
-          if (response.status == 200 && response.data) {
-            if (response.data.statusCode == -100) {
-              vm.$dialog
-                .confirm({
-                  message: response.data.resultInfo,
-                  className: 'willy_pup'
-                })
-                .then(() => {
-                  localStorage.removeItem('userInfo')
-                  vm.$router.push('/login')
-                })
-                .catch(() => {
-                  localStorage.removeItem('userInfo')
-                  vm.$router.push('/')
-                })
-            } else {
-              let _list = response.data.resultInfo
-              console.log('ff', _list)
-              vm.list = [...vm.list, ..._list]
+      setTimeout(() => {
+        let params = {
+          token: vm.userData.token,
+          pageNo: vm.page,
+          pageSize: 20,
+          startDate: vm.datetimeStar,
+          endDate: vm.datetimeEnd,
+          type: vm.activeType
+        }
+        let url = '/user/bet/getUserMoneyChangeList'
+        vm.$axios
+          .get(url, {params})
+          .then(response => {
+            toast1.clear()
+            vm.thisNullData = false
+            if (response.status == 200 && response.data) {
+              if (response.data.statusCode == -100) {
+                vm.$dialog
+                  .confirm({
+                    message: response.data.resultInfo,
+                    className: 'willy_pup'
+                  })
+                  .then(() => {
+                    localStorage.removeItem('userInfo')
+                    vm.$router.push('/login')
+                  })
+                  .catch(() => {
+                    localStorage.removeItem('userInfo')
+                    vm.$router.push('/')
+                  })
+              } else {
+                let _list = response.data.resultInfo
 
-              if (_list.length < 10) {
-                console.log('10SSS')
-                /* 所有数据加载完毕 */
-                //                  this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
-                return
+                vm.list = [...vm.list, ..._list]
+                vm.page++
+
+                vm.loading = false;
+                if (_list.length < 20) {
+
+                  vm.finished = true;
+
+                }
+
               }
-
-              /* 单次请求数据完毕 */
-              //              this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
-
-              //                this.page++;
-              //                  let newList =response.data.resultInfo
-              //                vm.list =(vm.list||[]).concat(newList)
-              //
-              //                vm.loading = false;
-              //                if ( newList.length <10) {
-              //                  vm.finished = true;
-              //                }
-              vm.page++
+            } else {
+              vm.$toast('获取交易信息失败')
             }
-          } else {
-            vm.$toast('获取余额信息失败')
-          }
-        })
-        .catch(response => {
-          vm.thisNullData = false
-          vm.$toast('获取余额信息失败')
-        })
+          })
+          .catch(response => {
+            vm.thisNullData = false
+            vm.$toast('获取交易信息失败')
+          })
+      },500)
     },
 
     onClickLeft() {
@@ -188,28 +189,30 @@ export default {
     vm.$watch(
       'activeIndex',
       () => {
+        vm.finished = false
+        vm.page=1
         if (vm.activeIndex == 0) {
           vm.activeType = null
           vm.list = []
-          vm.page = 1
+
           vm.searchList()
         } else if (vm.activeIndex == 1) {
           //充值
           vm.activeType = 'recharge'
           vm.list = []
-          vm.page = 1
+
           vm.searchList()
         } else if (vm.activeIndex == 2) {
           //提现
           vm.activeType = 'downchange'
           vm.list = []
-          vm.page = 1
+
           vm.searchList()
         } else if (vm.activeIndex == 3) {
           //投注
           vm.activeType = 'betAll'
           vm.list = []
-          vm.page = 1
+
           vm.searchList()
         }
       },
