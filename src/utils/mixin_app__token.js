@@ -1,7 +1,4 @@
-/**
- * Created by hao.wang on 2017-5-5.
- * App.vue 的 mixins
- */
+
 
 import * as axios from 'axios'
 export default {

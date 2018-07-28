@@ -24,7 +24,7 @@
         </td>
         <td width="20%" > {{allType[trade.betType]}}  </td>
         <!--如果为充值，则颜色添加红色，添加样式pay_money-->
-        <td width="20%" class="pay_money">{{trade.changeAmt}}</td>
+        <td width="20%">{{trade.changeAmt}}</td>
         <td width="20%" class="pay_money">{{trade.resultBlnc}}</td>
       </tr>
     </table>

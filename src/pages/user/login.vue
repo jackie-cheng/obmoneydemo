@@ -182,7 +182,7 @@ export default {
       const vm = this
       vm.userData = JSON.parse(localStorage.getItem('userInfo'))
       let pullData = JSON.parse(e.data)
-      console.log('收到的封禁信息', pullData)
+//      console.log('收到的封禁信息', pullData)
 //        type 有01 02 03 分别是 禁言、封号01、封ip03 ，status是'0' 或者'1'
       if (pullData.type == '02' && pullData.status == '1') {
         vm.$dialog.alert({

@@ -1,6 +1,4 @@
-/**
- * Created by hao.wang on 2017-4-10.
- */
+
 import Vue from 'vue'
 import _ from 'lodash'
 import * as axios from 'axios'

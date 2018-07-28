@@ -399,7 +399,7 @@
         }
 
         vm.websock.send(JSON.stringify(sendData));
-        console.log('发的消息', JSON.stringify(sendData))
+//        console.log('发的消息', JSON.stringify(sendData))
         vm.mySendMessage.push(sendData)
       },
       //        数字求的颜色
@@ -439,7 +439,7 @@
         });
         vm.clickLoadMore = true
         vm.oldRoom_wechatulHeight = document.getElementsByClassName('willy_ltulli')[0].clientHeight;
-        console.log('liangyige ',vm.oldRoom_wechatulHeight)
+//        console.log('liangyige ',vm.oldRoom_wechatulHeight)
         let params = {
           roomNumber: vm.$route.params.id,
           pageNo: this.page,
@@ -592,7 +592,7 @@
         const vm = this
 
         let pullData = JSON.parse(e.data)
-        console.log('收到的', e.data)
+//        console.log('收到的', e.data)
         if (pullData.chatType != '9'&&pullData.chatstatus != '1') {
           vm.redata = JSON.parse(pullData.msgContent);
 //          if (!vm.$_.isEmpty(vm.userData)) {
@@ -678,7 +678,7 @@
             let content = document.getElementsByClassName('room_wechatul')[0];
             content.scrollTop = content.scrollHeight
           }, 100);
-        console.log(vm.mySendMessage)
+//        console.log(vm.mySendMessage)
       },
 
       userChatStatus(){
